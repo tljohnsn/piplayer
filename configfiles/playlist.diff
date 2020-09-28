@@ -1,0 +1,12 @@
+--- /home/pi/rompr/ui/playlist.js	2020-08-16 14:05:37.000000000 +0100
++++ playlist.js	2020-09-27 19:53:51.483484491 +0100
+@@ -466,7 +466,8 @@
+ 			event.stopImmediatePropagation();
+ 			var clickedElement = $(this);
+ 			if (clickedElement.hasClass("playid")) {
+-				player.controller.playId(clickedElement.attr("romprid"));
++			    // player.controller.playId(clickedElement.attr("romprid"));
++			    // alert("do not change");
+ 			} else if (clickedElement.hasClass("clickremovetrack")) {
+ 				playlist.delete(clickedElement.attr("romprid"));
+ 			} else if (clickedElement.hasClass("clickremovealbum")) {

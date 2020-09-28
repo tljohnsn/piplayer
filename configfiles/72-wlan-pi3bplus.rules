@@ -1,0 +1,16 @@
+# Raspberry Pi 3b+
+# https://www.raspberrypi.org/forums/viewtopic.php?t=198946#p1421091
+#    +---------+ ----------+
+#    | wlan2   | | wlan4   |
+#    | 1-1.1.2 | | 1-1.3   |
+#    +---------+ +---------+
+# ---| wlan1   | | wlan3   |
+# Lan| 1-1.1.1 | | 1-1.2   |
+# ---+---------+ +---------+
+#ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="sdio", KERNELS=="mmc1:0001:1", NAME="wlan0"
+#ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb",  KERNELS=="1-1.1.1",       NAME="wlan1"
+ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb",  KERNELS=="1-1.1.2",       NAME="wlan2"
+ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb",  KERNELS=="1-1.2",       NAME="wlan3"
+ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb",  KERNELS=="1-1.3",       NAME="wlan4"
+ACTION=="add", SUBSYSTEM=="net", DRIVERS=="brcmfmac", NAME="wlanboard"
+#ACTION=="add", SUBSYSTEM=="net", DRIVERS=="r8188eu", NAME="wlanusb1"
