@@ -211,3 +211,7 @@ sudo rm /var/www/html/index.html
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
 
+if [ "$pi_ssh_password" != "raspberry" ]; then
+    echo Changing pi login password
+    echo pi:pi | sudo chpasswd
+fi
