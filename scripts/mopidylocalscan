@@ -3,3 +3,17 @@ mopidyctl local scan
 curl -b "skin=desktop;currenthost=Default;player_backend=mopidy" http://localhost/rompr/albums.php\?rebuild=yes >/dev/null
 curl -b "skin=desktop;currenthost=Default;player_backend=mopidy" -d '[{"action": "metabackup"}]' -H "Content-Type: application/json" -X POST  http://localhost/rompr/backends/sql/userRatings.php
 sudo -u www-data php /var/www/html/ampache/bin/catalog_update.inc
+
+cd /var/www/html/rompr/prefs/databackups
+older=`ls -tr /var/www/html/rompr/prefs/databackups | tail -n 2 | head -n 1`
+newer=`ls -tr /var/www/html/rompr/prefs/databackups | tail -n 1`
+
+if [ "$older" != "$newer" ]; then 
+    if [ `diff $older $newer | wc -c` -lt 1 ]; then
+	echo "no differences in tags found"
+	rm  /var/www/html/rompr/prefs/databackups/$newer/*
+	rmdir /var/www/html/rompr/prefs/databackups/$newer
+    fi
+fi
+   
+    

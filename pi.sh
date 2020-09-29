@@ -62,7 +62,7 @@ echo '
 sudo systemctl enable smbd
 sudo systemctl restart smbd
 fi
-sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/cleanftp.sh /etc/cron.daily/
+sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/cleanftp /etc/cron.daily/
 
 # Install mopidy
 # https://docs.mopidy.com/en/latest/installation/debian/#debian-install
