@@ -207,6 +207,7 @@ sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/prefs.va
 #Finish
 sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.php /var/www/html/index.php
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
+sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
 sudo rm /var/www/html/index.html
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
