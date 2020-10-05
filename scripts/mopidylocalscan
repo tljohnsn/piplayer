@@ -14,6 +14,8 @@ if [ "$older" != "$newer" ]; then
 	rm  /var/www/html/rompr/prefs/databackups/$newer/*
 	rmdir /var/www/html/rompr/prefs/databackups/$newer
     fi
+else
+    if [ `ping -c 2 hot.useractive.com 2>/dev/null | wc -l` -gt 2 ]; then
+	rsync -avP -e ssh /var/www/html/rompr/prefs/databackups/. trentj@hot.useractive.com:databackups/.
+    fi
 fi
-   
-    
