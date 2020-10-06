@@ -76,6 +76,7 @@ sudo usermod -a -G video mopidy
 sudo python3 -m pip install Mopidy-Iris Mopidy-PlaybackDefaults
 sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mopidy.conf /etc/mopidy
 sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/mopidylocalscan /etc/cron.daily/
+sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
 sudo systemctl enable --now mopidy.service
 
 # Setup access point

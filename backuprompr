@@ -1,0 +1,19 @@
+#!/bin/bash
+curl -b "skin=desktop;currenthost=Default;player_backend=mopidy" -d '[{"action": "metabackup"}]' -H "Content-Type: application/json" -X POST  http://localhost/rompr/backends/sql/userRatings.php
+
+cd /var/www/html/rompr/prefs/databackups
+older=`ls -tr /var/www/html/rompr/prefs/databackups | tail -n 2 | head -n 1`
+newer=`ls -tr /var/www/html/rompr/prefs/databackups | tail -n 1`
+
+echo "$older $newer" | tee -a /tmp/out.log
+if [ "$older" != "$newer" ]; then 
+    if [ `diff $older $newer | wc -c` -lt 1 ]; then
+	echo "no differences in tags found"
+	rm  /var/www/html/rompr/prefs/databackups/$newer/*
+	rmdir /var/www/html/rompr/prefs/databackups/$newer
+    else
+	if [ `ping -c 2 hot.useractive.com 2>/dev/null | wc -l` -gt 2 ]; then
+	    rsync -avP -e "ssh -i /root/.ssh/id_rsa" /var/www/html/rompr/prefs/databackups/. trentj@hot.useractive.com:databackups/.
+	fi
+    fi
+fi
