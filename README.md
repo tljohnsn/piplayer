@@ -7,7 +7,7 @@
 * Change default passwords in tunes.txt
 
 ```bash
-ssh -A -o 'UserKnownHostsFile /dev/null' -o 'StrictHostKeyChecking no'pi@raspberrypi.local
+ssh -A -o 'UserKnownHostsFile /dev/null' -o 'StrictHostKeyChecking no' pi@raspberrypi.local
 git clone git@github.com:tljohnsn/piplayer.git
 bash ~pi/piplayer/pi.sh
 ```
