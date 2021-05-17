@@ -6,3 +6,5 @@ sed -i -e "s/^interface wlanboard/#interface wlanboard/" \
 
 mv /etc/dnsmasq.conf.orig /etc/dnsmasq.conf
 mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.old
+mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak
+mv /etc/xdg/autostart/piwiz.desktop /etc/xdg/
