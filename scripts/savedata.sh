@@ -21,3 +21,11 @@ systemctl stop cups
 systemctl stop cups-browsed
 systemctl disable cups
 systemctl disable cups-browsed
+
+systemctl stop exim4
+systemctl disable exim4
+
+systemctl stop colord
+systemctl disable colord
+
+

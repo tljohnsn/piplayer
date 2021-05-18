@@ -1,0 +1,13 @@
+#Pi setup notes
+
+#Play silence
+aplay -t raw -r 48000 -c 2 -f S16_LE /dev/zero
+
+#Stereo test
+wget http://www.aoakley.com/articles/stereo-test.mp3
+mpg321 stereo-test.mp3
+
+# Headphone jack
+mv /etc/asound.conf /etc/asound.conf.pi
+add audio_pwm_mode=2 to /boot/config.txt
+

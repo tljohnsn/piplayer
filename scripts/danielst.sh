@@ -8,3 +8,6 @@ mv /etc/dnsmasq.conf.orig /etc/dnsmasq.conf
 mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.old
 mv /usr/share/piwiz/srprompt.wav /usr/share/piwiz/srprompt.wav.bak
 mv /etc/xdg/autostart/piwiz.desktop /etc/xdg/
+
+systemctl stop hostapd
+systemctl disable hostapd
