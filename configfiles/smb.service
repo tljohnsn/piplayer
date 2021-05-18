@@ -1,4 +1,3 @@
-#https://kremalicious.com/raspberry-pi-file-and-screen-sharing-macos-ios
 <?xml version="1.0" standalone='no'?>
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
@@ -13,3 +12,4 @@
     <txt-record>model=Xserve</txt-record>
   </service>
 </service-group>
+<!-- https://kremalicious.com/raspberry-pi-file-and-screen-sharing-macos-ios -->
