@@ -16,3 +16,8 @@ echo '# redirect rngd output on Raspberry Pi Buster
 :programname,startswith,"rng" /dev/null
 :programname,startswith,"rng" stop
 '>/etc/rsyslog.d/rng.conf
+
+systemctl stop cups
+systemctl stop cups-browsed
+systemctl disable cups
+systemctl disable cups-browsed
