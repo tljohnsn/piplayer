@@ -11,3 +11,8 @@ mv /etc/xdg/autostart/piwiz.desktop /etc/xdg/
 
 systemctl stop hostapd
 systemctl disable hostapd
+
+git clone git@github.com:tljohnsn/sunwait.git
+cd sunwait
+make
+

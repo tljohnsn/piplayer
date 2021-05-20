@@ -1,0 +1,5 @@
+#!/bin/bash
+source /boot/tunes.txt
+curl -X PUT -d '{"on":true, "bri":192}' http://10.0.2.30/api/$huekey/lights/1/state
+#For ceramic tree:
+#curl -X PUT -d '{"on":true, "bri":254}' http://10.0.2.30/api/$huekey/lights/2/state

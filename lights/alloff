@@ -1,0 +1,3 @@
+#!/bin/bash
+source /boot/tunes.txt
+curl -X PUT -d '{"on":false}' http://10.0.2.30/api/$huekey/groups/0/action
