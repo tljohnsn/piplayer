@@ -15,3 +15,8 @@ https://github.com/superjamie/lazyweb/wiki/Raspberry-Pi-3.5mm-Audio-Hiss
 #Bottlerocket only works with version 0.04c
 wget https://www.linuxha.com/bottlerocket/bottlerocket-0.04c.tar.gz
 cd bottlerocket-0.04c; ./configure; make
+
+Crontab:
+00 15 * * * /home/pi/piplayer/lights/waiton
+00 05 * * * /home/pi/piplayer/lights/waitoff
+00 23 * * * /home/pi/piplayer/lights/alloff
