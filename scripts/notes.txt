@@ -12,3 +12,6 @@ mv /etc/asound.conf /etc/asound.conf.pi
 add audio_pwm_mode=2 to /boot/config.txt
 https://github.com/superjamie/lazyweb/wiki/Raspberry-Pi-3.5mm-Audio-Hiss
 
+#Bottlerocket only works with version 0.04c
+wget https://www.linuxha.com/bottlerocket/bottlerocket-0.04c.tar.gz
+cd bottlerocket-0.04c; ./configure; make
