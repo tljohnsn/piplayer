@@ -1,0 +1,6 @@
+0 7 * * * /usr/local/bin/br -x /dev/ttyUSB0 -c C -n 1
+1 7 * * *  /usr/local/bin/br -x /dev/ttyUSB0 -c C -n 1
+37 16 * * *  /usr/local/bin/br -x /dev/ttyUSB0 -c C -n 1,2
+38 16 * * *  /usr/local/bin/br -x /dev/ttyUSB0 -c C -n 1,2
+49 22 * * *  /usr/local/bin/br -x /dev/ttyUSB0 -c C -f 1,2
+50 22 * * *  /usr/local/bin/br -x /dev/ttyUSB0 -c C -f 1,2
