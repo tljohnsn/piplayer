@@ -17,6 +17,10 @@ nohup ~pi/piplayer/scripts/wlanup.sh </dev/null >/dev/null 2>/dev/null &
 nohup aplay -t raw -r 48000 -c 2 -f S16_LE /dev/zero >/dev/null 2>/dev/null &
 echo none > /sys/class/leds/led1/trigger
 
+if [ -z "/var/www/html/rompr/prefs/prefs.var" ]; then
+    install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/prefs.var /var/www/html/rompr/prefs/prefs.var
+fi
+
 
 # Print the IP address
 _IP=$(hostname -I) || true
