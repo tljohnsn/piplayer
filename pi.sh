@@ -27,6 +27,15 @@ chown pi ~pi/.ssh/authorized_keys
 chmod 600 ~pi/.ssh/authorized_keys
 fi
 
+if [ ! -f /usr/bin/git ]; then
+   exit "run me as root for debian install"
+   echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
+   chmod 440 /etc/sudoers.d/010_pi-nopasswd
+   apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync
+   systemctl enable --now avahi-daemon
+   systemctl disable rsync
+fi
+
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 git config --global core.editor emacs
@@ -76,7 +85,7 @@ sudo usermod -a -G video mopidy
 sudo python3 -m pip install Mopidy-Iris Mopidy-PlaybackDefaults
 sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mopidy.conf /etc/mopidy
 sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/mopidylocalscan /etc/cron.daily/
-sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
+#sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
 sudo systemctl enable --now mopidy.service
 
 # Setup access point
