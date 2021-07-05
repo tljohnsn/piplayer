@@ -1,0 +1,1 @@
+www-data * = (root) NOPASSWD: /usr/sbin/mopidyctl
