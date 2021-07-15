@@ -3,7 +3,7 @@
 
 $FORCE = 0;
 
-$albumdir = "/musictest/convertedflacs";
+$albumdir = "/Muxic/convertedflacs";
 
 opendir(ALBUMS,"$albumdir");
 
