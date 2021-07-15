@@ -8,7 +8,7 @@ $albumdir = "/musictest/convertedflacs";
 opendir(ALBUMS,"$albumdir");
 
 while ($album = readdir(ALBUMS)) {
-    if (($album ne "..") && ($album ne "..") && ($album ne ".sync") && opendir(SHNS,"$albumdir/$album")) {
+    if (($album ne ".") && ($album ne "..") && ($album ne ".sync") && opendir(SHNS,"$albumdir/$album")) {
 	# found a directory do this inside it
 
                 #retag everything if index.txt does not exist                                                                    
