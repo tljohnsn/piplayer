@@ -31,7 +31,7 @@ if [ ! -f /usr/bin/git ]; then
    exit "run me as root for debian install"
    echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
    chmod 440 /etc/sudoers.d/010_pi-nopasswd
-   apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync net-tools
+   apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync alsa-utils net-tools
    systemctl enable --now avahi-daemon
    systemctl disable rsync
 fi
