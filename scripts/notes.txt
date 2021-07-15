@@ -12,6 +12,11 @@ mv /etc/asound.conf /etc/asound.conf.pi
 add audio_pwm_mode=2 to /boot/config.txt
 https://github.com/superjamie/lazyweb/wiki/Raspberry-Pi-3.5mm-Audio-Hiss
 
+#For haebey
+use alsmixer to unumte master
+#save the mixer settings into /var/lib/alsa/asound.state :
+alsactl store
+
 #Bottlerocket only works with version 0.04c
 wget https://www.linuxha.com/bottlerocket/bottlerocket-0.04c.tar.gz
 cd bottlerocket-0.04c; ./configure; make
