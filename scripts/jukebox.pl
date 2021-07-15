@@ -211,4 +211,5 @@ foreach $albumdir (@albumdirs) {
             }
         }
     }
+    system("find $basedir/$albumdir -print0 | perl -n0e 'chomp; print $_, \"\n\" if /[[:^ascii:][:cntrl:]]/'");
 }

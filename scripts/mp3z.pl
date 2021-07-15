@@ -9,8 +9,8 @@
 $FORCE = 0;
 $FORCEINDEX = 0;
 
-$basedir = "/Users/tljohnsn/Public/music/";
-@albumdirs = qw(mp3zlaptop convertedflacs);
+$basedir = "/Music/";
+@albumdirs = qw(mp3zlaptop);
 $mp3dir = "/home/ftp/incoming/mp3";
 
 %RENAME = ( "Alan Jackson" => "Jackson, Alan",
