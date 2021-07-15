@@ -8,9 +8,9 @@
 $FORCE = 0;
 $FORCEINDEX = 0;
 
-$basedir = "/home/ftp/local/";
-@albumdirs = qw(albums albums2);
-$mp3dir = "/home/ftp/local/mp3";
+$basedir = "/Music/";
+@albumdirs = qw(albums2);
+$mp3dir = "/musictest/convertedflacs";
 
 %RENAME = ( "Alan Jackson" => "Jackson, Alan",
 	    "Alanis Morissette" => "Morissette, Alanis",
@@ -91,7 +91,7 @@ foreach $albumdir (@albumdirs) {
     system("find $basedir/$albumdir -name \".DS_Store*\" -print0 | xargs -0 rm");
     opendir(DIR,"$basedir/$albumdir");
     foreach $file (readdir(DIR)){
-        if (!($file =~ /AppleDouble/) && $file ne "Live Shows" && $file ne "." && $file ne ".." && $file ne "LiveShows"
+        if (!($file =~ /AppleDouble/) && $file ne "Live Shows" && $file ne "." && $file ne ".." && $file ne "LiveShows" && $file ne ".sync"
             && !($file =~ /lost\+found/) ){
             $albumcount++;
             if (-d "$basedir/$albumdir/$file") {
@@ -102,9 +102,9 @@ foreach $albumdir (@albumdirs) {
                 $title = substr($file,$dash+3);
 		$path = $albumdir . "/" . $file;
 
-		if ($RENAME{$artist} ne ""){
-		    $artist = $RENAME{$artist};
-		}
+		#if ($RENAME{$artist} ne ""){
+		#    $artist = $RENAME{$artist};
+		#}
 
 		if (lc(substr($artist,0,4)) eq "the "){
                     $sortartist = substr($artist,4) . ", The";
@@ -168,19 +168,25 @@ foreach $albumdir (@albumdirs) {
 			$base =~ s/\.flac$//;
 			$input = "$basedir/$path/$file";
 			$output = "$mp3dir/$theDirectory/$base.mp3";
+			$tracknum = substr($base, 0, 2);
+			$safesong = substr($file, 3, -5);
 			if ($FORCE || !(-e $output)){
 			    $command1 = "flac --silent -d -c \"$input\" -o \"/tmp/$base.wav\"";
 			    $command2 = "lame -quiet \"/tmp/$base.wav\" \"$output\"";
-			    
+			    $command3 = "flac --silent -d -c \"$input\" | lame -quiet - \"$output\"";
 			    print "Doing $output\n";
 			    if (-e $output) {
 				print "And deleting\n";
 				system("rm \"$output\"");
 			    }
-			    system($command1 );
-			    system($command2 );
+			    #system($command1 );
+			    #system($command2 );
+			    system($command3 );
 			    system("eyeD3 --remove-all \"$output\"");
-			    system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum  --add-image=\"$basedir/$path/cover.jpg\":FRONT_COVER \"$output\"");
+			    $date =`date +%Y-%m-%dT%H:%M:%S`;
+			    chomp($date);
+			    print("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date --add-image=\"$basedir/$path/cover.jpg\":FRONT_COVER \"$output\"\n");
+			    system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date  --add-image=\"$basedir/$path/cover.jpg\":FRONT_COVER \"$output\"");
 			    system("rm \"/tmp/$base.wav\"");
 			}
 		    }
