@@ -182,7 +182,7 @@ foreach $albumdir (@albumdirs) {
 			    #system($command1 );
 			    #system($command2 );
 			    system($command3 );
-			    system("eyeD3 --remove-all \"$output\"");
+#			    system("eyeD3 --remove-all \"$output\"");
 			    $date =`date +%Y-%m-%dT%H:%M:%S`;
 			    chomp($date);
 			    print("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date --add-image=\"$basedir/$path/cover.jpg\":FRONT_COVER \"$output\"\n");

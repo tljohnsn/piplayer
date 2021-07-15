@@ -9,7 +9,7 @@
 $FORCE = 0;
 $FORCEINDEX = 0;
 
-$basedir = "/Music/";
+$basedir = "/musictest/";
 @albumdirs = qw(mp3zlaptop);
 $mp3dir = "/home/ftp/incoming/mp3";
 
@@ -156,8 +156,10 @@ foreach $albumdir (@albumdirs) {
 				$safefile = "$basedir/$path/$file";
 				$safesong = $song;
 				$safefile =~ s/\$/\\\$/; $safesong =~ s/\$/\\\$/;
-				system("eyeD3 --remove-all \"$basedir/$path/$file\"");
-				system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum  --add-image=\"$basedir/$path/cover-170.jpg\":FRONT_COVER \"$safefile\"");
+				$date =`date +%Y-%m-%dT%H:%M:%S`;
+				chomp($date);
+#				system("eyeD3 --remove-all \"$basedir/$path/$file\"");
+				system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date --add-image=\"$basedir/$path/cover-170.jpg\":FRONT_COVER \"$safefile\"");
 			    }
 			    $tracknum++;
 			}
