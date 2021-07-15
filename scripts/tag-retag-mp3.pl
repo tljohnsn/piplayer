@@ -3,12 +3,12 @@
 
 $FORCE = 0;
 
-$albumdir = "/home/ftp/local/mp3";
+$albumdir = "/musictest/convertedflacs";
 
 opendir(ALBUMS,"$albumdir");
 
 while ($album = readdir(ALBUMS)) {
-    if (($album ne "..") && ($album ne ".") && opendir(SHNS,"$albumdir/$album")) {
+    if (($album ne "..") && ($album ne "..") && ($album ne ".sync") && opendir(SHNS,"$albumdir/$album")) {
 	# found a directory do this inside it
 
                 #retag everything if index.txt does not exist                                                                    
@@ -27,8 +27,10 @@ while ($album = readdir(ALBUMS)) {
 			$song =~ s/^[0-9][0-9] //;
 			print "Gonna retag  \"$file\"\n";
 			$file =~ s/\$/\\\$/; $song =~ s/\$/\\\$/;
-			$shit = `eyeD3 --remove-all \"$file\"`;
-			$shit = `eyeD3 --to-v2.4  --remove-v1 -a \"$artist\" -A \"$albumt\" -t \"$song\" -n $tracknum  --add-image=\"$albumdir/$album/cover.jpg\":FRONT_COVER \"$file\"`;
+			$date =`date +%Y-%m-%dT%H:%M:%S`;
+			chomp($date);
+#			$shit = `eyeD3 --remove-all \"$file\"`;
+			$shit = `eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -A \"$albumt\" -b \"$artist\" -t \"$song\" -n $tracknum --tagging-date $date --add-image=\"$albumdir/$album/cover.jpg\":FRONT_COVER \"$file\"`;
 		    }
 		}
 	    }
