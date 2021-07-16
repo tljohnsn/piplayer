@@ -30,7 +30,7 @@ while ($album = readdir(ALBUMS)) {
 			$date =`date +%Y-%m-%dT%H:%M:%S`;
 			chomp($date);
 #			$shit = `eyeD3 --remove-all \"$file\"`;
-			$shit = `eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -A \"$albumt\" -b \"$artist\" -t \"$song\" -n $tracknum --tagging-date $date --add-image=\"$albumdir/$album/cover.jpg\":FRONT_COVER \"$file\"`;
+			$shit = `eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -A \"$albumt\" -b \"$artist\" -t \"$song\" -n $tracknum --preserve-file-times --tagging-date $date --add-image=\"$albumdir/$album/cover.jpg\":FRONT_COVER \"$file\"`;
 		    }
 		}
 	    }
