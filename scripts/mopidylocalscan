@@ -25,3 +25,8 @@ if [ "$older" != "$newer" ]; then
 else
     echo "$older equals $newer"
 fi
+
+#to add the key:
+#sudo su - root
+#ssh-keygen -t rsa
+#ssh-copy-id trentj@hot.useractive.com
