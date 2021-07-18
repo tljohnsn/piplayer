@@ -9,7 +9,7 @@
 $FORCE = 0;
 $FORCEINDEX = 0;
 
-$basedir = "/musictest/";
+$basedir = "/Music/";
 @albumdirs = qw(mp3zlaptop);
 
 %RENAME = ( "Alan Jackson" => "Jackson, Alan",
@@ -158,7 +158,7 @@ foreach $albumdir (@albumdirs) {
 				$date =`date +%Y-%m-%dT%H:%M:%S`;
 				chomp($date);
 #				system("eyeD3 --remove-all \"$basedir/$path/$file\"");
-				system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --preserve-file-times --tagging-date $date --add-image=\"$basedir/$path/cover-170.jpg\":FRONT_COVER \"$safefile\"");
+				system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date --add-image=\"$basedir/$path/cover-170.jpg\":FRONT_COVER \"$safefile\"");
 			    }
 			    $tracknum++;
 			}
