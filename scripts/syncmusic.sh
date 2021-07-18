@@ -1,3 +1,3 @@
 #!/bin/bash
-rsync -avP /Music/convertedflacs/. /Volumes/public/convertedflacspi/.
-rsync -avP /Music/mp3zlaptop/. /Volumes/public/mp3zpi/.
+rsync -avP --delete /Music/convertedflacs/. /Volumes/public/convertedflacspi/.
+rsync -avP --delete /Music/mp3zlaptop/. /Volumes/public/mp3zpi/.
