@@ -173,7 +173,7 @@ foreach $albumdir (@albumdirs) {
 			if ($FORCE || !(-e $output)){
 			    $command1 = "flac --silent -d -c \"$input\" -o \"/tmp/$base.wav\"";
 			    $command2 = "lame -quiet \"/tmp/$base.wav\" \"$output\"";
-			    $command3 = "flac --silent -d -c \"$input\" | lame -quiet - \"$output\"";
+			    $command3 = "flac --silent -d -c \"$input\" | lame --quiet - \"$output\"";
 			    print "Doing $output\n";
 			    if (-e $output) {
 				print "And deleting\n";
