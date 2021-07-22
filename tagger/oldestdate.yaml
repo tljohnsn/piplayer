@@ -1,11 +1,26 @@
 directory: ~/music
 library: ~/data/musiclibrary.db
+#https://community.metabrainz.org/t/picard-2-x-and-genres-good-practices-advice-on-plugins/416427
 #orignial_date: yes
+#beet import -C -W -q -l /tmp/beet.txt <album or dir>
+#beet -c ~/piplayer/tagger/oldestdate.yaml import -w -C -s -L
+#https://github.com/kernitus/beets-oldestdate
 import:
     copy: no
-    write: no
-plugins: lastgenre bpmanalyser oldestdate
+    write: yes
+plugins: lastgenre bpmanalyser oldestdate chroma
 lastgenre:
     source: track
 match: 
-   strong_rec_thresh: 0.2
+   strong_rec_thresh: 0.45
+musicbrainz:
+  searchlimit: 20
+oldestdate:
+  auto: yes
+  ignore_track_id: yes
+  filter_on_import: yes
+  prompt_missing_work_id: no
+  force: yes
+  overwrite_year: yes
+  filter_recordings: yes
+  approach: 'releases'
