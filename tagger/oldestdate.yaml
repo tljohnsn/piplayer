@@ -1,0 +1,11 @@
+directory: ~/music
+library: ~/data/musiclibrary.db
+#orignial_date: yes
+import:
+    copy: no
+    write: no
+plugins: lastgenre bpmanalyser oldestdate
+lastgenre:
+    source: track
+match: 
+   strong_rec_thresh: 0.2
