@@ -158,7 +158,8 @@ foreach $albumdir (@albumdirs) {
 				$date =`date +%Y-%m-%dT%H:%M:%S`;
 				chomp($date);
 #				system("eyeD3 --remove-all \"$basedir/$path/$file\"");
-				system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date --add-image=\"$basedir/$path/cover-170.jpg\":FRONT_COVER \"$safefile\"");
+				system("mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT \"$safefile\"");
+				system("eyeD3 --to-v2.4 --force-update --remove-v1 -a \"$artist\" -b \"$artist\" -A \"$title\" -t \"$safesong\" -n $tracknum --tagging-date $date --remove-frame TSOP --add-image=\"$basedir/$path/cover-170.jpg\":FRONT_COVER \"$safefile\"");
 			    }
 			    $tracknum++;
 			}
