@@ -1,0 +1,3 @@
+beet import -C -w -q -l beet.log /musictest >beet.txt
+
+beet ls -f '$albumartist - $album/$track $title :$genre' |wc -l
