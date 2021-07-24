@@ -5,7 +5,8 @@ import:
     copy: no
     write: no
     duplicate_action: keep
-plugins: chroma lastgenre bpmanalyser fetchart ftintitle
+    quiet_fallback: asis
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite
 lastgenre:
     source: track
 match: 
@@ -21,6 +22,7 @@ ftintitle:
    format: (ft. {0})
 format_item: $albumartist - $album/$track $title :$genre
 max_filename_length: 39
+max_filename_length: 42
 paths:
    default: $albumartist - $album%aunique{}/$track $title
 replace:
@@ -32,3 +34,6 @@ replace:
     '\s+$': ''
     '^\s+': ''
     '^-':
+rewrite:
+   artist At the Drive‐In: At the Drive In
+   artist AC/DC: ACDC
