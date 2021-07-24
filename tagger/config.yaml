@@ -1,14 +1,16 @@
-directory: ~/music
+directory: ~/staging
 library: ~/data/musiclibrary.db
 orignial_date: yes
 import:
     copy: no
     write: no
     duplicate_action: keep
-plugins: chroma lastgenre
+plugins: chroma lastgenre bpmanalyser
 lastgenre:
     source: track
 match: 
    strong_rec_thresh: 0.3
    max_rec:
        missing_tracks: strong
+paths:
+   default: $albumartist - $album%aunique{}/$track $title
