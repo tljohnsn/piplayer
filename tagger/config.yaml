@@ -1,4 +1,4 @@
-directory: ~/staging
+directory: ~/mp3zrenamed
 library: ~/data/musiclibrary.db
 orignial_date: yes
 import:
@@ -15,6 +15,8 @@ match:
 asciify_paths: yes
 fetchart:
    enforce_ratio: yes
+   store_source: yes
+   cover_names: cover.jpg
 ftintitle:
    format: (ft. {0})
 format_item: $albumartist - $album/$track $title :$genre
