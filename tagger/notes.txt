@@ -1,3 +1,7 @@
 beet import -C -w -q -l beet.log /musictest >beet.txt
 
+beet import -w -c ~/staging
+mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC ~/mp3zrenamed/*/*.mp3
+
+
 beet ls -f '$albumartist - $album/$track $title :$genre' |wc -l
