@@ -5,12 +5,28 @@ import:
     copy: no
     write: no
     duplicate_action: keep
-plugins: chroma lastgenre bpmanalyser
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle
 lastgenre:
     source: track
 match: 
    strong_rec_thresh: 0.3
    max_rec:
        missing_tracks: strong
+asciify_paths: yes
+fetchart:
+   enforce_ratio: yes
+ftintitle:
+   format: (ft. {0})
+format_item: $albumartist - $album/$track $title :$genre
+max_filename_length: 39
 paths:
    default: $albumartist - $album%aunique{}/$track $title
+replace:
+    '[\\/]':
+    '^\.':
+    '[\x00-\x1f]':
+    '[<>:"\?\*\|]':
+    '\.$':
+    '\s+$': ''
+    '^\s+': ''
+    '^-':

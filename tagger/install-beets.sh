@@ -16,6 +16,8 @@ python3 setup.py install
 
 brew install chromaprint
 
+pip3 install requests
+
 mkdir -p ~/{.config/beets,data}
 cp ~/piplayer/tagger/config.yaml ~/.config/beets
 
