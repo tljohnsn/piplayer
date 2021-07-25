@@ -1,8 +1,9 @@
 beet import -C -w -q -l beet.log /musictest >beet.txt
 
 beet import -w -c ~/staging
-mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC ~/mp3zrenamed/*/*.mp3
-find /musictest -name "*.mp3" -print0 | xargs -0 mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
 
+rm -rf ~/mp3zrenamed/* ~/data/musiclibrary.db beet.log beet.txt
+beet import -C -w -q -l beet.log /musictest >beet.txt
+find /musictest -name "*.mp3" -print0 | xargs -0 mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
 
 beet ls -f '$albumartist - $album/$track $title :$genre' |wc -l
