@@ -5,5 +5,7 @@ beet import -w -c ~/staging
 rm -rf ~/mp3zrenamed/* ~/data/musiclibrary.db beet.log beet.txt
 beet import -C -w -q -l beet.log /musictest >beet.txt
 find /musictest -name "*.mp3" -print0 | xargs -0 mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
+find /musictest -name cover.?.jpg -print0 |xargs -0 rm
+
 
 beet ls -f '$albumartist - $album/$track $title :$genre' |wc -l
