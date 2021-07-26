@@ -36,5 +36,5 @@ replace:
     '^-':
 rewrite:
    artist At the Drive‐In: At the Drive In
+   artist .*Weird Al.*Yankovic: Weird Al Yankovic
    artist AC/DC: ACDC
-   artist ?Weird Al? Yankovic: Weird Al Yankovic
