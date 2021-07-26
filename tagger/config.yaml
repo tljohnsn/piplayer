@@ -6,7 +6,7 @@ import:
     write: no
     duplicate_action: keep
     quiet_fallback: asis
-plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart
 lastgenre:
     source: track
 match: 
@@ -18,6 +18,8 @@ fetchart:
    enforce_ratio: yes
    store_source: yes
    cover_names: cover.jpg
+embedart:
+   ifempty: yes
 ftintitle:
    format: (ft. {0})
 format_item: $albumartist - $album/$track $title :$genre
