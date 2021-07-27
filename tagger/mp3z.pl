@@ -9,7 +9,7 @@
 $FORCE = 0;
 $FORCEINDEX = 0;
 
-$basedir = "/musictest/";
+$basedir = "/Music/";
 @albumdirs = qw(mp3zlaptop);
 
 %RENAME = ( "Alan Jackson" => "Jackson, Alan",

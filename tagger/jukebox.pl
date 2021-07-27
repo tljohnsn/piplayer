@@ -10,7 +10,7 @@ $FORCEINDEX = 0;
 
 $basedir = "/Music/";
 @albumdirs = qw(flacmini);
-$mp3dir = "/musictest/convertedflacs";
+$mp3dir = "/Music/convertedflacs";
 
 %RENAME = ( "Alan Jackson" => "Jackson, Alan",
 	    "Alanis Morissette" => "Morissette, Alanis",
