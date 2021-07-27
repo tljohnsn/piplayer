@@ -18,6 +18,6 @@ brew install chromaprint
 
 pip3 install requests
 
-mkdir -p ~/{.config/beets,data}
+mkdir -p ~/{.config/beets,data,mp3zstaging,mp3zrenamed}
 cp ~/piplayer/tagger/config.yaml ~/.config/beets
 
