@@ -1,0 +1,2 @@
+find /Music/mp3zlaptop  -type f  ! -name "*.mp3" ! -name "index.txt" ! -name "cover.jpg" ! -name "cover-170.jpg" ! -name "IgnoreList" ! -name "ID" ! -name "StreamsList" ! -name "root_acl_entry"
+find /Music/flacmini  -type f  ! -name "*.flac" ! -name "index.txt" ! -name "cover.jpg" ! -name "cover-170.jpg" ! -name "IgnoreList" ! -name "ID" ! -name "StreamsList" ! -name "root_acl_entry" -print0 | xargs -0 ls
