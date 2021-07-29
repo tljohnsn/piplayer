@@ -6,7 +6,7 @@ import:
     write: no
     duplicate_action: keep
     quiet_fallback: asis
-plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert
 lastgenre:
     source: track
 match: 
@@ -14,6 +14,11 @@ match:
    max_rec:
        missing_tracks: strong
 asciify_paths: yes
+convert:
+   auto: yes
+   copy_album_art: yes
+   never_convert_lossy_files: yes
+   quiet: no   
 fetchart:
    enforce_ratio: yes
    store_source: yes
