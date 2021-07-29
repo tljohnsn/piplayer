@@ -150,8 +150,8 @@ sudo systemctl enable --now apache2.service
 #https://fatg3erman.github.io/RompR/Installation-on-Linux-Alternative-Method.html
 
 cd
-wget https://github.com/fatg3erman/RompR/releases/download/1.48/rompr-1.48.zip
-unzip -q rompr-1.48.zip
+wget https://github.com/fatg3erman/RompR/releases/download/1.58/rompr-1.58.zip
+unzip -q rompr-1.58.zip
 mkdir rompr/{prefs,albumart}
 mkdir -p rompr/prefs/databackups
 #This patch reduced accidental clicks when trying to re-order the playlist
