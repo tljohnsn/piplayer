@@ -14,6 +14,7 @@ mkdir -p rompr/prefs/databackups
 #This patch reduced accidental clicks when trying to re-order the playlist
 patch rompr/ui/playlist.js piplayer/configfiles/playlist.diff
 patch rompr/includes/prefs.class.php piplayer/configfiles/prefs.class.diff
+patch rompr/ui/hotkeys.js piplayer/configfiles/hotkeys.diff
 cp -a ~pi/piplayer/backups/* rompr/prefs/databackups/.
 sudo mv rompr /var/www/html
 sudo chown -R www-data.www-data /var/www/html/rompr

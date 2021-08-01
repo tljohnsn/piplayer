@@ -1,0 +1,11 @@
+--- hotkeys.js.orig	2021-08-01 10:50:55.786907029 -0500
++++ hotkeys.js	2021-08-01 10:51:11.416828026 -0500
+@@ -77,7 +77,7 @@
+ 										button_volup: "=",
+ 										button_voldown: "-",
+ 										button_skipforward: "]",
+-										button_skipbackward: "[",
++										button_skipbackward: "",
+ 										button_clearplaylist: "C",
+ 										button_stopafter: "F",
+ 										button_random: "S",
