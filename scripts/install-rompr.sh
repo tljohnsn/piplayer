@@ -5,7 +5,7 @@ VERSION=1.59
 #Don't forget to change version in sed command below
 
 cd
-if [ ! -f "rompr-$VERSION.zip" ];
+if [ ! -f "rompr-$VERSION.zip" ]; then
     wget https://github.com/fatg3erman/RompR/releases/download/$VERSION/rompr-$VERSION.zip
 fi
 unzip -q rompr-$VERSION.zip
