@@ -1,0 +1,36 @@
+#!/bin/bash
+echo "begin"
+#/usr/sbin/mopidyctl local scan
+#curl -b "skin=desktop;currenthost=Default;player_backend=mopidy" http://localhost/rompr/albums.php\?rebuild=yes >/dev/null
+#curl -b "skin=desktop;currenthost=Default;player_backend=mopidy" -d '[{"action": "metabackup"}]' -H "Content-Type: application/json" -X POST  http://localhost/rompr/backends/sql/userRatings.php
+#curl -d '[{"action": "metabackup"}]' -H "Content-Type: application/json" -X POST  http://localhost/rompr/api/metadata/backup/
+curl 'http://localhost/rompr/api/metadata/backup/'   -H 'Connection: keep-alive'   -H 'Accept: application/json, text/javascript, */*; q=0.01'   -H 'DNT: 1'   -H 'X-Requested-With: XMLHttpRequest'   -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'   -H 'Content-Type: text/plain;charset=UTF-8'   -H 'Origin: http://tunes.local'   -H 'Referer: http://tunes.local/rompr/'   -H 'Accept-Language: en-US,en;q=0.9'   -H 'Cookie: currenthost=Default; sortcollectionby=artist; actuallysortresultsby=artist; _ga=GA1.2.155561936.1625402230; skin=tablet; player_backend=mopidy'   --data-raw '{"action":"metabackup"}'   --compressed   --insecure
+
+cd /var/www/html/rompr/prefs/databackups
+older=`ls -tr /var/www/html/rompr/prefs/databackups | tail -n 2 | head -n 1`
+newer=`ls -tr /var/www/html/rompr/prefs/databackups | tail -n 1`
+#cp -a /var/www/html/rompr/prefs/customradio/*.json /var/www/html/rompr/prefs/databackups/$newer/.
+
+if [ "$older" != "$newer" ]; then 
+    echo "$older unequal $newer"
+    if [ `diff  $older $newer | wc -c` -lt 1 ]; then
+	echo "no differences in tags found"
+	rm  /var/www/html/rompr/prefs/databackups/$newer/*
+	rmdir /var/www/html/rompr/prefs/databackups/$newer
+    else
+	echo "attempt upload"
+	if [ `ping -c 2 hot.useractive.com 2>/dev/null | wc -l` -gt 2 ]; then
+	    echo "do rsync"
+	    rsync -avP -e ssh /var/www/html/rompr/prefs/databackups/. trentj@hot.useractive.com:databackups/.
+	    ssh trentj@hot.useractive.com mkdir -p customradio/$newer
+	    rsync -avP -e ssh /var/www/html/rompr/prefs/customradio/*.json trentj@hot.useractive.com:customradio/$newer/
+	fi
+    fi
+else
+    echo "$older equals $newer"
+fi
+
+#to add the key:
+#sudo su - root
+#ssh-keygen -t rsa
+#ssh-copy-id trentj@hot.useractive.com
