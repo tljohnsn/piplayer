@@ -115,10 +115,10 @@ address=/gw.wlan/192.168.5.1  # Alias for this router
 
 echo "192.168.5.1 $host_name.local" | sudo tee -a /etc/hosts
 
-git clone https://github.com/lwfinger/rtl8188eu.git
-cd rtl8188eu
-make
-sudo make install
+#git clone https://github.com/lwfinger/rtl8188eu.git
+#cd rtl8188eu
+#make
+#sudo make install
 
 sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/72-wlan-pi3bplus.rules /etc/udev/rules.d/
 sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/wlan.conf /etc/modprobe.d/wlan.conf
@@ -147,21 +147,7 @@ sudo a2enmod deflate
 sudo systemctl enable --now apache2.service
 
 #Install rompr
-#https://fatg3erman.github.io/RompR/Installation-on-Linux-Alternative-Method.html
-
-cd
-wget https://github.com/fatg3erman/RompR/releases/download/1.58/rompr-1.58.zip
-unzip -q rompr-1.58.zip
-mkdir rompr/{prefs,albumart}
-mkdir -p rompr/prefs/databackups
-#This patch reduced accidental clicks when trying to re-order the playlist
-patch rompr/ui/playlist.js piplayer/configfiles/playlist.diff
-ln -s /home/ftp/local rompr/prefs/MusicFolders
-cp -a ~pi/piplayer/backups/* rompr/prefs/databackups/.
-sudo mv rompr /var/www/html
-sudo chown -R www-data.www-data /var/www/html/rompr
-curl -b "skin=desktop;currenthost=Default;player_backend=mopidy" -d '[{"action": "metabackup"}]' -H "Content-Type: application/json" -X POST  http://localhost/rompr/ >/dev/null
-sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/prefs.var /var/www/html/rompr/prefs/prefs.var
+~pi/piplayer/install-rompr.sh
 
 #Finish
 sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.php /var/www/html/index.php
