@@ -5,7 +5,9 @@ VERSION=1.59
 #Don't forget to change version in sed command below
 
 cd
-#wget https://github.com/fatg3erman/RompR/releases/download/$VERSION/rompr-$VERSION.zip
+if [ ! -f "rompr-$VERSION.zip" ];
+    wget https://github.com/fatg3erman/RompR/releases/download/$VERSION/rompr-$VERSION.zip
+fi
 unzip -q rompr-$VERSION.zip
 mkdir rompr/{prefs,albumart}
 mkdir -p rompr/prefs/databackups

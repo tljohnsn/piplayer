@@ -147,7 +147,7 @@ sudo a2enmod deflate
 sudo systemctl enable --now apache2.service
 
 #Install rompr
-~pi/piplayer/install-rompr.sh
+~pi/piplayer/scripts/install-rompr.sh
 
 #Finish
 sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.php /var/www/html/index.php
