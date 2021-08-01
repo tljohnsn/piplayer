@@ -153,6 +153,7 @@ sudo systemctl enable --now apache2.service
 sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.php /var/www/html/index.php
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
+sudo install -b -o root -g root -m 440 ~pi/piplayer/configfiles/mopidyscan /etc/sudoers.d/mopidyscan
 sudo rm /var/www/html/index.html
 echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/7.3/apache2/conf.d/99-timezone.ini
 sudo timedatectl set-timezone US/Central
