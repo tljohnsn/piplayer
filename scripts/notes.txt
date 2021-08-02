@@ -25,3 +25,7 @@ Crontab:
 00 15 * * * /home/pi/piplayer/lights/waiton
 00 05 * * * /home/pi/piplayer/lights/waitoff
 00 23 * * * /home/pi/piplayer/lights/alloff
+
+/lib/systemd/system/bluealsa.service
+--a2dp-volume
+amixer -D bluealsa sset 'AOMAIS  OUTDOOR - A2DP' 85%
