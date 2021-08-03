@@ -2,6 +2,7 @@
 NOW=`date +'%s'`
 LASTRUN=`date +'%s'`
 PAST=`date +'%s'`
+echo starting $NOW
 while mpc idle database; do
     NOW=`date +'%s'`
     RUNDURATION=`expr $NOW - $LASTRUN`
