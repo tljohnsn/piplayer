@@ -10,22 +10,33 @@
 # bits.
 #
 # By default this script does nothing.
+mkdir -p /etc/rclocal
 
+date | tee -a /etc/rclocal/0
 amixer cset numid=1 95%
 amixer cset numid=66 95%
+date | tee -a /etc/rclocal/1
 nohup ~pi/piplayer/scripts/btboot.sh </dev/null >/dev/null 2>/dev/null &
+date | tee -a /etc/rclocal/2
 nohup ~pi/piplayer/scripts/wlanup.sh </dev/null >/dev/null 2>/dev/null &
-nohup ~pi/piplayer/scripts/watchchanges.sh </dev/null >/dev/null 2>/dev/null &
+date | tee -a /etc/rclocal/3
+nohup ~pi/piplayer/scripts/watchchanges.sh </dev/null >/etc/rclocal/watch 2>&1 &
+date | tee -a /etc/rclocal/4
 nohup aplay -t raw -r 48000 -c 2 -f S16_LE /dev/zero >/dev/null 2>/dev/null &
-echo none > /sys/class/leds/led1/trigger
-
+date | tee -a /etc/rclocal/5
+if [ -f /sys/class/leds/led1/trigger ]; then
+    echo none > /sys/class/leds/led1/trigger
+fi
+date | tee -a /etc/rclocal/6
 iptables -I INPUT -s 192.168.0.0/16 -j ACCEPT
 iptables -I INPUT -s 10.0.0.0/8 -j ACCEPT
 iptables -I INPUT -s 127.0.0.0/8 -j ACCEPT
+date | tee -a /etc/rclocal/7
 
 if [ -z "/var/www/html/rompr/prefs/prefs.var" ]; then
     install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/prefs.var /var/www/html/rompr/prefs/prefs.var
 fi
+date | tee -a /etc/rclocal/8
 
 
 # Print the IP address
