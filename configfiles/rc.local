@@ -15,6 +15,7 @@ amixer cset numid=1 95%
 amixer cset numid=66 95%
 nohup ~pi/piplayer/scripts/btboot.sh </dev/null >/dev/null 2>/dev/null &
 nohup ~pi/piplayer/scripts/wlanup.sh </dev/null >/dev/null 2>/dev/null &
+nohup ~pi/piplayer/scripts/watchchanges.sh </dev/null >/dev/null 2>/dev/null &
 nohup aplay -t raw -r 48000 -c 2 -f S16_LE /dev/zero >/dev/null 2>/dev/null &
 echo none > /sys/class/leds/led1/trigger
 
