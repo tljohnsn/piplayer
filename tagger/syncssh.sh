@@ -7,4 +7,4 @@ rsync='rsync -avP --exclude=.sync --exclude=.DS_Store --exclude=._* --delete'
 $rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" $src/convertedflacs/. $dst/convertedflacspi/.
 $rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" $src/mp3zlaptop/. $dst/mp3zpi/.
 
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null pi@tunes.local sudo /etc/cron.daily/mopidylocalscan
+#ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null pi@tunes.local sudo /etc/cron.daily/mopidylocalscan
