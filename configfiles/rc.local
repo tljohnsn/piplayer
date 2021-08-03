@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 #
 # rc.local
 #
@@ -13,8 +13,8 @@
 mkdir -p /etc/rclocal
 
 date | tee -a /etc/rclocal/0
-amixer cset numid=1 95%
-amixer cset numid=66 95%
+amixer cset numid=1 95% >/dev/null 2>&1
+amixer cset numid=66 95% >/dev/null 2>&1
 date | tee -a /etc/rclocal/1
 nohup ~pi/piplayer/scripts/btboot.sh </dev/null >/dev/null 2>/dev/null &
 date | tee -a /etc/rclocal/2
