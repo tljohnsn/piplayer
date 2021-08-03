@@ -18,4 +18,5 @@ while [ 1 == 1 ]; do
 #    fi
 	PAST=`date +'%s'`
     done
+    sleep 5
 done
