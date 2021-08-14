@@ -6,7 +6,7 @@ systemctl mask apt-daily.service
 
 systemctl stop apt-daily-upgrade.timer
 systemctl disable apt-daily-upgrade.timer
-systemctl mask apt-daily-upgrade..service
+systemctl mask apt-daily-upgrade.service
 
 sed -i -e "s/\*:09,39/1:09/" /etc/systemd/system/timers.target.wants/phpsessionclean.timer
 
