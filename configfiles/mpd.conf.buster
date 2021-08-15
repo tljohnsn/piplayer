@@ -241,6 +241,7 @@ audio_output {
 	type		"alsa"
 	name		"My ALSA Device"
 #	mixer_type	"software"
+#https://www.raspberrypi.org/forums/viewtopic.php?t=150505
         device          "hw:CARD=Headphones,DEV=0"
         mixer_control   "Headphone"
         mixer_index     "0"
