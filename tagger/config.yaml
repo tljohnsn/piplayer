@@ -6,7 +6,11 @@ import:
     write: no
     duplicate_action: keep
     quiet_fallback: asis
-plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert replaygain zero
+replaygain:
+    backend: ffmpeg
+zero:
+    fields: albumartist_sort artist_sort composer_sort albumartist_sort
 lastgenre:
     source: track
 match: 
@@ -27,7 +31,7 @@ embedart:
    ifempty: yes
 ftintitle:
    format: (ft. {0})
-format_item: $albumartist - $album/$track $title :$genre
+format_item: $albumartist - $album/$track $title :$genre :$art_source
 max_filename_length: 39
 max_filename_length: 42
 paths:
@@ -37,10 +41,13 @@ replace:
     '^\.':
     '[\x00-\x1f]':
     '[<>:"\?\*\|]':
+    '  ': ' '
     '\.$':
     '\s+$': ''
     '^\s+': ''
     '^-':
+#This is to replace forward slash / in filename with space instead of underscore
+path_sep_replace: ''
 rewrite:
    artist At the Drive‐In: At the Drive In
    artist .*Weird Al.*Yankovic: Weird Al Yankovic
