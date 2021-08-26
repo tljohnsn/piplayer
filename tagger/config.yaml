@@ -6,7 +6,9 @@ import:
     write: no
     duplicate_action: keep
     quiet_fallback: asis
-plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert replaygain zero
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert replaygain zero acousticbrainz
+acousticbrainz:
+   force: no
 replaygain:
     backend: ffmpeg
 zero:
@@ -31,7 +33,7 @@ embedart:
    ifempty: yes
 ftintitle:
    format: (ft. {0})
-format_item: $albumartist - $album/$track $title :$genre :$art_source
+format_item: $albumartist - $album/$track $title :$genre :$art_source :$bpm
 max_filename_length: 39
 max_filename_length: 42
 paths:
