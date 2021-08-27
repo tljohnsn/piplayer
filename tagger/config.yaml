@@ -41,16 +41,19 @@ max_filename_length: 39
 max_filename_length: 42
 paths:
    default: $albumartist - $album%aunique{}/$track $title
+   comp: Various Artists - $album%aunique{}/$track $title
 replace:
     '[\\/]':
     '^\.':
     '[\x00-\x1f]':
     '[<>:"\?\*\|]':
-    '  ': ' '
     '\.$':
     '\s+$': ''
     '^\s+': ''
     '^-':
+    '  ': ' '
+    '\./':
+    'Greatest Hits So Far\.': 'Greatest Hits So Far'
 #This is to replace forward slash / in filename with space instead of underscore
 path_sep_replace: ''
 rewrite:
