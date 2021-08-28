@@ -40,8 +40,6 @@ git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 git config --global core.editor emacs
 
-wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
-sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/buster.list
 sudo apt update
 sudo apt -y install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers \
      apache2 php php-common php-mysql php-curl php-xml composer php-gd ffmpeg \
@@ -73,20 +71,14 @@ sudo systemctl restart smbd
 fi
 sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/cleanftp /etc/cron.daily/
 
-# Install mopidy
-# https://docs.mopidy.com/en/latest/installation/debian/#debian-install
-sudo apt -y install mopidy
-sudo apt -y install mopidy-mpd mopidy-local
-
+#install mpd
+sudo apt -y install mpd mpc
 # Added for pi https://docs.mopidy.com/en/latest/installation/raspberrypi/
-sudo usermod -a -G video mopidy
+sudo usermod -a -G video mpd
 
-#Iris https://mopidy.com/ext/iris/
-sudo python3 -m pip install Mopidy-Iris Mopidy-PlaybackDefaults
-sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mopidy.conf /etc/mopidy
-#sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/mopidylocalscan /etc/cron.daily/
+sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf /etc/mpd.conf
 sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
-sudo systemctl enable --now mopidy.service
+sudo systemctl enable --now mpd.service
 
 # Setup access point
 # https://www.raspberrypi.org/documentation/configuration/wireless/access-point-routed.md
@@ -153,7 +145,6 @@ sudo systemctl enable --now apache2.service
 sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.php /var/www/html/index.php
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
-sudo install -b -o root -g root -m 440 ~pi/piplayer/configfiles/mopidyscan /etc/sudoers.d/mopidyscan
 sudo rm /var/www/html/index.html
 echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/7.3/apache2/conf.d/99-timezone.ini
 sudo timedatectl set-timezone US/Central
