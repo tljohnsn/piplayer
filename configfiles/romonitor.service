@@ -1,0 +1,19 @@
+[Unit]
+Description=RompR Playback Monitor
+After=avahi-daemon.service
+After=dbus.service
+After=network.target
+After=nss-lookup.target
+After=remote-fs.target
+After=sound.target
+After=mariadb.service
+After=nginx.service
+
+[Service]
+User=www-data
+PermissionsStartOnly=true
+WorkingDirectory=/var/www/html/rompr
+ExecStart=/usr/bin/php /var/www/html/rompr/romonitor.php  --currenthost Default --player_backend mpd
+
+[Install]
+WantedBy=multi-user.target
