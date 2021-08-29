@@ -59,4 +59,5 @@ path_sep_replace: ''
 rewrite:
    artist At the Drive‐In: At the Drive In
    artist .*Weird Al.*Yankovic: Weird Al Yankovic
+   artist Пётр Ильич Чайковский: Pyotr Ilyich Tchaikovsky
    artist AC/DC: ACDC
