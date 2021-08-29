@@ -6,6 +6,7 @@ join_wifi_network=Jupiter
 join_wifi_password=secret
 create_wifi_network=raspberrypi
 create_wifi_password=secret
+wifi_mode=create
 db_ampache_password=ampache_password
 db_root_password=root
 pi_ssh_password=raspberry
@@ -154,7 +155,14 @@ sudo rm /var/www/html/index.html
 echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/7.3/apache2/conf.d/99-timezone.ini
 sudo timedatectl set-timezone US/Central
 
+if [ "$wifi_mode" = "join" ]; then
+    sudo bash ~pi/piplayer/scripts/danielst.sh
+fi
+
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
+sudo sed -i -e "s/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
+sudo locale-gen
+
 
 if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password
