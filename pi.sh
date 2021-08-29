@@ -20,6 +20,9 @@ if [ -f /boot/tunes.txt ]; then
     source /boot/tunes.txt
 fi
 
+sudo sed -i -e "s/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
+sudo locale-gen
+
 if [ ! -f ~pi/.ssh/authorized_keys ]; then
 mkdir -p ~pi/.ssh
 echo "ssh-rsa $sshkey0 newlaptopkey" >>~pi/.ssh/authorized_keys
@@ -160,9 +163,6 @@ if [ "$wifi_mode" = "join" ]; then
 fi
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
-sudo sed -i -e "s/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
-sudo locale-gen
-
 
 if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password
