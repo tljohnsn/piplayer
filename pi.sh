@@ -76,7 +76,12 @@ sudo apt -y install mpd mpc
 # Added for pi https://docs.mopidy.com/en/latest/installation/raspberrypi/
 sudo usermod -a -G video mpd
 
-sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf /etc/mpd.conf
+if [ `arch` = "armv7l" ]; then
+    sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf.buster /etc/mpd.conf
+fi
+if [ `arch` = "i686" ]; then
+    sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf /etc/mpd.conf
+fi		       
 sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
 sudo systemctl enable --now mpd.service
 
