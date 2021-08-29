@@ -14,6 +14,10 @@ git clone git@github.com:kernitus/beets-oldestdate.git
 cd beets-oldestdate/
 python3 setup.py install
 
+#cd
+#git clone git@github.com:/mried/beetsplug.git
+#cp beetsplug/beetsplug/autosingleton.py /usr/local/lib/python3.9/site-packages/beetsplug/
+
 brew install chromaprint
 
 pip3 install requests
