@@ -6,7 +6,12 @@ file=$1
 dos2unix -c mac $file
 
 #Replace paths
-sed -i  \
-    -e "s%/Users/tljohnsn/Public/music/convertedflacs%convertedflacspi%" \
-    -e "s%/Users/tljohnsn/Public/music/mp3zlaptop%mp3zpi%" \
+#sed -i  \
+#    -e "s%/Users/tljohnsn/Public/music/convertedflacs%convertedflacspi%" \
+#    -e "s%/Users/tljohnsn/Public/music/mp3zlaptop%mp3zpi%" \
+#    $file
+
+sed -i \
+    -e "s%/Music/convertedflacs%convertedflacspi%g" \
+    -e "s%/Music/mp3zlaptop%mp3zpi%g" \
     $file
