@@ -376,11 +376,13 @@ audio_output {
 # This setting is off by default.
 #
 #replaygain			"album"
+replaygain			"track"
 #
 # This setting sets the pre-amp used for files that have ReplayGain tags. By
 # default this setting is disabled.
 #
 #replaygain_preamp		"0"
+replaygain_preamp		"10"
 #
 # This setting sets the pre-amp used for files that do NOT have ReplayGain tags.
 # By default this setting is disabled.
