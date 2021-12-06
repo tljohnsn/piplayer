@@ -1,2 +1,4 @@
-#1/bin/bash
-sed -i -e "s%mp3zpi%/Music/mp3zlaptop%g" -e "s%convertedflacspi%/Music/convertedflacs%g" $1
+#!/bin/bash
+PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+sed -i "s%mp3zpi%/Music/mp3zlaptop%g" $1
+sed -i "s%convertedflacspi%/Music/convertedflacs%g" $1
