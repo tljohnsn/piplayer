@@ -36,6 +36,12 @@ embedart:
    ifempty: yes
 ftintitle:
    format: (ft. {0})
+bpmanalyser:
+  auto: no
+  dry-run: no
+  write: yes
+  force: no
+  quiet: no
 format_item: "$rg_track_gain: $albumartist - $album/$track $title :$genre :$art_source :$bpm"
 max_filename_length: 39
 max_filename_length: 42
