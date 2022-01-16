@@ -16,5 +16,5 @@ find  ~/mp3zstaging -name "*.mp3" -print0 | xargs -0 mid3v2 --delete-frames=TXXX
 find ~/mp3zstaging -name cover.?.jpg -print0 |xargs -0 rm
 
 echo "now run:"
-cd ~/mp3zstaging
-echo "find . -type f -name "*.mp3" -print0 | xargs -0 -I {}  rsync -avP {}  /Music/mp3zlaptop/{}"
+echo "cd ~/mp3zstaging"
+echo "find . -type f -name "*.mp3" -print0 | xargs -0 -I {}  rsync -a ~/mp3zstaging/{}  /Music/mp3zlaptop/{}"
