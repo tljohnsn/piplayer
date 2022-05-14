@@ -29,7 +29,7 @@ convert:
    never_convert_lossy_files: yes
    quiet: no   
 fetchart:
-   enforce_ratio: yes
+   enforce_ratio: 2.5%
    store_source: yes
    cover_names: cover.jpg
 embedart:
