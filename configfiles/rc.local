@@ -36,8 +36,14 @@ iptables -I INPUT -s 127.0.0.0/8 -j ACCEPT
 date | tee -a /etc/rclocal/7
 
 if [ -z "/var/www/html/rompr/prefs/prefs.var" ]; then
-    install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/prefs.var /var/www/html/rompr/prefs/prefs.var
+    ROMPR_VERSION=`grep \'ROMPR_VERSION\' /var/www/html/rompr/includes/constants.php  | cut -d , -f 2 | tr -d " \'\)\;"`
+    install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/prefs.$ROMPR_VERSION.var /var/www/html/rompr/prefs/prefs.var
 fi
+
+mpc enable 1
+mpc crossfade 10
+mpc consume on
+
 date | tee -a /etc/rclocal/8
 
 
