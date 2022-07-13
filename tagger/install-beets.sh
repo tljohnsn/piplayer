@@ -18,6 +18,7 @@ python3 setup.py install
 #git clone git@github.com:/mried/beetsplug.git
 #cp beetsplug/beetsplug/autosingleton.py /usr/local/lib/python3.9/site-packages/beetsplug/
 
+brew install curl ffmpeg
 brew install chromaprint
 
 pip3 install requests
