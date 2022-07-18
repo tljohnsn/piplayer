@@ -31,7 +31,7 @@ echo "  Do the folders look like 'Artist - Album'?"
 echo "  Are the tracks named like '01 Track Name.mp3'?"
 echo "  Do all the tracks have cover art?"
 echo
-echo "If everything looks good, drag the new files into mp3zlaptop"
+echo "If everything looks good, drag the folders from mp3zrenameds into mp3zlaptop"
 echo 
 echo "now run this command to send files from mp3zlaptop to tunes:"
 echo " ~/piplayer/tagger/syncssh.sh"
