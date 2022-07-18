@@ -47,6 +47,7 @@ max_filename_length: 39
 max_filename_length: 42
 paths:
    default: $albumartist - $album%aunique{}/$track $title
+   singleton: $artist - Non-Album/$title
    comp: Various Artists - $album%aunique{}/$track $title
 replace:
     '[\\/]':
