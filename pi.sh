@@ -117,23 +117,6 @@ sudo iptables -t nat -A POSTROUTING -o $wan_interface -j MASQUERADE
 sudo netfilter-persistent save
 sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 
-if [ "$eth0_mode" = "consort" ]; then
-        echo '
-interface eth0
-   static ip_address=10.0.4.2
-' | sudo tee -a /etc/dhcpcd.conf
-echo '
-no-hosts
-interface=eth0
-dhcp-range=10.0.4.100,10.0.4.200,255.255.255.0,24h
-                # Pool of IP addresses served via DHCP
-domain=local     # Local wireless DNS domain
-address=/gw.local/10.0.4.2  # Alias for this router
-dhcp-host=14:7d:da:14:83:9f,10.0.4.200
-' | sudo tee /etc/dnsmasq.conf
-echo "10.0.4.2 $host_name.local" | sudo tee -a /etc/hosts
-fi
-
 #git clone https://github.com/lwfinger/rtl8188eu.git
 #cd rtl8188eu
 #make
@@ -178,6 +161,23 @@ sudo timedatectl set-timezone US/Central
 
 if [ "$wifi_mode" = "join" ]; then
     sudo bash ~pi/piplayer/scripts/danielst.sh
+fi
+
+if [ "$eth0_mode" = "consort" ]; then
+        echo '
+interface eth0
+   static ip_address=10.0.4.2
+' | sudo tee -a /etc/dhcpcd.conf
+echo '
+no-hosts
+interface=eth0
+dhcp-range=10.0.4.100,10.0.4.200,255.255.255.0,24h
+                # Pool of IP addresses served via DHCP
+domain=local     # Local wireless DNS domain
+address=/gw.local/10.0.4.2  # Alias for this router
+dhcp-host=14:7d:da:14:83:9f,10.0.4.200
+' | sudo tee /etc/dnsmasq.conf
+echo "10.0.4.2 $host_name.local" | sudo tee -a /etc/hosts
 fi
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
