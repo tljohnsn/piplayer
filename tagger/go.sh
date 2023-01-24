@@ -19,7 +19,13 @@ echo "Writing bpm to the tags in files..."
 beet write
 echo
 echo "Using mid3v2 to remove sort tags..."
-find  ~/mp3zrenamed -name "*.mp3" -print0 | xargs -0 mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
+if [ -x /usr/local/bin/mid3v2 ]; then
+    mid3v2=/usr/local/bin/mid3v2
+fi
+if [ -x $HOME/Library/Python/3.9/bin/mid3v2 ]; then
+    mid3v2=$HOME/Library/Python/3.9/bin/mid3v2
+fi
+find  ~/mp3zrenamed -name "*.mp3" -print0 | xargs -0 $mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
 find ~/mp3zrenamed -name cover.?.jpg -print0 |xargs -0 rm
 open ~/mp3zrenamed
 echo
