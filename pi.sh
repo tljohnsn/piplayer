@@ -178,6 +178,7 @@ address=/gw.local/10.0.4.2  # Alias for this router
 dhcp-host=14:7d:da:14:83:9f,10.0.4.200
 ' | sudo tee /etc/dnsmasq.conf
 echo "10.0.4.2 $host_name.local" | sudo tee -a /etc/hosts
+sudo apt -y install gpsd gpsd-clients
 fi
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
