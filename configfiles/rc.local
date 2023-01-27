@@ -44,6 +44,8 @@ mpc enable 1
 mpc crossfade 10
 mpc consume on
 
+nohup ~pi/piplayer/scripts/startgps.sh </dev/null >/dev/null 2>/dev/null &
+
 date | tee -a /etc/rclocal/8
 
 
