@@ -4,7 +4,7 @@ echo routing through $1
 iptables -t nat -D POSTROUTING 1
 iptables -t nat -D POSTROUTING 1
 iptables -t nat -D POSTROUTING 1
-iptables -t nat -A POSTROUTING -o $1 -m iprange --src-range 192.168.77.1-192.168.77.150 -j MASQUERADE
-iptables -t nat -A POSTROUTING -o $1 -m iprange --src-range 192.168.77.154-192.168.77.255 -j MASQUERADE
-iptables -t nat -A POSTROUTING -o $1 -m iprange --src-range 192.168.5.1-192.168.5.255 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o $1 -m iprange --src-range 10.0.4.1-10.0.4.170 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o $1 -m iprange --src-range 10.0.4.172-10.0.4.181 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o $1 -m iprange --src-range 10.0.4.183-10.0.4.255 -j MASQUERADE
 netfilter-persistent save

@@ -7,3 +7,6 @@ if [ -e /dev/ttyAMA0 ]; then
     echo ama0
 #    gpsd /dev/ttyAMA0 -G
 fi
+
+#screen -dm -S cgps bash /usr/bin/cgps
+
