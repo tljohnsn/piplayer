@@ -1,4 +1,5 @@
 #!/bin/bash
+sleep 10
 if [ -e /dev/ttyACM0 ]; then
     gpsd /dev/ttyACM0 -G -n
 fi

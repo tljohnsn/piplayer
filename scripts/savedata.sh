@@ -28,4 +28,5 @@ systemctl disable exim4
 systemctl stop colord
 systemctl disable colord
 
+echo tunes >/etc/motd
 
