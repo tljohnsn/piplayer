@@ -2,3 +2,5 @@
 pu port             /dev/ttyUSB0
 pu baudrate         57600
 pu rtscts           No
+pu localecho        Yes
+pu addlinefeed	    Yes
