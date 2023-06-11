@@ -1,0 +1,4 @@
+#!/bin/bash
+echo $1 | sed -e s/\\.// -e s/\$/00/
+rigctl -m 2 F `echo $1 | sed -e s/\\\\.// -e s/\\\$/00/`
+
