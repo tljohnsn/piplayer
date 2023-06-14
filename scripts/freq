@@ -1,4 +1,5 @@
 #!/bin/bash
 echo $1 | sed -e s/\\.// -e s/\$/00/
 rigctl -m 2 F `echo $1 | sed -e s/\\\\.// -e s/\\\$/00/`
+echo curl \'http://localhost:8080/api/connect?url=pactor%3A%2F%2F%2FN4SER\'
 
