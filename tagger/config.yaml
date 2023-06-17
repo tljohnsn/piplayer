@@ -6,7 +6,7 @@ import:
     write: no
     duplicate_action: keep
     quiet_fallback: asis
-plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert replaygain zero acousticbrainz ihate
+plugins: chroma lastgenre bpmanalyser fetchart ftintitle fromfilename rewrite embedart convert replaygain zero ihate
 ihate:
    skip:
         - artist:Weezer

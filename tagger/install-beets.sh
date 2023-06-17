@@ -4,7 +4,7 @@ export LDFLAGS="-L/usr/local/opt/ffmpeg@4/lib"
 export CPPFLAGS="-I/usr/local/opt/ffmpeg@4/include"
 
 brew install curl ffmpeg@4 
-brew install chromaprint eye-d3mid3v2
+brew install chromaprint eye-d3 mid3v2
 
 pip3 install https://github.com/beetbox/beets/tarball/master
 
