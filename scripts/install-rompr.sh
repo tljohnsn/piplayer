@@ -13,6 +13,9 @@ mkdir rompr/{prefs,albumart}
 mkdir -p rompr/prefs/databackups
 #This patch reduced accidental clicks when trying to re-order the playlist
 unix2dos rompr/ui/playlist.js
+#this changes some default prefs
+#cp rompr/includes/prefs.class.php prefs.class.php.default
+#diff -u prefs.class.php.default prefs.class.php
 unix2dos rompr/includes/prefs.class.php
 unix2dos rompr/ui/hotkeys.js
 patch rompr/ui/playlist.js piplayer/configfiles/playlist.diff
