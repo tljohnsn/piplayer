@@ -1,5 +1,5 @@
---- prefs.class.php.default	2021-08-01 06:47:15.447754963 -0500
-+++ prefs.class.php	2021-08-01 06:59:59.375257912 -0500
+--- prefs.class.php.default	2023-06-17 09:56:26.971865353 -0500
++++ prefs.class.php	2023-06-17 09:55:05.147275188 -0500
 @@ -6,7 +6,7 @@
  
  	public static $prefs = array(
@@ -9,7 +9,16 @@
  		"mysql_host" => "localhost",
  		"mysql_database" => "romprdb",
  		"mysql_user" => "rompr",
-@@ -63,7 +63,7 @@
+@@ -33,7 +33,7 @@
+ 		'live_mode' => false,
+ 		'use_mopidy_scan' => false,
+ 		'collection_load_timeout' => 3600000,
+-		"smartradio_chunksize" => 5,
++		"smartradio_chunksize" => 3,
+ 		"linkchecker_nextrun" => 0,
+ 		"linkchecker_isrunning" => false,
+ 		"linkchecker_frequency" => 604800000,
+@@ -64,7 +64,7 @@
  
  		// Things that could be set on a per-user basis but need to be known by the backend
  		"displaycomposer" => true,
@@ -18,7 +27,7 @@
  		"nosortprefixes" => array("The"),
  		"sortcollectionby" => "artist",
  		"sortresultsby" => "sameas",
-@@ -104,11 +104,11 @@
+@@ -105,11 +105,11 @@
  		"clickmode" => "double",
  		"chooser" => "albumlist",
  		"hide_albumlist" => false,
@@ -34,7 +43,7 @@
  		"hide_searcher" => false,
  		"hidebrowser" => false,
  		"shownupdatewindow" => '',
-@@ -120,10 +120,10 @@
+@@ -121,10 +121,10 @@
  		"synclove" => false,
  		"synclovevalue" => "5",
  		"theme" => "Numismatist.css",
@@ -49,7 +58,7 @@
  		"displayresultsas" => "collection",
  		'crossfade_duration' => 5,
  		"newradiocountry" => "countries/GB",
-@@ -157,8 +157,8 @@
+@@ -158,8 +158,8 @@
  		"podcast_sort_2" => 'Category',
  		"podcast_sort_3" => 'new',
  		"alarms" => array( ),
