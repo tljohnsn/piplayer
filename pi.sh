@@ -157,6 +157,7 @@ sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
 sudo rm /var/www/html/index.html
 echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/7.3/apache2/conf.d/99-timezone.ini
+echo 'max_execution_time = 120' | sudo tee -a /etc/php/7.3/apache2/conf.d/99-tunes.ini
 sudo timedatectl set-timezone US/Central
 
 if [ "$wifi_mode" = "join" ]; then
