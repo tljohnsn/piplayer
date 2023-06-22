@@ -43,6 +43,7 @@ fi
 mpc enable 1
 mpc crossfade 10
 mpc consume on
+mpc volume 80%
 
 nohup ~pi/piplayer/scripts/startgps.sh </dev/null >/dev/null 2>/dev/null &
 
