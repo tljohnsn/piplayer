@@ -5,8 +5,8 @@ fi
 if [ -x $HOME/Library/Python/3.9/bin/mid3v2 ]; then
     mid3v2=$HOME/Library/Python/3.9/bin/mid3v2
 fi
-find ~/mp3zstaging -name "*.mp3"  -print0 | xargs -0 $mid3v2 \
-    --delete-frames=TXXX:Uploader,TXXX:Credits,TCOP,TENC,TIT1,TPE3,TSSE,TXXX:RELEASECOUNTRY,COMM
+find ~/mp3zstaging -name "*.mp3"  -print0 | xargs -0 $mid3v2 --delete-v1 \
+    --delete-frames=TXXX:Uploader,TXXX:Credits,TCOP,TENC,TIT1,TPE3,TSSE,TXXX:RELEASECOUNTRY,COMM,USLT,TXXX:Provider
 if [ -x ~/bin/apetag ]; then
     find ~/mp3zstaging -name "*.mp3" -print0 | xargs -0 -n 1 -I {} ~/bin/apetag -i {} -m erase
 fi
