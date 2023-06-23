@@ -1,4 +1,15 @@
 #!/bin/bash
+if [ -x /usr/local/bin/mid3v2 ]; then
+    mid3v2=/usr/local/bin/mid3v2
+fi
+if [ -x $HOME/Library/Python/3.9/bin/mid3v2 ]; then
+    mid3v2=$HOME/Library/Python/3.9/bin/mid3v2
+fi
+find ~/mp3zstaging -name "*.mp3"  -print0 | xargs -0 $mid3v2 \
+    --delete-frames=TXXX:Uploader,TXXX:Credits,TCOP,TENC,TIT1,TPE3,TSSE,TXXX:RELEASECOUNTRY,COMM
+if [ -x ~/bin/apetag ]; then
+    find ~/mp3zstaging -name "*.mp3" -print0 | xargs -0 -n 1 -I {} ~/bin/apetag -i {} -m erase
+fi
 cd ~/piplayer/tagger
 echo "Updating tagging script to latest version in github..."
 git pull
@@ -19,13 +30,7 @@ echo "Writing bpm to the tags in files..."
 beet write
 echo
 echo "Using mid3v2 to remove sort tags..."
-if [ -x /usr/local/bin/mid3v2 ]; then
-    mid3v2=/usr/local/bin/mid3v2
-fi
-if [ -x $HOME/Library/Python/3.9/bin/mid3v2 ]; then
-    mid3v2=$HOME/Library/Python/3.9/bin/mid3v2
-fi
-find  ~/mp3zrenamed -name "*.mp3" -print0 | xargs -0 $mid3v2 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
+find  ~/mp3zrenamed -name "*.mp3" -print0 | xargs -0 $mid3v2 --delete-v1 --delete-frames=TXXX:ALBUMARTISTSORT,TSOP,TSOC
 find ~/mp3zrenamed -name cover.?.jpg -print0 |xargs -0 rm
 open ~/mp3zrenamed
 echo
