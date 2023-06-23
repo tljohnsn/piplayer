@@ -8,7 +8,7 @@ fi
 find ~/mp3zstaging -name "*.mp3"  -print0 | xargs -0 $mid3v2 --delete-v1 \
     --delete-frames=TXXX:Uploader,TXXX:Credits,TCOP,TENC,TIT1,TPE3,TSSE,TXXX:RELEASECOUNTRY,COMM,USLT,TXXX:Provider
 if [ -x ~/bin/apetag ]; then
-    find ~/mp3zstaging -name "*.mp3" -print0 | xargs -0 -n 1 -I {} ~/bin/apetag -i {} -m erase
+    find ~/mp3zstaging -name "*.mp3" -print0 | xargs -0 -n 1 -I {} ~/bin/apetag -i {} -m erase 2>/dev/null
 fi
 cd ~/piplayer/tagger
 echo "Updating tagging script to latest version in github..."
