@@ -16,3 +16,5 @@ git clone git@github.com:tljohnsn/sunwait.git
 cd sunwait
 make
 
+cron ~/piplayer/pi.cron
+
