@@ -1,12 +1,22 @@
---- /home/pi/rompr/ui/playlist.js	2020-08-16 14:05:37.000000000 +0100
-+++ playlist.js	2020-09-27 19:53:51.483484491 +0100
-@@ -466,7 +466,8 @@
+--- playlist.js.default	2023-06-26 06:27:18.046612227 -0500
++++ playlist.js	2023-06-26 06:34:01.278092193 -0500
+@@ -171,7 +171,8 @@
+ 						radiomaster: prefs.browser_id
+ 					});
+ 					await player.controller.takeBackControl();
+-					player.controller.clearPlaylist();
++					// player.controller.clearPlaylist();
++				        // alert("do not clear the playlist");
+ 				}
+ 				infobar.smartradio(language.gettext('label_preparing'));
+ 				playlist.preventControlClicks(false);
+@@ -472,7 +473,8 @@
  			event.stopImmediatePropagation();
  			var clickedElement = $(this);
  			if (clickedElement.hasClass("playid")) {
 -				player.controller.playId(clickedElement.attr("romprid"));
-+			    // player.controller.playId(clickedElement.attr("romprid"));
-+			    // alert("do not change");
++			        // player.controller.playId(clickedElement.attr("romprid"));
++			        // alert("do not change");
  			} else if (clickedElement.hasClass("clickremovetrack")) {
  				playlist.delete(clickedElement.attr("romprid"));
  			} else if (clickedElement.hasClass("clickremovealbum")) {
