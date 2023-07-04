@@ -1,12 +1,12 @@
---- playlist.js.default	2023-06-26 06:27:18.046612227 -0500
-+++ playlist.js	2023-06-26 06:34:01.278092193 -0500
+--- playlist.js.orig	2023-06-22 09:51:11.629962771 -0500
++++ playlist.js	2023-07-04 10:19:05.341775675 -0500
 @@ -171,7 +171,8 @@
  						radiomaster: prefs.browser_id
  					});
  					await player.controller.takeBackControl();
 -					player.controller.clearPlaylist();
-+					// player.controller.clearPlaylist();
-+				        // alert("do not clear the playlist");
++				    // player.controller.clearPlaylist();
++				    // alert("do not clear the playlist");
  				}
  				infobar.smartradio(language.gettext('label_preparing'));
  				playlist.preventControlClicks(false);
@@ -15,8 +15,21 @@
  			var clickedElement = $(this);
  			if (clickedElement.hasClass("playid")) {
 -				player.controller.playId(clickedElement.attr("romprid"));
-+			        // player.controller.playId(clickedElement.attr("romprid"));
-+			        // alert("do not change");
++			    // player.controller.playId(clickedElement.attr("romprid"));
++			    // alert("do not change");
  			} else if (clickedElement.hasClass("clickremovetrack")) {
  				playlist.delete(clickedElement.attr("romprid"));
  			} else if (clickedElement.hasClass("clickremovealbum")) {
+@@ -647,7 +649,11 @@
+ 				var playpos = (moveto === null) ? playlist.playFromEnd() : null;
+ 				// if moveto is set then these items were dragged in, in which
+ 				// case we must always queue
+-				var queue = (moveto !== null);
++			        var queue = (moveto !== null);
++			        if (prefs.radiomode == "starRadios") {
++				    moveto = 1;
++				}
++			        // alert("adding a song" + prefs.radiomode + moveto);
+ 				player.controller.addTracks(tracks, playpos, moveto, queue);
+ 				$('.selected').removeFromSelection();
+ 			}
