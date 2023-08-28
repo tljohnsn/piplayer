@@ -1,8 +1,8 @@
 #!/bin/bash
 if [ -f /usr/bin/pat ]; then
     echo starting pat
-    export pactor_debug=1
-    su -c "pactor_debug=1 /usr/bin/pat http" - pi | tee -a /var/log/pat.log &
+    export pactor_debug=2
+    su -c "pactor_debug=2 /home/pi/pat/pat http" - pi | tee -a /var/log/pat.log &
 fi
 
 touch /var/log/rigctld.log

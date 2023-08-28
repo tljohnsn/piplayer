@@ -1,0 +1,25 @@
+#!/bin/bash
+# 2023/08/26 06:41:37 Connected to HI8COE (pactor) Santo Domingo Rep. Dominica
+freq 7066.5
+cnx HI8COE
+#2023/08/26 07:00:24 Connected to KB5MAC (pactor) Spring Texas
+freq 3592.5
+cnx KB5MAC
+#2023/08/26 07:13:19 Connected to WS8EOC (pactor) Dimondale, Michigan
+freq 7100.0
+cnx WS8EOC
+#2023/08/26 07:16:40 Connected to K4MSU (pactor) Murray State University, Murray KY
+freq 7101.0
+cnx K4MSU
+#2023/08/26 07:22:55 Connected to 6Y5ODP (pactor) ITU Gateway Jamacia
+freq 7066.7
+cnx 6Y5ODP
+#2023/08/26 07:25:44 Connected to KQ4ET (pactor) Virginia Beach, VA
+freq 10145.0
+cnx KQ4ET
+#2023/08/26 07:30:46 Connected to WS8EOC (pactor)
+freq 10144.7
+cnx WS8EOC
+#2023/08/27 05:28:47 Connected to N4HCA (pactor) Tampa, FL
+freq 7099.7
+cnx N4HCA
