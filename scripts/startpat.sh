@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -f /home/pi/pat/patt ]; then
+if [ -f /home/pi/pat/pat ]; then
     echo starting pat
     export pactor_debug=2
     su -c "pactor_debug=2 /home/pi/pat/pat http" - pi | tee -a /var/log/pat.log &
