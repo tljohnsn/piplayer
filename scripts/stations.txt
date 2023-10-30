@@ -23,3 +23,5 @@ cnx WS8EOC
 #2023/08/27 05:28:47 Connected to N4HCA (pactor) Tampa, FL
 freq 7099.7
 cnx N4HCA
+#2023/08/29 06:58:01 QSY pactor: 7061
+#2023/08/29 06:58:19 Connected to TG0CND (pactor) Aurora Guatemala
