@@ -14,7 +14,9 @@
     "telnet": "telnet://{mycall}:CMSTelnet@cms.winlink.org:8772/wl2k"
   },
   "listen": [],
-  "hamlib_rigs": {},
+  "hamlib_rigs": {
+  	"my_precious_rig": {"address": "localhost:4532", "network": "tcp"}
+  },
   "ax25": {
     "port": "wl2k",
     "beacon": {
@@ -44,7 +46,7 @@
   "pactor": {
     "path": "/dev/ttyUSB0",
     "baudrate": 57600,
-    "rig": "",
+    "rig": "my_precious_rig",
     "custom_init_script": ""
   },
   "telnet": {
@@ -68,8 +70,8 @@
     "ptt_ctrl": false
   },
   "gpsd": {
-    "enable_http": false,
-    "allow_forms": false,
+    "enable_http": true,
+    "allow_forms": true,
     "use_server_time": false,
     "addr": "localhost:2947"
   },
