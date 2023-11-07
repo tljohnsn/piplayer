@@ -48,7 +48,7 @@ sudo apt update
 sudo apt -y install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers \
      apache2 php php-common php-mysql php-curl php-xml composer php-gd ffmpeg \
      php-curl php-sqlite3 php-json php-xml php-mbstring imagemagick \
-     inotify-tools expect gridsite-clients alsa-tools bluealsa sqlite3
+     inotify-tools expect gridsite-clients alsa-tools bluealsa sqlite3 ntp
 sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent samba samba-common-bin 
 
 #systemctl enable ssh

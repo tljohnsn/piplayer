@@ -1,0 +1,35 @@
+diff --git a/freq.go b/freq.go
+index 14b2459..cf6582a 100644
+--- a/freq.go
++++ b/freq.go
+@@ -141,7 +141,7 @@ func freq(param string) {
+ }
+
+ func setFreq(rig hamlib.VFO, freq string) (newFreq, oldFreq int, err error) {
+-    oldFreq, err = rig.GetFreq()
++    // oldFreq, err = rig.GetFreq()
+     if err != nil {
+         return 0, 0, fmt.Errorf("unable to get rig frequency: %w", err)
+     }
+diff --git a/http.go b/http.go
+index bd6be85..a53501b 100644
+--- a/http.go
++++ b/http.go
+@@ -527,14 +527,14 @@ func qsyHandler(w http.ResponseWriter, req *http.Request) {
+     case !ok:
+         // A rig is configured, but not loaded properly
+         w.WriteHeader(http.StatusInternalServerError)
+-        log.Printf("QSY failed: Hamlib rig '%s' not loaded.", rigName)
++        log.Printf("QSY failed 1: Hamlib rig '%s' not loaded.", rigName)
+     case err != nil:
+         w.WriteHeader(http.StatusInternalServerError)
+-        log.Printf("QSY failed: %v", err)
++        log.Printf("QSY failed 2: %v", err)
+     default:
+         if _, _, err := setFreq(rig, string(payload.Freq)); err != nil {
+             w.WriteHeader(http.StatusInternalServerError)
+-            log.Printf("QSY failed: %v", err)
++            log.Printf("QSY failed 3: %v", err)
+             return
+         }
+         _ = json.NewEncoder(w).Encode(payload)
