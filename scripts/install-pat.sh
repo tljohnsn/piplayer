@@ -11,3 +11,9 @@ export XTIDE_DEFAULT_LOCATION="Nassau, New Providence Island, Bahamas"
 
 git clone https://github.com/la5nta/pat
 cd pat
+git apply /home/pi/piplayer/configfiles/pat.diff
+./make.bash
+
+cp /home/pi/piplayer/configfiles/config.json .config/pat/config.json
+source /boot/tunes.txt
+sed -i -e "s%secure_login_password\":.*,%secure_login_password\": \"`echo $pi_ssh_password`\",%" ~/.config/pat/config.json

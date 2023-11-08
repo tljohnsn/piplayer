@@ -1,0 +1,5 @@
+export GOPATH=$HOME/.local/share/go
+export PATH=$HOME/.local/share/go/bin:$PATH
+export XTIDE_DEFAULT_LOCATION="Nassau, New Providence Island, Bahamas"
+export VISUAL=emacs
+export EDITOR=emacs
