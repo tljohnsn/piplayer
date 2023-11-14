@@ -24,3 +24,5 @@
 00 15 * * * /home/pi/piplayer/lights/waiton
 00 05 * * * /home/pi/piplayer/lights/waitoff
 00 23 * * * /home/pi/piplayer/lights/alloff
+00 23 * * * ls -tr ~/.local/share/pat/mailbox/KB3HLO/in/*.b2f |tail -n +10 | xargs -i mv {} ~/.local/share/pat/mailbox/KB3HLO/archive
+
