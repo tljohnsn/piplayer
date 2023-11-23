@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /home/pi
 sudo apt-get -y install libax25-dev libhamlib-utils
 cp -a /home/pi/piplayer/edgeport /lib/firmware
 
@@ -14,6 +15,7 @@ cd pat
 git apply /home/pi/piplayer/configfiles/pat.diff
 ./make.bash
 
-cp /home/pi/piplayer/configfiles/config.json .config/pat/config.json
+mkdir -p /home/pi/.config/pat
+cp /home/pi/piplayer/configfiles/config.json /home/pi/.config/pat/config.json
 source /boot/tunes.txt
 sed -i -e "s%secure_login_password\":.*,%secure_login_password\": \"`echo $pi_ssh_password`\",%" ~/.config/pat/config.json
