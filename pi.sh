@@ -176,6 +176,8 @@ sudo apt -y install socat tcpdump
 fi
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
+sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/cmdline.txt
+
 
 if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password

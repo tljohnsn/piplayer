@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /home/pi
 sudo apt-get -y install libax25-dev libhamlib-utils
-cp -a /home/pi/piplayer/edgeport /lib/firmware
+sudo cp -a /home/pi/piplayer/edgeport /lib/firmware
 
 wget https://go.dev/dl/go1.21.3.linux-armv6l.tar.gz
 tar -xvf go1.21.3.linux-armv6l.tar.gz
