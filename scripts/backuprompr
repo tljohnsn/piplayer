@@ -24,6 +24,8 @@ if [ "$older" != "$newer" ]; then
 	    rsync -avP -e ssh /var/www/html/rompr/prefs/databackups/. trentj@hot.useractive.com:databackups/.
 	    ssh trentj@hot.useractive.com mkdir -p customradio/$newer
 	    rsync -avP -e ssh /var/www/html/rompr/prefs/customradio/*.json trentj@hot.useractive.com:customradio/$newer/
+	    ssh trentj@hot.useractive.com mkdir -p playlists/$newer
+	    rsync -avP -e ssh /home/ftp/local/playlists/*.m3u trentj@hot.useractive.com:playlists/$newer/
 	fi
     fi
 else
