@@ -1,6 +1,6 @@
 #!/bin/bash
 date="2023-07-12"
-date=`date +%Y-%m-%_d`
+date=`date +%Y-%m-%d`
 for i in {2..4}; do
     outfile=`echo /home/ftp/local/playlists/$((i+1))plus${date}.itunes.m3u`
     echo $outfile
