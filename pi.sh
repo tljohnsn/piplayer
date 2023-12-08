@@ -89,7 +89,9 @@ if [ `arch` = "armv7l" ]; then
     source /etc/os-release
     if [ $VERSION_CODENAME = "bullseye" ]; then
 	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf.bullseye /etc/mpd.conf
-	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/default.pa /etc/pulse.default.pa
+	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/default.pa /etc/pulse/default.pa
+	pulseaudio --kill
+	pulseaudio --start
     else
 	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf.buster /etc/mpd.conf
     fi
