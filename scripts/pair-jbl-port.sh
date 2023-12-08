@@ -6,4 +6,4 @@ source /boot/tunes.txt
 expect -f ~pi/piplayer/scripts/btpair.expect $bt_addr
 
 #Test the sound
-aplay /usr/share/sounds/alsa/Front_Center.wav
+aplay /usr/share/sounds/alsa/Front_Right.wav
