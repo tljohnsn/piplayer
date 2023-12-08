@@ -31,6 +31,10 @@ chown pi ~pi/.ssh/authorized_keys
 chmod 600 ~pi/.ssh/authorized_keys
 fi
 
+#Configure the shell
+cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
+
+
 if [ ! -f /usr/bin/git ]; then
    exit "run me as root for debian install"
    apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync alsa-utils net-tools
@@ -157,8 +161,9 @@ sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.ph
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
 sudo rm /var/www/html/index.html
-echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/7.?/apache2/conf.d/99-timezone.ini
-echo 'max_execution_time = 120' | sudo tee -a /etc/php/7.?/apache2/conf.d/99-tunes.ini
+phpver=`ls /etc/php/`
+echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-timezone.ini
+echo 'max_execution_time = 120' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
 sudo timedatectl set-timezone US/Central
 
 if [ "$wifi_mode" = "join" ]; then
@@ -178,8 +183,6 @@ fi
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
 sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/cmdline.txt
-
-cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
 
 if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password
