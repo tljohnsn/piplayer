@@ -20,6 +20,9 @@ if [ -f /boot/tunes.txt ]; then
     source /boot/tunes.txt
 fi
 
+#Configure the shell
+cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
+
 sudo sed -i -e "s/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
 sudo locale-gen
 
@@ -30,10 +33,6 @@ echo "ssh-rsa $sshkey1 tljohnsn@smack.office.useractive.com" >>~pi/.ssh/authoriz
 chown pi ~pi/.ssh/authorized_keys
 chmod 600 ~pi/.ssh/authorized_keys
 fi
-
-#Configure the shell
-cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
-
 
 if [ ! -f /usr/bin/git ]; then
    exit "run me as root for debian install"
