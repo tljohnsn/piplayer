@@ -18,7 +18,7 @@ amixer cset numid=1 95% >/dev/null 2>&1
 amixer cset numid=66 95% >/dev/null 2>&1
 amixer cset numid=3 95% >/dev/null 2>&1
 date | tee -a /etc/rclocal/1
-nohup ~pi/piplayer/scripts/btboot.sh </dev/null >/dev/null 2>/dev/null &
+nohup su -c "~pi/piplayer/scripts/btboot.sh" - pi </dev/null >/dev/null 2>/dev/null &
 date | tee -a /etc/rclocal/2
 nohup ~pi/piplayer/scripts/wlanup.sh </dev/null >/dev/null 2>/dev/null &
 date | tee -a /etc/rclocal/3

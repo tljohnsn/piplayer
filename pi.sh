@@ -86,7 +86,13 @@ sudo apt -y install mpd mpc
 sudo usermod -a -G video mpd
 
 if [ `arch` = "armv7l" ]; then
-    sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf.buster /etc/mpd.conf
+    source /etc/os-release
+    if [ $VERSION_CODENAME = "bullseye" ]; then
+	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf.bullseye /etc/mpd.conf
+	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/default.pa /etc/pulse.default.pa
+    else
+	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf.buster /etc/mpd.conf
+    fi
 fi
 if [ `arch` = "i686" ]; then
     sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf /etc/mpd.conf
