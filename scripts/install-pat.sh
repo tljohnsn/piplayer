@@ -16,6 +16,8 @@ tar -xzf hamlib-3.3.tar.gz
 cd /home/pi/hamlib-3.3
 ./configure
 make
+sudo cp ./src/.libs/libhamlib.so.2 /usr/lib/
+sudo ldconfig
 
 git clone https://github.com/la5nta/pat
 cd /home/pi/pat
