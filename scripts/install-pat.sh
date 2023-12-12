@@ -21,6 +21,7 @@ make
 sudo cp ./src/.libs/libhamlib.so.2 /usr/lib/
 sudo ldconfig
 
+cd /home/pi
 git clone https://github.com/la5nta/pat
 cd /home/pi/pat
 git apply /home/pi/piplayer/configfiles/pat.diff

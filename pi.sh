@@ -24,6 +24,7 @@ if [ -f /boot/tunes.txt ]; then
     source /boot/tunes.txt
 fi
 
+source /etc/os-release
 #Configure the shell
 cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
 
@@ -105,8 +106,13 @@ if [ `arch` = "i686" ]; then
     sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/mpd.conf /etc/mpd.conf
 fi		       
 sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
-sudo systemctl enable --now mpd.service
 
+if [ "$VERSION_CODENAME" = "bookworm" ]; then
+    sudo systemctl disable mpd.service
+    sudo systemctl disable mpd.socket
+else
+    sudo systemctl enable --now mpd.service
+fi
 # Setup access point
 # https://www.raspberrypi.org/documentation/configuration/wireless/access-point-routed.md
 sudo systemctl unmask hostapd
