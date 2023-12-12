@@ -10,4 +10,7 @@ touch /var/log/rigctld.log
 if [ -c /dev/ttyUSB3 ]; then
     echo starting rigctld
     rigctld -m 3002 -r /dev/ttyUSB3 -v >>/var/log/rigctld.log 2>&1  &
+else
+    sleep 10
+    rigctld -m 3002 -r /dev/ttyUSB3 -v >>/var/log/rigctld.log 2>&1  &
 fi
