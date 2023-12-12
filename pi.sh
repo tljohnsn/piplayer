@@ -68,6 +68,7 @@ sudo apt -y install pulseaudio-module-bluetooth
 #Install and configure Samba to open a share at /home/ftp/local
 sudo mkdir -p -m 777 /home/ftp/local/{mp3zpi,convertedflacspi,playlists}
 sudo chown -R pi.pi /home/ftp/local
+cp -a ~pi/piplayer/playlists/* /home/ftp/local/playlists
 
 if [ `grep -c ftp/local /etc/samba/smb.conf` -lt 1 ]; then
 sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
