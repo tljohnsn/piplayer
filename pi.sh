@@ -53,7 +53,8 @@ sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev ema
      php-curl php-sqlite3 php-json php-xml php-mbstring imagemagick \
      inotify-tools expect gridsite-clients alsa-tools sqlite3 ntp
 sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent samba samba-common-bin 
-sudo yum -y install bluealsa
+sudo apt -y install bluealsa
+sudo apt -y install pulseaudio-module-bluetooth 
 
 #systemctl enable ssh
 #systemctl start ssh
