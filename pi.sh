@@ -110,6 +110,7 @@ sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cro
 if [ "$VERSION_CODENAME" = "bookworm" ]; then
     sudo systemctl disable mpd.service
     sudo systemctl disable mpd.socket
+    mkdir -p ~pi/mpd
 else
     sudo systemctl enable --now mpd.service
 fi
