@@ -1,6 +1,8 @@
 #!/bin/bash
 cd /home/pi
 apt -y install gpsd gpsd-clients scons
+source /etc/os-release
+if [ "$VERSION_CODENAME" != "bookworm" ]; then
 wget https://download-mirror.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.xz
 tar -xf gpsd-3.25.tar.xz
 cd gpsd-3.25
@@ -15,7 +17,7 @@ systemctl disable gpsd.service
 
 systemctl mask gpsd.socket
 systemctl mask gpsd.service
-
+fi
 if [ `grep -c 127.127.28.0 /etc/ntp.conf` -lt 1 ]; then
 echo "
 server 127.127.28.0 prefer
