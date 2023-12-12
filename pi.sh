@@ -16,6 +16,10 @@ ampache_key=fb76b35ab9df5b171af92d75d5e3a714d42c8a1b70d01504bb7a0f8548efcc
 sshkey0=AAAAB3NzaC1yc2EAAAADAQABAAAAgQDMEFJLHUXdVfnJ71zabt7P2YSHVe8fE/ueFUH9Rc2uUsJqiBK9l8g/0yfzqoFexdVjgOH3/B4/xvpShJTar0+/FaGOSWPq6KA36KxfBFurLPeA7ngD0j2D/yCx8dXJIziyveFf9bNJYYT0vQBU0pIlsGjfaRhFye2CKzCA0T2jQQ==
 sshkey1=AAAAB3NzaC1yc2EAAAADAQABAAAAgQDMEFJLHUXdVfnJ71zabt7P2YSHVe8fE/ueFUH9Rc2uUsJqiBK9l8g/0yfzqoFexdVjgOH3/B4/xvpShJTar0+/FaGOSWPq6KA36KxfBFurLPeA7ngD0j2D/yCx8dXJIziyveFf9bNJYYT0vQBU0pIlsGjfaRhFye2CKzCA0T2jQQ==
 
+if [ -f /boot/firmware/tunes.txt ]; then
+    sudo ln -s /boot/firmware/tunes.txt /boot
+fi
+
 if [ -f /boot/tunes.txt ]; then
     source /boot/tunes.txt
 fi
