@@ -4,8 +4,9 @@ export GOPATH=$HOME/.local/share/go
 export PATH=$HOME/.local/share/go/bin:$PATH
 export XTIDE_DEFAULT_LOCATION="Nassau, New Providence Island, Bahamas"
 
-sudo apt-get -y install libax25-dev libhamlib-utils xtide tcd-utils
+sudo apt-get -y install libax25-dev xtide tcd-utils
 sudo cp -a /home/pi/piplayer/edgeport /lib/firmware
+#sudo apt-get -y install libhamlib-utils
 
 wget https://go.dev/dl/go1.21.3.linux-armv6l.tar.gz
 wget https://github.com/Hamlib/Hamlib/releases/download/3.3/hamlib-3.3.tar.gz
