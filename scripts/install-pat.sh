@@ -10,7 +10,7 @@ sudo cp -a /home/pi/piplayer/edgeport /lib/firmware
 
 wget https://go.dev/dl/go1.21.3.linux-armv6l.tar.gz
 wget https://github.com/Hamlib/Hamlib/releases/download/3.3/hamlib-3.3.tar.gz
-tar -xvf go1.21.3.linux-armv6l.tar.gz
+tar -xf go1.21.3.linux-armv6l.tar.gz
 mkdir -p ~pi/.local/share
 mv go ~pi/.local/share
 
