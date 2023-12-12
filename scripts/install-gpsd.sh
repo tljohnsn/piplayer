@@ -1,5 +1,11 @@
 #!/bin/bash
-apt -y install gpsd gpsd-clients
+cd /home/pi
+apt -y install gpsd gpsd-clients scons
+wget https://download-mirror.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.xz
+tar -xf gpsd-3.25.tar.xz
+cd gpsd-3.25
+scons
+cp ./gpsd-3.25/gpsd/gpsd /usr/sbin
 
 systemctl stop gpsd.socket
 systemctl stop gpsd.service
