@@ -51,7 +51,7 @@ fi
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 git config --global core.editor emacs
-git config pull.rebase false
+git config --global pull.rebase false
 
 sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers \
