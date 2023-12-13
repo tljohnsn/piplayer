@@ -18,7 +18,7 @@ unix2dos rompr/ui/playlist.js
 #diff -u prefs.class.php.default prefs.class.php
 unix2dos rompr/includes/prefs.class.php
 unix2dos rompr/ui/hotkeys.js
-unix2dos rompr/util_classes/gd_image.class.php
+#unix2dos rompr/util_classes/gd_image.class.php
 patch rompr/ui/playlist.js piplayer/configfiles/playlist.diff
 patch rompr/includes/prefs.class.php piplayer/configfiles/prefs.class.diff
 patch rompr/ui/hotkeys.js piplayer/configfiles/hotkeys.diff
