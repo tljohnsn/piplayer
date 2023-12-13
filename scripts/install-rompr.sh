@@ -18,9 +18,11 @@ unix2dos rompr/ui/playlist.js
 #diff -u prefs.class.php.default prefs.class.php
 unix2dos rompr/includes/prefs.class.php
 unix2dos rompr/ui/hotkeys.js
+unix2dos rompr/util_classes/gd_image.class.php
 patch rompr/ui/playlist.js piplayer/configfiles/playlist.diff
 patch rompr/includes/prefs.class.php piplayer/configfiles/prefs.class.diff
 patch rompr/ui/hotkeys.js piplayer/configfiles/hotkeys.diff
+patch rompr/util_classes/gd_image.class.php piplayer/configfiles/gd_image.class.diff
 cp -a ~pi/piplayer/backups/* rompr/prefs/databackups/.
 sudo mv rompr /var/www/html
 sudo chown -R www-data.www-data /var/www/html/rompr

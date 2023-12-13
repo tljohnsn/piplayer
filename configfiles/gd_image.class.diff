@@ -1,0 +1,11 @@
+--- gd_image.class.php	2023-12-13 11:48:36.834888816 -0600
++++ /var/www/html/rompr/util_classes/gd_image.class.php	2023-12-13 12:02:40.070406318 -0600
+@@ -216,7 +216,7 @@
+ 			$this->reset();
+ 		} else {
+ 			$height = $this->getheight() * $ratio;
+-			$this->resize($width,$height);
++			$this->resize(intval($width),intval($height));
+ 		}
+ 	}
+ 
