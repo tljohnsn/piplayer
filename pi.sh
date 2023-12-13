@@ -210,6 +210,9 @@ sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostnam
 sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/cmdline.txt
 sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/firmware/cmdline.txt
 
+echo "    HostKeyAlgorithms=+ssh-rsa" | sudo tee -a ~/etc/ssh/ssh_config
+echo "    PubkeyAcceptedAlgorithms=+ssh-rsa" | sudo tee -a ~/etc/ssh/ssh_config
+
 if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password
     echo "pi:$pi_ssh_password" | sudo chpasswd
