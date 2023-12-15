@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding='ISO-8859-1'?>
+
+<!-- Output of restore_tide_db. -->
+<!-- This file was converted from HARMONICS_NO_US_Consort.tcd -->
+<!-- at 2023-02-19 05:39 EST -->
+
+<!-- ** The following boilerplate text is a placeholder only.  Please ** -->
+<!-- ** replace it with the boilerplate and changelog available       ** -->
+<!-- ** separately.                                                   ** -->
+
+<!--
+
+Offset tide stations for use with XTide version 2.2.2 or later.
+
+All coordinates given in this file are approximate.  All tide
+predictions produced through the application of offsets are
+approximate.
+
+********* NOT FOR NAVIGATION ********
+
+*** DO NOT RELY ON THIS DATA FILE FOR DECISIONS THAT CAN RESULT IN ***
+***                   HARM TO ANYONE OR ANYTHING.                  ***
+
+This data file is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Highly trustworthy tide predictions cannot be achieved on a zero
+budget.  If you need guaranteed results, don't use this data!
+Contact the tide authority for your region (NOAA in the U.S.).
+
+WHOSOEVER CHOOSES TO REDISTRIBUTE THIS DATA ASSUMES ALL LIABILITY
+ASSOCIATED THEREWITH.  NEITHER DAVID FLATER NOR ANYONE ELSE INVOLVED
+SHALL BE LIABLE PERSONALLY OR OTHERWISE FOR ANY LOSSES THAT THE
+REDISTRIBUTOR MIGHT SUFFER AS A CONSEQUENCE OF ANY CLAIMS, BOGUS OR
+OTHERWISE, THAT ARE MADE TO THIS DATA.
+
+-->
+
+<document>
+
+<!-- Comments on Thompson Bay, Long Island, Bahamas THJ:
+Collected 2023-02-16
+23 21 30
+75 08 15
+-->
+
+<subordinatestation name="Thompson Bay, Long Island, Bahamas THJ"
+   latitude="23.3583"
+   longitude="-75.1375"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   reference="Nassau, New Providence Island, Bahamas">
+<simpleoffsets>
+   <timeadd value="+01:45"/>
+</simpleoffsets>
+</subordinatestation>
+
+<!-- Comments on Plane Bay, Great Guana, Bahamas:
+Collected 2023-02-11
+24 04 40
+76 23 7
+-->
+
+<subordinatestation name="Plane Bay, Great Guana, Bahamas"
+   latitude="24.0778"
+   longitude="-76.3853"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   date_imported="20230425"
+   restriction="Public Domain"
+   reference="Nassau, New Providence Island, Bahamas">
+<simpleoffsets>
+   <timeadd value="+0:45"/>
+</simpleoffsets>
+</subordinatestation>
+
+<subordinatestation name="Flamingo Cay, Jumentos, Bahamas TJ"
+   latitude="22.88"
+   longitude="-75.87"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230219"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+01:15"/>
+   </max><min>
+      <timeadd value="+00:30"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Buenavista Cay, Ragged Islands, Bahamas TJ"
+   latitude="22.4317500"
+   longitude="-75.8366667"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230222"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:30"/>
+   </max><min>
+      <timeadd value="+00:25"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Racoon Cay, Ragged Islands, Bahamas TJ"
+   latitude="22.3583333"
+   longitude="-75.8150000"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230225"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:30"/>
+   </max><min>
+      <timeadd value="+00:12"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Double Breasted Cay, Ragged Islands, Bahamas TJ"
+   latitude="22.3150000"
+   longitude="-75.7683333"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230227"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:05"/>
+   </max><min>
+      <timeadd value="+00:30"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Ragged Island, Ragged Islands, Bahamas TJ"
+   latitude="22.1733333"
+   longitude="-75.7166666"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230311"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="01:00"/>
+   </max><min>
+      <timeadd value="01:00"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Hog Cay, Ragged Islands, Bahamas TJ"
+   latitude="22.25"
+   longitude="-75.755"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230304"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:10"/>
+   </max><min>
+      <timeadd value="-00:25"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Johnson Cay, Jumentos, Bahamas TJ"
+   latitude="22.3383333333"
+   longitude="-75.78"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230329"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:0"/>
+   </max><min>
+      <timeadd value="-00:0"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<!-- Comments on Adam Cay, Exumas, Bahamas TJ:
+Offset from explorer charts.
+No values collected
+-->
+
+<subordinatestation name="Adam Cay, Exumas, Bahamas TJ"
+   latitude="23.45"
+   longitude="-75.98333"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230415"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+02:30"/>
+   </max><min>
+      <timeadd value="+02:30"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+<subordinatestation name="Rocky Point, Great Exuma, Bahamas TJ"
+   latitude="23.5750000000"
+   longitude="-76.0750000000"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230416"
+   reference="Nassau, New Providence Island, Bahamas">
+<simpleoffsets>
+   <timeadd value="+01:15"/>
+</simpleoffsets>
+</subordinatestation>
+
+<subordinatestation name="Farmers Cay, Exumas, Bahamas TJ"
+   latitude="23.965"
+   longitude="-76.3216666666"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230417"
+   reference="Nassau, New Providence Island, Bahamas">
+<simpleoffsets>
+   <timeadd value="+0:30"/>
+</simpleoffsets>
+</subordinatestation>
+   
+<subordinatestation name="Hawksbill Cay, Exumas, Bahamas TJ"
+   latitude="24.4850000000"
+   longitude="-76.7733333333"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20230425"
+   reference="Nassau, New Providence Island, Bahamas">
+<simpleoffsets>
+   <timeadd value="+0:30"/>
+</simpleoffsets>
+</subordinatestation>
+ 
+</document>
