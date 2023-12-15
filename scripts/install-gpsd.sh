@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /home/pi
-apt -y install gpsd gpsd-clients scons
+apt -y install gpsd gpsd-clients scons libncurses5-dev
 source /etc/os-release
 if [ "$VERSION_CODENAME" != "bookworm" ]; then
 wget https://download-mirror.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.xz
