@@ -3,7 +3,7 @@
 
 Clear[test,times,vals,peaks,troughs,blur];
 
-test=Import["/Users/tljohnsn/piplayer/tide/tide-2023-04-25-planebay","Data"];
+test=Import["/Users/tljohnsn/piplayer/tide/tide-2023-02-15-thompsonbayy","Data"];
 
 times=DateObject/@StringRiffle/@test[[All,1;;-2]];
 vals=ToExpression[test[[All,-1]]];
