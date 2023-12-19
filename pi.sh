@@ -200,10 +200,12 @@ sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/dnsmasq.consort.
 echo "10.0.4.2 $host_name.local" | sudo tee -a /etc/hosts
 sudo ~pi/piplayer/scripts/install-gpsd.sh
 sudo apt -y install socat tcpdump
-nmcli con mod "Wired connection 1" ipv4.addresses "10.0.4.2/24"
-nmcli con mod "Wired connection 1" ipv4.method manual
-nmcli con mod "Wired connection 1" connection.autoconnect yes
-nmcli con up "Wired connection 1"
+sudo nmcli con mod "Wired connection 1" ipv4.addresses "10.0.4.2/24"
+sudo nmcli con mod "Wired connection 1" ipv4.method manual
+sudo nmcli con mod "Wired connection 1" ipv6.method disabled
+sudo nmcli con mod "Wired connection 1" connection.autoconnect yes
+sudo nmcli con up "Wired connection 1"
+sudo nmcli con mod preconfigured ipv6.method disabled
 fi
 
 sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
