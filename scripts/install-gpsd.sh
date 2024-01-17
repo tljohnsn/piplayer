@@ -17,6 +17,9 @@ systemctl disable gpsd.service
 
 systemctl mask gpsd.socket
 systemctl mask gpsd.service
+
+sudo sed -i -e 's/GPSD_OPTIONS=""/GPSD_OPTIONS="-G -n"/' /etc/default/gpsd
+
 fi
 if [ `grep -c 127.127.28.0 /etc/ntp.conf` -lt 1 ]; then
 echo "
