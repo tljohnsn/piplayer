@@ -9,9 +9,10 @@ while [ 1 == 1 ]; do
     echo "Starting idle loop"
     while mpc idle database; do
 	NOW=`date +'%s'`
+	NOWH=`date +'%F-%T'`
 	RUNDURATION=`expr $NOW - $LASTRUN`
 	CHANGEDURATION=`expr $NOW - $PAST`
-	echo it changed NOW: $NOW LASTRUN: $LASTRUN RUNDURATION: $RUNDURATION PAST: $PAST CHANGEDURATION: $CHANGEDURATION
+	echo it changed NOW: $NOWH LASTRUN: $LASTRUN RUNDURATION: $RUNDURATION PAST: $PAST CHANGEDURATION: $CHANGEDURATION
 	if [ ! -f "$LOCK" ]; then
 	    touch $LOCK
 	    echo "it was unlocked"
