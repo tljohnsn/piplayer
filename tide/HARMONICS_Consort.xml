@@ -264,9 +264,13 @@ No values collected
    restriction="Public Domain"
    date_imported="20230425"
    reference="Nassau, New Providence Island, Bahamas">
-<simpleoffsets>
-   <timeadd value="+0:30"/>
-</simpleoffsets>
+<offsets>
+   <max>
+      <timeadd value="+00:25"/>
+   </max><min>
+      <timeadd value="+00:55"/>
+   </min>
+</offsets>
 </subordinatestation>
  
 </document>
