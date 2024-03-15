@@ -1,0 +1,4373 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    186506,       4365]
+NotebookOptionsPosition[    182198,       4293]
+NotebookOutlinePosition[    182634,       4310]
+CellTagsIndexPosition[    182591,       4307]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", 
+   RowBox[{
+   "test", ",", "times", ",", "vals", ",", "peaks", ",", "troughs", ",", 
+    "blur"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"test", "=", 
+    RowBox[{"Import", "[", 
+     RowBox[{
+     "\"\</Users/tljohnsn/piplayer/tide/tide-2023-04-26-hawksbill\>\"", ",", 
+      "\"\<Data\>\""}], "]"}]}], ";"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Change", " ", "this", " ", "to", " ", "wherever", " ", "your", " ", 
+    "data", " ", "is", " ", 
+    RowBox[{"stored", "."}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"times", "=", 
+   RowBox[{"DateObject", "/@", 
+    RowBox[{"StringRiffle", "/@", 
+     RowBox[{"test", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", 
+        RowBox[{"1", ";;", 
+         RowBox[{"-", "2"}]}]}], "]"}], "]"}]}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"vals", "=", 
+    RowBox[{"ToExpression", "[", 
+     RowBox[{"test", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", 
+        RowBox[{"-", "1"}]}], "]"}], "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Import", " ", "the", " ", "data", " ", "and", " ", "parse", " ", 
+     RowBox[{"it", ".", "\[IndentingNewLine]", "\[IndentingNewLine]", "If"}], 
+     " ", "you", " ", "change", " ", "the", " ", "format", " ", "of", " ", 
+     "the", " ", "input"}], ",", " ", 
+    RowBox[{
+    "you", " ", "may", " ", "need", " ", "to", " ", "adjust", " ", "parsing", 
+     " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"this", " ", "is", " ", "not", " ", 
+        RowBox[{"robust", "--"}], "I", " ", "just", " ", "assume", " ", 
+        "data", " ", "will", " ", "always", " ", "come", " ", "in", " ", 
+        "the", " ", "format", " ", "you", " ", "gave"}], ")"}], "."}]}]}], 
+   " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"data", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{"times", ",", "vals"}], "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Now", " ", "we", " ", "have", " ", 
+    RowBox[{"{", 
+     RowBox[{"time", ",", " ", "level"}], "}"}], " ", "in", " ", "a", " ", 
+    RowBox[{"list", ".", " ", "Plot"}], " ", "it", " ", "to", " ", "make", 
+    " ", 
+    RowBox[{"sure", ":"}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"DateListPlot", "[", 
+  RowBox[{"data", ",", 
+   RowBox[{"Joined", "->", "False"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.9058931941230135`*^9, 3.905893218521975*^9}, {
+   3.905893289162365*^9, 3.90589335912691*^9}, 3.9058933934346123`*^9, {
+   3.9058949138769903`*^9, 3.905894914234571*^9}, {3.9058958400353184`*^9, 
+   3.9058958433925023`*^9}, 3.9058958778397207`*^9, {3.905896396407835*^9, 
+   3.90589642123997*^9}, {3.9058965213505898`*^9, 3.905896530938149*^9}, {
+   3.90589731364398*^9, 3.9058973351982965`*^9}, 3.9058974035329504`*^9, {
+   3.905897846126462*^9, 3.905897876934989*^9}, 3.9058979277449894`*^9, 
+   3.9058980246137304`*^9, {3.9058993562774367`*^9, 3.905899406941272*^9}, {
+   3.9058997154617796`*^9, 3.905899737053377*^9}, {3.9059003178748093`*^9, 
+   3.905900318226857*^9}, {3.9059005940050316`*^9, 3.905900594687982*^9}, {
+   3.905901232887831*^9, 3.905901282920104*^9}, {3.905902419645767*^9, 
+   3.9059024202408695`*^9}, 3.905902451033327*^9, {3.9059026415297165`*^9, 
+   3.90590264256297*^9}, 3.9059034369887733`*^9, {3.905903544758603*^9, 
+   3.905903544873574*^9}, {3.9059035758743367`*^9, 3.9059036513794374`*^9}, {
+   3.908442233615136*^9, 3.9084422349154024`*^9}, {3.9084443049240675`*^9, 
+   3.9084443050946636`*^9}, {3.908482773414551*^9, 3.9084827761734805`*^9}, {
+   3.908483351660711*^9, 3.908483386526182*^9}, {3.9085275879608383`*^9, 
+   3.9085275922186055`*^9}, {3.9085277600775585`*^9, 3.908527854801117*^9}, 
+   3.908527954877836*^9, {3.90852814520462*^9, 3.908528160304866*^9}, {
+   3.9085283594697495`*^9, 3.908528362061035*^9}, {3.9085284161928873`*^9, 
+   3.908528527280841*^9}, {3.908528558722614*^9, 3.90852857680888*^9}, {
+   3.908529110547806*^9, 3.9085291223350487`*^9}, {3.9085292823908987`*^9, 
+   3.908529287332449*^9}, {3.9085331878478203`*^9, 3.908533195740579*^9}, 
+   3.911656151534336*^9, 3.9116608122379*^9, {3.919058954874865*^9, 
+   3.9190589669053288`*^9}, {3.919059635393682*^9, 3.9190596561846657`*^9}, {
+   3.919139641122059*^9, 3.919139659052228*^9}, {3.919140245479197*^9, 
+   3.919140247391884*^9}, 3.91914031743727*^9, {3.919141551768792*^9, 
+   3.919141554689332*^9}, {3.919227288401101*^9, 3.919227288832096*^9}, {
+   3.9192274610866528`*^9, 3.919227461233302*^9}, {3.919483529021735*^9, 
+   3.919483540818864*^9}},
+ CellLabel->"In[76]:=",ExpressionUUID->"0c2b5782-7226-46b4-bb63-db16636bde72"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   InterpretationBox[{
+     TagBox[
+      TagBox[
+       {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+        0.009166666666666668], AbsoluteThickness[2], PointBox[CompressedData["
+1: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
+eD5Fwz+d+kU4gtmPwnHtY2Mzc7St/gHlSPCp
+         "]]},
+       Annotation[#, "Charting`Private`Tag#1"]& ],
+      {"WolframDynamicHighlight", <|
+       "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>}], 
+     DynamicBox[(Charting`HighlightActionBox["DynamicHighlight", {}, 
+       Slot["HighlightElements"], 
+       Slot["LayoutOptions"], 
+       Slot["Meta"], 
+       Charting`HighlightActionFunction["DynamicHighlight", {{
+          Annotation[{
+            Directive[
+             PointSize[0.009166666666666668], 
+             RGBColor[0.368417, 0.506779, 0.709798], 
+             AbsoluteThickness[2]], 
+            Point[CompressedData["
+1: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
+eD5Fwz+d+kU4gtmPwnHtY2Mzc7St/gHlSPCp
+             "]]}, "Charting`Private`Tag#1"]}}, <|
+        "HighlightElements" -> <|
+          "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+         "LayoutOptions" -> <|
+          "PlotRange" -> {{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+            10.6869565217391}}, "Frame" -> {{True, True}, {True, True}}, 
+           "AxesOrigin" -> {3.8914281*^9, 7.543236714975862}, 
+           "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {False, False}, 
+           "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+           "DefaultStyle" -> {
+             Directive[
+              PointSize[0.009166666666666668], 
+              RGBColor[0.368417, 0.506779, 0.709798], 
+              AbsoluteThickness[2]]}, 
+           "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> (({
+               DateString[
+                Part[#, 1], "DateShort"], 
+               Part[#, 2]}& )[{
+                Identity[
+                 Part[#, 1]], 
+                Identity[
+                 Part[#, 2]]}]& ), 
+             "ScalingFunctions" -> {{Identity, Identity}, {
+               Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+           False|>, 
+         "Meta" -> <|
+          "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+           DateListPlot, "GroupHighlight" -> False|>|>]]& )[<|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PlotRange" -> {{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+           10.6869565217391}}, "Frame" -> {{True, True}, {True, True}}, 
+          "AxesOrigin" -> {3.8914281*^9, 7.543236714975862}, 
+          "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {False, False}, 
+          "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+          "DefaultStyle" -> {
+            Directive[
+             PointSize[0.009166666666666668], 
+             RGBColor[0.368417, 0.506779, 0.709798], 
+             AbsoluteThickness[2]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> (({
+              DateString[
+               Part[#, 1], "DateShort"], 
+              Part[#, 2]}& )[{
+               Identity[
+                Part[#, 1]], 
+               Identity[
+                Part[#, 2]]}]& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          DateListPlot, "GroupHighlight" -> False|>|>],
+      ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+       4.503599627370496*^15, -4.503599627370496*^15}}]},
+    Annotation[{{
+       Annotation[{
+         Directive[
+          PointSize[0.009166666666666668], 
+          RGBColor[0.368417, 0.506779, 0.709798], 
+          AbsoluteThickness[2]], 
+         Point[CompressedData["
+1:eJxV1QlUjWkcx/Fbd4yZkixRtiktEiEhqaREsqWuutpUc5OWybSSQdOCGp3B
+ZGsiabEMKUaiKXubJZFu0aRJQ+GIFrSgzPv7zTlzznTOPZ3P/Z733vM+7/95
+7nhZsMRXUSQSpQgv/BeJYrxX9LdaW32oFt+UjLcS3oiHBzcttu70g2OyYcvN
+Di2uC9mr4JlLXnzS0mLvgo/ubjtios8+1kFwTO/BWSV9WujWcMTF5Pgb7bDI
+D1Ysz1cXN7L/DDcHl6acq2c/B1uvXa57/hL7Q3jfxbM3Iw6y98Gjrp2cv2sP
+u7aj4Kd2B/syZOx2sFJPv9ITJ/Z18P3UiFj5dPa9cIarzWN9Q/YCeP7eT8q1
+w9j/gkPCzOuNB7GLJYJHXzKL3l2riW4Ab1L3kE+4CMfYw06KC91V0tgjYEeF
+M5WNWewp8KOGSI9LQexX4c158QUrXNifwZWuhksbaZHSSsEPxFPWhxuxT4M9
+uhISFZq+QXeGlfns2DfBdTW9m8+/YU+HTSv9u8++h2NK4WyHz4e6Tfj5r+Dc
+ncXx9ca8foiTYNUEL7ekDl5vAlsEFUwZ3s7r3eHWoDtGmS/YY2GlNB2H8zXs
+x+Huh3r7VZ+yV8Dmr61T/Ebw8zvgJUUJOcFifr+6s2D1U72yMAt2C9hc8rLD
+aim7DDbLmzDMzZM9AS4T2Y8I28eeA0feepTZmMj+AG5JX/bDorPsPXBQ2cg+
+aSr7OKlgfZ1Ey8I97Dbwh8miUfPPsfvDBRoYGPZd8LbthmvGK/P558EaT2fE
+2ulxPurgdTL9DTJ99n5YrnVtz+8L2XVXCV6s2ThvnT37Ylht8NXz2j7swXCV
+zWnLK9Hs+2DjmJXbxx5jL4Qr/KZG9uSxN8Kr3j5ef72UfYALnr/XjGXrm9kn
+wTbvqvYH6XL/OcBbhGmRLOD+XA9HBkwc1ObEfgjO2lapqhjIfg2+qnVCmBD2
+Frj8SabJH4fZlV0F61ksSvfPZp8OH/hxcuW+BnYp7F+Tm3+4g30LXB17oHCO
+hjZ6Bpwr7O6lNrCoHHbi/LO3wmPUp9WLotiHuQm+YogBZp8NO058ezqzjH01
+nDJ0oebqW+xxcJpYJejIK/bf4Ii2M8LE6KDfhU++14kzNYNFb+HegPAHAyTs
+Gu6C3bA8IeyW8GkFm1njwtl94K07Ty0w2MG+AzZK7/epOcSeC3eFJcwzv80u
+hzOSzwgnDHsv/NE99HhrF7umh2CZxX3J7IG66AvgzoHJ2oX6sCgQbpBHVOjN
+Z98N+y5uLi7wYs+H3xxW0432ZP8TnnD4+IA529lFqwXbCqdnWgK7HhxtlDVU
+9Vf2pfDGK2tVQo+wh8DTbJUeR5WzH4Drv04STlz2IjhYHB9o1sLeBHcLp4lr
+E/uXnoJdTx7aWtfGbgiXzK4VdpgeuiPs2HNsxChNWBQJG3R/UbNlOnsq3Hbi
+s8t7W/YbsHrnyJEp9uzP4VNXFU2d7dhVvATvlS/JkS9hN4bDE5tL7qxid4G9
+MZ6e7FFe/60fexZsc0waeEzKfhMuapMqJ/zb38DlN7SrA9zYh3tjf2y44Kvh
+yD4HjjvQPqvYid0TVpkauLfelX0bPIN/7CfhyDFGTtW8X9E97//f/ztYW9zo
+pTCWffS3gp3TnOUaBuzzYInLGrPlyuy+8C353eut3Vz/RPhJkPidwWuu/1m4
+wRg/QOw1sJv0cujrUvaP8Pd2Ju8fFbFryXA/gVgQdltYJ3XSs4kZ7N/BRXOx
+AdmT4Foc5/HsF+CkWUn3OzexP4YXdD53HunHruCD9di4y6pKyq4PTwiKElaE
+fRk8Gtvbjj0Mjox7di/bkD0Z3jquwr9EzH4ZThWmcVgT99ffcNXt9LzQR9xf
+X60R7DNJs6yvkH0KLCmNCTHIZF8JD+HvAftGONN05YbNAexpcOiH3c7BHuzF
+sF6y+ac6R/aXvN5WLSpCj32wr+CeDJlVgRr7TFhdPf/W61aeT67wgLqi8XMb
+eD5Fwz+d+kU4gtmPwnHtY2Mzc7St/gHlSPCp
+          "]]}, "Charting`Private`Tag#1"]}}, <|
+     "HighlightElements" -> <|
+       "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+      "LayoutOptions" -> <|
+       "PlotRange" -> {{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+         10.6869565217391}}, "Frame" -> {{True, True}, {True, True}}, 
+        "AxesOrigin" -> {3.8914281*^9, 7.543236714975862}, 
+        "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {False, False}, 
+        "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), "DefaultStyle" -> {
+          Directive[
+           PointSize[0.009166666666666668], 
+           RGBColor[0.368417, 0.506779, 0.709798], 
+           AbsoluteThickness[2]]}, 
+        "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> (({
+            DateString[
+             Part[#, 1], "DateShort"], 
+            Part[#, 2]}& )[{
+             Identity[
+              Part[#, 1]], 
+             Identity[
+              Part[#, 2]]}]& ), 
+          "ScalingFunctions" -> {{Identity, Identity}, {
+            Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>, 
+      "Meta" -> <|
+       "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+        DateListPlot, "GroupHighlight" -> False|>|>, 
+     "DynamicHighlight"]], {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{None, None},
+  AxesOrigin->{3.8914281*^9, 7.543236714975862},
+  DisplayFunction->Identity,
+  Frame->{{True, True}, {True, True}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->FrontEndValueCache[{{Automatic, Automatic}, {
+      Charting`DateTicksFunction[Automatic, DateTicksFormat -> {Automatic}], 
+      Charting`DateTicksFunction[
+      Automatic, DateTicksFormat -> {Automatic}, "TickLabels" -> None]}}, {{
+     Automatic, Automatic}, {{{3.8914236*^9, 
+        FormBox[
+         StyleBox["\"15:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         StyleBox["\"18:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         StyleBox["\"21:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         StyleBox["\"00:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         StyleBox["\"03:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         StyleBox["\"06:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914236*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914272*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914308*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891438*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914416*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914488*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914524*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914596*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914632*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914704*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891474*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}}, {{3.8914236*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914236*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914272*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914308*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891438*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914416*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914488*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914524*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914596*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914632*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914704*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891474*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}}}}],
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "NoShowPlotTheme" -> Automatic, "AxisPadding" -> Scaled[0.02], 
+    "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultMeshStyle" -> 
+    AbsolutePointSize[6], "DefaultPlotStyle" -> {
+      Directive[
+       RGBColor[0.368417, 0.506779, 0.709798], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.880722, 0.611041, 0.142051], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.560181, 0.691569, 0.194885], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.922526, 0.385626, 0.209179], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.528488, 0.470624, 0.701351], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.772079, 0.431554, 0.102387], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.363898, 0.618501, 0.782349], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[1, 0.75, 0], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.647624, 0.37816, 0.614037], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.571589, 0.586483, 0.], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.915, 0.3325, 0.2125], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.40082222609352647`, 0.5220066643438841, 0.85], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.9728288904374106, 0.621644452187053, 0.07336199581899142], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.736782672705901, 0.358, 0.5030266573755369], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.28026441037696703`, 0.715, 0.4292089322474965], 
+       AbsoluteThickness[2]]}, "DomainPadding" -> Scaled[0.02], 
+    "PointSizeFunction" -> "SmallPointSize", "RangePadding" -> Scaled[0.05], 
+    "AllowMicroRanges" -> {True, False}, "OptimizePlotMarkers" -> True, 
+    "IncludeHighlighting" -> "CurrentPoint", "HighlightStyle" -> Automatic, 
+    "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> (({
+        DateString[
+         Part[#, 1], "DateShort"], 
+        Part[#, 2]}& )[{
+         Identity[
+          Part[#, 1]], 
+         Identity[
+          Part[#, 2]]}]& ), "CopiedValueFunction" -> (({
+        DateString[
+         Part[#, 1], "DateShort"], 
+        Part[#, 2]}& )[{
+         Identity[
+          Part[#, 1]], 
+         Identity[
+          Part[#, 2]]}]& )}},
+  PlotRange->{{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+   10.6869565217391}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.05], 
+     Scaled[0.05]}},
+  Ticks->{{}, Automatic}]], "Output",
+ CellChangeTimes->{3.919483716868114*^9, 3.919483960270659*^9},
+ CellLabel->"Out[81]=",ExpressionUUID->"e3c7fdd5-3d70-4cec-8c94-dfb516afb283"]
+}, Open  ]],
+
+Cell["If all looks good, continue...", "Text",
+ CellChangeTimes->{{3.9085285910177774`*^9, 
+  3.908528597481683*^9}},ExpressionUUID->"ee15c3e1-9769-45f1-9bfc-\
+350e9239be18"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Convert", " ", "our", " ", "data", " ", "into", " ", "a", " ", 
+    "TimeSeries", " ", 
+    RowBox[{"object", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"series", "=", 
+    RowBox[{"TimeSeries", "[", "data", "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"blur", "=", "50"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"This", " ", "is", " ", "a", " ", "more"}], "-", "or", "-", 
+      RowBox[{
+      "less", " ", "magic", " ", "number", " ", "and", " ", "you", " ", 
+       "should", " ", "adjust", " ", "it", " ", "until", " ", "you", " ", 
+       "get", " ", "good", " ", 
+       RowBox[{"results", ".", " ", "See"}], " ", "the", " ", "plot", " ", 
+       "below", " ", "to", " ", 
+       RowBox[{"check", ".", "\[IndentingNewLine]", "Lower"}], " ", "values", 
+       " ", "will", " ", "detect", " ", "more", " ", "peaks", " ", "and", " ",
+        "may", " ", "be", " ", "more", " ", "precise"}]}], ",", " ", 
+     RowBox[{
+     "but", " ", "will", " ", "throw", " ", "in", " ", "false", " ", 
+      "positives", " ", "due", " ", "to", " ", 
+      RowBox[{"noise", ".", "\[IndentingNewLine]", "Higher"}], " ", "values", 
+      " ", "may", " ", "miss", " ", "actual", " ", 
+      RowBox[{"peaks", ".", "\[IndentingNewLine]", "The"}], " ", 
+      "\"\<correct\>\"", " ", "number", " ", "will", " ", "depend", " ", "on",
+       " ", "how", " ", "much", " ", "noise", " ", "is", " ", "in", " ", 
+      "your", " ", "data", " ", "and", " ", "how", " ", "precise", " ", "you",
+       " ", "want", " ", "things", " ", "to", " ", 
+      RowBox[{
+      "be", ".", "\[IndentingNewLine]", "\[IndentingNewLine]", "Use"}], " ", 
+      "FindPeaks", " ", "to", " ", "look", " ", "for", " ", "peaks", " ", 
+      "and", " ", 
+      RowBox[{"troughs", ":"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"peaks", "=", 
+     RowBox[{"FindPeaks", "[", 
+      RowBox[{"series", ",", "blur"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"troughs", "=", 
+     RowBox[{"FindPeaks", "[", 
+      RowBox[{
+       RowBox[{"-", "series"}], ",", "blur"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Plot", " ", "everything", " ", "to", " ", "see", " ", "how", " ", 
+     RowBox[{"it", "'"}], "s", " ", 
+     RowBox[{"going", ":"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"DateListPlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"series", ",", "peaks", ",", 
+       RowBox[{"-", "troughs"}]}], "}"}], ",", 
+     RowBox[{"PlotStyle", "->", 
+      RowBox[{"{", 
+       RowBox[{"Black", ",", 
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", 
+          RowBox[{"PointSize", "->", "0.02"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"Red", ",", 
+          RowBox[{"PointSize", "->", "0.02"}]}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"Joined", "->", "False"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.9085273166223803`*^9, 3.908527323402711*^9}, {
+   3.908527380011594*^9, 3.908527380903486*^9}, {3.908527432268486*^9, 
+   3.9085274524552*^9}, {3.90852759963032*^9, 3.9085276215351706`*^9}, {
+   3.908527694227023*^9, 3.908527733240348*^9}, 3.9085279284702053`*^9, {
+   3.9085281676191*^9, 3.9085281681507483`*^9}, {3.908528350132634*^9, 
+   3.9085283547474194`*^9}, {3.9085284032992897`*^9, 
+   3.9085284053100386`*^9}, {3.908528710211157*^9, 3.9085288639116673`*^9}, {
+   3.908528987144704*^9, 3.9085290487218647`*^9}, {3.911725687482545*^9, 
+   3.911725763124228*^9}, {3.9117257995503902`*^9, 3.9117257999523907`*^9}, {
+   3.919059136248514*^9, 3.919059179563286*^9}, {3.919059250401699*^9, 
+   3.9190592544961567`*^9}, {3.91905945067365*^9, 3.919059452264888*^9}, 
+   3.919059564724518*^9, {3.9190597158771553`*^9, 3.91905971835367*^9}, {
+   3.919227501851234*^9, 3.9192275031284533`*^9}},
+ CellLabel->"In[82]:=",ExpressionUUID->"8759c983-bc2e-4b0a-ad37-049e85922997"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["TimeSeries",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    TemplateBox[{
+      PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{{{{}, {}, 
+                TagBox[{
+                  Directive[
+                   Opacity[1.], 
+                   RGBColor[0.368417, 0.506779, 0.709798], 
+                   AbsoluteThickness[2]], 
+                  LineBox[CompressedData["
+1:eJwV0ntMU3cUB3AEgwRIpoLOIuHetvdaHAg0uBmJ0WO2KopTSoulUmhFYHIJ
+rZu1is8OpfKIChpmEKzyGCIIogNNQYPUB88pi5ta1o3HUECFKkrkEXW/88fJ
+ySfnr/M9h5+gi0pydnJyWkUKe7SrUbPl0+u1Df8mz2mL4kNLTupt9PcpPvK8
+UD7cdYgEkcSSC01FJTM0NGtWGNFxqSnZbXYahtO1dnQtrXzIFdJwabcBpMSn
+tqU7yhQ0qNP/OI9ODAp9a2NoqFF/dI4i/kVf8af+KQVLxyKT0bq+MUdzCQXm
+rA9W9OLsouH4GAouu+hEMuKXXZ7hi8b9oDZnZSb6RWf99G9v/KDPEtCPLogN
+3egIpaCyfew7OXG4l7zQd9QPuOezS9HNd80ue/v9oKX/lWs0sf98q8WJoWCd
+aToF7Tgm4ewpFNz/RvUAPXLUmBFQToGt9eRXW4m7CtmX9ecpGEr0zkKLhlV3
+bK405A5wo+iH0194/LeCBpXbSKSCePbv2YPtO2kQhTXWoOPz1ScXX6Uha5Nq
+fgxxo0dTxCDJc4CT7kLPVKftKSP5c2JtF1qewR/KLebD8WexIUriqrkHllns
+fDDnFp9A/+rc4K4PFEAEVTuO7s5/HZifKQA2dih6G3HCmifvnrUJYKp093X0
+T6fFU2cpIezo7F4YS8xJ93KTWiE8+GzUoy1X/Fsu5gtBYY/pRq83Wa793COE
+w4WzlquINZO8g2k8BswJH/PQeVLYfEXNgNyzYwK9xtdQ8sHEgIt1RBaH9+6t
+m5yoZKCPEtehN7QZQqL+YUAWv8E7nnjuoQLj9CcGmivrf0R7lZuDB4NYaHn8
+5gm653KBnhfBwtsKeZiauOhRY51EyYKPyeMsurUimJdDbJOcmUEvaw8Id1ew
+cHqeVqkhVhs0KwPIfF/mrgZ0SJlXx00xC+9t3/K2Ezdt/ZJ96s8CF8YZ0HLh
+RNroOAN7Dmz/G10d7HY/5h4DtYnG1QnEvL90t5xLyT7K8XPoJcXuPO+jDFQG
+f/0Z3VUltT1SMMDN61TtwP+W/VCQt4oB62OxFb1fltXb1yuE9avvsInEm5Ju
+vdp4ieRfX5KBvp16w20iSQg9HvIhdOACYHUiIQxrlZIk4kMzPgernwugeupI
+OXqnpspUWiOA/wH7y+WM
+                   "]]}, Annotation[#, "Charting`Private`Tag#1"]& ]}}, {}}, {
+             DisplayFunction -> Identity, Ticks -> {Automatic, Automatic}, 
+              AxesOrigin -> {3.8914281000000086`*^9, 7.720180565419428}, 
+              FrameTicks -> {{{}, {}}, {{}, {}}}, GridLines -> {None, None}, 
+              DisplayFunction -> Identity, PlotRangePadding -> {{
+                 Scaled[0.1], 
+                 Scaled[0.1]}, {
+                 Scaled[0.1], 
+                 Scaled[0.1]}}, PlotRangeClipping -> True, ImagePadding -> 
+              All, DisplayFunction -> Identity, AspectRatio -> 1, 
+              Axes -> {False, False}, AxesLabel -> {None, None}, 
+              AxesOrigin -> {3.8914281*^9, 7.720180565419411}, 
+              DisplayFunction :> Identity, 
+              Frame -> {{True, True}, {True, True}}, 
+              FrameLabel -> {{None, None}, {None, None}}, FrameStyle -> 
+              Directive[
+                Opacity[0.5], 
+                Thickness[Tiny], 
+                RGBColor[0.368417, 0.506779, 0.709798]], 
+              FrameTicks -> {{None, None}, {None, None}}, 
+              GridLines -> {None, None}, GridLinesStyle -> Directive[
+                GrayLevel[0.5, 0.4]], ImageSize -> 
+              Dynamic[{
+                Automatic, 
+                 3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])}], 
+              Method -> {
+               "DefaultBoundaryStyle" -> Automatic, 
+                "DefaultGraphicsInteraction" -> {
+                 "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+                  "Effects" -> {
+                   "Highlight" -> {"ratio" -> 2}, 
+                    "HighlightPoint" -> {"ratio" -> 2}, 
+                    "Droplines" -> {
+                    "freeformCursorMode" -> True, 
+                    "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+                "DefaultMeshStyle" -> AbsolutePointSize[6], 
+                "ScalingFunctions" -> None, 
+                "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Identity[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Identity[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& )}}, 
+              PlotRange -> {{3891428100, 3891473700}, {7.720180565419411, 
+                10.674881732050734`}}, PlotRangeClipping -> True, 
+              PlotRangePadding -> {{
+                 Scaled[0.1], 
+                 Scaled[0.1]}, {
+                 Scaled[0.1], 
+                 Scaled[0.1]}}, Ticks -> {Automatic, Automatic}}], 
+            GridBox[{{
+               TagBox[
+                TemplateBox[{
+                  RowBox[{
+                    TagBox["\"Time: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    TemplateBox[{
+                    RowBox[{"\"25 Apr 2023 16:15:00\"", 
+                    StyleBox[
+                    RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+                    StyleBox[
+                    RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> 
+                    False]}], FontColor -> GrayLevel[0.5]]}], 
+                    RowBox[{"DateObject", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"2023", ",", "4", ",", "25", ",", "16", ",", "15",
+                     ",", "0"}], "}"}], ",", "\"Instant\"", ",", 
+                    "\"Gregorian\"", ",", 
+                    RowBox[{"-", "4.`"}], ",", "\"SmearedUTC\"", ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"Day\"", ",", "\" \"", ",", 
+                    "\"MonthNameShort\"", ",", "\" \"", ",", "\"Year\"", ",", 
+                    "\" \"", ",", "\"Hour\"", ",", "\":\"", ",", "\"Minute\"",
+                     ",", "\":\"", ",", "\"Second\""}], "}"}]}], "]"}]}, 
+                    "DateObject", Editable -> False], "SummaryItem"]}], 
+                  RowBox[{
+                    TagBox["\" to \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    TemplateBox[{
+                    RowBox[{"\"26 Apr 2023 04:55:00\"", 
+                    StyleBox[
+                    RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+                    StyleBox[
+                    RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> 
+                    False]}], FontColor -> GrayLevel[0.5]]}], 
+                    RowBox[{"DateObject", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"2023", ",", "4", ",", "26", ",", "4", ",", "55", 
+                    ",", "0"}], "}"}], ",", "\"Instant\"", ",", 
+                    "\"Gregorian\"", ",", 
+                    RowBox[{"-", "4.`"}], ",", "\"SmearedUTC\"", ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"Day\"", ",", "\" \"", ",", 
+                    "\"MonthNameShort\"", ",", "\" \"", ",", "\"Year\"", ",", 
+                    "\" \"", ",", "\"Hour\"", ",", "\":\"", ",", "\"Minute\"",
+                     ",", "\":\"", ",", "\"Second\""}], "}"}]}], "]"}]}, 
+                    "DateObject", Editable -> False], "SummaryItem"]}]}, 
+                 "RowDefault"], "SummaryItem"], "\[SpanFromLeft]"}, {
+               RowBox[{
+                 TagBox["\"Data points: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["153", "SummaryItem"]}], "\[SpanFromLeft]"}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{{{{}, {}, 
+                TagBox[{
+                  Directive[
+                   Opacity[1.], 
+                   RGBColor[0.368417, 0.506779, 0.709798], 
+                   AbsoluteThickness[2]], 
+                  LineBox[CompressedData["
+1:eJwV0ntMU3cUB3AEgwRIpoLOIuHetvdaHAg0uBmJ0WO2KopTSoulUmhFYHIJ
+rZu1is8OpfKIChpmEKzyGCIIogNNQYPUB88pi5ta1o3HUECFKkrkEXW/88fJ
+ySfnr/M9h5+gi0pydnJyWkUKe7SrUbPl0+u1Df8mz2mL4kNLTupt9PcpPvK8
+UD7cdYgEkcSSC01FJTM0NGtWGNFxqSnZbXYahtO1dnQtrXzIFdJwabcBpMSn
+tqU7yhQ0qNP/OI9ODAp9a2NoqFF/dI4i/kVf8af+KQVLxyKT0bq+MUdzCQXm
+rA9W9OLsouH4GAouu+hEMuKXXZ7hi8b9oDZnZSb6RWf99G9v/KDPEtCPLogN
+3egIpaCyfew7OXG4l7zQd9QPuOezS9HNd80ue/v9oKX/lWs0sf98q8WJoWCd
+aToF7Tgm4ewpFNz/RvUAPXLUmBFQToGt9eRXW4m7CtmX9ecpGEr0zkKLhlV3
+bK405A5wo+iH0194/LeCBpXbSKSCePbv2YPtO2kQhTXWoOPz1ScXX6Uha5Nq
+fgxxo0dTxCDJc4CT7kLPVKftKSP5c2JtF1qewR/KLebD8WexIUriqrkHllns
+fDDnFp9A/+rc4K4PFEAEVTuO7s5/HZifKQA2dih6G3HCmifvnrUJYKp093X0
+T6fFU2cpIezo7F4YS8xJ93KTWiE8+GzUoy1X/Fsu5gtBYY/pRq83Wa793COE
+w4WzlquINZO8g2k8BswJH/PQeVLYfEXNgNyzYwK9xtdQ8sHEgIt1RBaH9+6t
+m5yoZKCPEtehN7QZQqL+YUAWv8E7nnjuoQLj9CcGmivrf0R7lZuDB4NYaHn8
+5gm653KBnhfBwtsKeZiauOhRY51EyYKPyeMsurUimJdDbJOcmUEvaw8Id1ew
+cHqeVqkhVhs0KwPIfF/mrgZ0SJlXx00xC+9t3/K2Ezdt/ZJ96s8CF8YZ0HLh
+RNroOAN7Dmz/G10d7HY/5h4DtYnG1QnEvL90t5xLyT7K8XPoJcXuPO+jDFQG
+f/0Z3VUltT1SMMDN61TtwP+W/VCQt4oB62OxFb1fltXb1yuE9avvsInEm5Ju
+vdp4ieRfX5KBvp16w20iSQg9HvIhdOACYHUiIQxrlZIk4kMzPgernwugeupI
+OXqnpspUWiOA/wH7y+WM
+                   "]]}, Annotation[#, "Charting`Private`Tag#1"]& ]}}, {}}, {
+             DisplayFunction -> Identity, Ticks -> {Automatic, Automatic}, 
+              AxesOrigin -> {3.8914281000000086`*^9, 7.720180565419428}, 
+              FrameTicks -> {{{}, {}}, {{}, {}}}, GridLines -> {None, None}, 
+              DisplayFunction -> Identity, PlotRangePadding -> {{
+                 Scaled[0.1], 
+                 Scaled[0.1]}, {
+                 Scaled[0.1], 
+                 Scaled[0.1]}}, PlotRangeClipping -> True, ImagePadding -> 
+              All, DisplayFunction -> Identity, AspectRatio -> 1, 
+              Axes -> {False, False}, AxesLabel -> {None, None}, 
+              AxesOrigin -> {3.8914281*^9, 7.720180565419411}, 
+              DisplayFunction :> Identity, 
+              Frame -> {{True, True}, {True, True}}, 
+              FrameLabel -> {{None, None}, {None, None}}, FrameStyle -> 
+              Directive[
+                Opacity[0.5], 
+                Thickness[Tiny], 
+                RGBColor[0.368417, 0.506779, 0.709798]], 
+              FrameTicks -> {{None, None}, {None, None}}, 
+              GridLines -> {None, None}, GridLinesStyle -> Directive[
+                GrayLevel[0.5, 0.4]], ImageSize -> 
+              Dynamic[{
+                Automatic, 
+                 3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])}], 
+              Method -> {
+               "DefaultBoundaryStyle" -> Automatic, 
+                "DefaultGraphicsInteraction" -> {
+                 "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+                  "Effects" -> {
+                   "Highlight" -> {"ratio" -> 2}, 
+                    "HighlightPoint" -> {"ratio" -> 2}, 
+                    "Droplines" -> {
+                    "freeformCursorMode" -> True, 
+                    "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+                "DefaultMeshStyle" -> AbsolutePointSize[6], 
+                "ScalingFunctions" -> None, 
+                "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Identity[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Identity[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& )}}, 
+              PlotRange -> {{3891428100, 3891473700}, {7.720180565419411, 
+                10.674881732050734`}}, PlotRangeClipping -> True, 
+              PlotRangePadding -> {{
+                 Scaled[0.1], 
+                 Scaled[0.1]}, {
+                 Scaled[0.1], 
+                 Scaled[0.1]}}, Ticks -> {Automatic, Automatic}}], 
+            GridBox[{{
+               TagBox[
+                TemplateBox[{
+                  RowBox[{
+                    TagBox["\"Time: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    TemplateBox[{
+                    RowBox[{"\"25 Apr 2023 16:15:00\"", 
+                    StyleBox[
+                    RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+                    StyleBox[
+                    RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> 
+                    False]}], FontColor -> GrayLevel[0.5]]}], 
+                    RowBox[{"DateObject", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"2023", ",", "4", ",", "25", ",", "16", ",", "15",
+                     ",", "0"}], "}"}], ",", "\"Instant\"", ",", 
+                    "\"Gregorian\"", ",", 
+                    RowBox[{"-", "4.`"}], ",", "\"SmearedUTC\"", ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"Day\"", ",", "\" \"", ",", 
+                    "\"MonthNameShort\"", ",", "\" \"", ",", "\"Year\"", ",", 
+                    "\" \"", ",", "\"Hour\"", ",", "\":\"", ",", "\"Minute\"",
+                     ",", "\":\"", ",", "\"Second\""}], "}"}]}], "]"}]}, 
+                    "DateObject", Editable -> False], "SummaryItem"]}], 
+                  RowBox[{
+                    TagBox["\" to \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    TemplateBox[{
+                    RowBox[{"\"26 Apr 2023 04:55:00\"", 
+                    StyleBox[
+                    RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+                    StyleBox[
+                    RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> 
+                    False]}], FontColor -> GrayLevel[0.5]]}], 
+                    RowBox[{"DateObject", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"2023", ",", "4", ",", "26", ",", "4", ",", "55", 
+                    ",", "0"}], "}"}], ",", "\"Instant\"", ",", 
+                    "\"Gregorian\"", ",", 
+                    RowBox[{"-", "4.`"}], ",", "\"SmearedUTC\"", ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"\"Day\"", ",", "\" \"", ",", 
+                    "\"MonthNameShort\"", ",", "\" \"", ",", "\"Year\"", ",", 
+                    "\" \"", ",", "\"Hour\"", ",", "\":\"", ",", "\"Minute\"",
+                     ",", "\":\"", ",", "\"Second\""}], "}"}]}], "]"}]}, 
+                    "DateObject", Editable -> False], "SummaryItem"]}]}, 
+                 "RowDefault"], "SummaryItem"], "\[SpanFromLeft]"}, {
+               RowBox[{
+                 TagBox["\"Data points: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["153", "SummaryItem"]}], "\[SpanFromLeft]"}, {
+               RowBox[{
+                 TagBox["\"Regular: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["True", "SummaryItem"]}], 
+               RowBox[{
+                 TagBox["\"Output dimension: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["1", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Metadata: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["None", "SummaryItem"]}], 
+               RowBox[{
+                 TagBox["\"Minimum increment: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    RowBox[{"5", ",", "\"Minute\""}], "}"}], 
+                  "SummaryItem"]}]}, {
+               TagBox["\"\"", "SummaryItem"], 
+               RowBox[{
+                 TagBox["\"Resampling: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    RowBox[{"\"Interpolation\"", ",", "1"}], "}"}], 
+                  "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel"],
+    DynamicModuleValues:>{}], "]"}],
+  TemporalData[TimeSeries, {CompressedData["
+1:eJxFk3sw1WkYxw9nTbMkWytHt/O+v9/v/SWlEktC9Y1IumxOKLLsnC4uc1q5
+lDZZodg1U61uViFOqyZFbbRZWrq4pFpLDsvIyJS2nSVSQpva32l2Zp+ZZ555
+5/3j+c7n+304daRqq6FMJjOQOktqvGmW31FxmNC9ctlgKIcl8eueBnhw+Mz7
+2VtKOfx4uP+0oxWHfaMnHarHKGKvZabeGqAwrLuqkHdR9ETWZF3poFi2bQ0r
+vU5x7NrlO7EnKabcOO926AjFY6+TY/lqCuORd8aPfCkas2OTdAso8gPcH1rZ
+ULgdfWvSOoliR7RLh914iqnXnRMPtxLsUQTpZl4j8DX02GSaS+BjcKmh6wxB
+W2dc0HUNQXxJatnnGwkaAmxWdUnzgXzuzhhbgqDXaekG3UqYyPRF0N4yGl/6
+XAmnhrDhy0NKXFj3/tSwI0HxwdupHXYEZmkhgRkvlHDVlM39dECJXs09W+0z
+JYxzhXWlLUoM/yEeN3ushEvfsqzQyQTeFWlFkXICReGoOtqVwEX11wusInAu
+mTkpMJigVrZ2cvQxgrj6Nm1XOsHTvNVfr7hMoKm1GPPPJrAS0peUHyF4M0c2
+xe0KQZmlHgzB/gM2WzgTCsvH9kleIsV2tdUutRWFjt448pMHxUrStXT7Wgrz
+CVWl/GaKJveLSyoTKez2rT8wvYDifui8uJESig0vH+68WUNhEmK/emcPhfur
+puMaxmGvREW1nENc+Kzx/b4czuxvMDOM4FBFz0lEONQ90jr+ksNBdF2RF3aB
+w4lv5jQc6+QQ1lJ8NecFh+akE+WLLHkUS26vcufh+4E/j2mK+R2yBB6VNnrA
+PHxmvbyoreWRNdGDfFHPI1duqjn9N4/Y/ksSGQHnh4RkJ2cBo+ExD4xUAgL1
+cnYIuGjg7jAjRkDKwcLl1t8JsM17t7nllIDX0WlLXe4KyM+8JCVGwD+bos72
+vhagdm1ULRzHMDguky+3YujUxd4X3Ri2ruy5XRbC8DzHnCUGM8zMOWu06ACD
+p5TO3DSGRNszE81+YNhduc006jTDfE/jhwl1DB0fZ0jJZYiUp0Y4P2UYllIS
+0M0QcP5USns/Q/XCVskxET4jBZOnEBHWwx+17F0gov/c+41DniIUgxYWWWtF
+FFYZOvl5iTiq8y7SeYuISe+pvrdBxJd6nMHif/pEuBf4RxT4i6jo9zdJk951
+t/jm8EARVbt+3mrpIyL5xIDDbV8RpvMijnYEiLD/UCLiptn6Ni/4fz8v7wox
+mC7CL9dPZ2ktQrVxi/MaExH1ut9u9g4zPNLIX1n3SXzs9AfEEOj/a1RfDcNX
+Xo5DbRUMyRF6IQxC9uwns/IZKhbrDWRo1cc8lSHDIaNxcA/D8sE//SxCGex3
+H0KTv8RVkyApYZiqt9uLIS75ye8XbBhSZtwPq5YzZEsUJ3ULaLqbVxLVJmDz
+bFI7Vi5AVbNvh7VWwCcf7kCA1mn9rvhwAVFvDvtFBgkQM13etvtI/57mCbGi
+gJF8NcrMBSgUV+v7enkYtVdwizt5fFv4vRRhHskD05O0RTz+BT8H/LM=
+    "], {
+     TemporalData`DateSpecification[{2023, 4, 25, 16, 15, 0}, {2023, 4, 26, 4,
+       55, 0}, {5, "Minute"}]}, 1, {"Continuous", 1}, {"Discrete", 1}, 1, {
+    ResamplingMethod -> {"Interpolation", InterpolationOrder -> 1}, 
+     ValueDimensions -> 1}}, True, 13.3],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.9194837170795*^9, 3.919483960487507*^9},
+ CellLabel->"Out[82]=",ExpressionUUID->"25e5db83-53bf-4c6c-a7ff-db53a30b1a03"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   InterpretationBox[{
+     TagBox[{
+       TagBox[
+        {GrayLevel[0], PointSize[0.009166666666666668], AbsoluteThickness[2], 
+         PointBox[CompressedData["
+1:eJxV1QlUjWkcx/Fbd4yZkixRtiktEiEhqaREsqWuutpUc5OWybSSQdOCGp3B
+ZGsiabEMKUaiKXubJZFu0aRJQ+GIFrSgzPv7zTlzznTOPZ3P/Z733vM+7/95
+7nhZsMRXUSQSpQgv/BeJYrxX9LdaW32oFt+UjLcS3oiHBzcttu70g2OyYcvN
+Di2uC9mr4JlLXnzS0mLvgo/ubjtios8+1kFwTO/BWSV9WujWcMTF5Pgb7bDI
+D1Ysz1cXN7L/DDcHl6acq2c/B1uvXa57/hL7Q3jfxbM3Iw6y98Gjrp2cv2sP
+u7aj4Kd2B/syZOx2sFJPv9ITJ/Z18P3UiFj5dPa9cIarzWN9Q/YCeP7eT8q1
+w9j/gkPCzOuNB7GLJYJHXzKL3l2riW4Ab1L3kE+4CMfYw06KC91V0tgjYEeF
+M5WNWewp8KOGSI9LQexX4c158QUrXNifwZWuhksbaZHSSsEPxFPWhxuxT4M9
+uhISFZq+QXeGlfns2DfBdTW9m8+/YU+HTSv9u8++h2NK4WyHz4e6Tfj5r+Dc
+ncXx9ca8foiTYNUEL7ekDl5vAlsEFUwZ3s7r3eHWoDtGmS/YY2GlNB2H8zXs
+x+Huh3r7VZ+yV8Dmr61T/Ebw8zvgJUUJOcFifr+6s2D1U72yMAt2C9hc8rLD
+aim7DDbLmzDMzZM9AS4T2Y8I28eeA0feepTZmMj+AG5JX/bDorPsPXBQ2cg+
+aSr7OKlgfZ1Ey8I97Dbwh8miUfPPsfvDBRoYGPZd8LbthmvGK/P558EaT2fE
+2ulxPurgdTL9DTJ99n5YrnVtz+8L2XVXCV6s2ThvnT37Ylht8NXz2j7swXCV
+zWnLK9Hs+2DjmJXbxx5jL4Qr/KZG9uSxN8Kr3j5ef72UfYALnr/XjGXrm9kn
+wTbvqvYH6XL/OcBbhGmRLOD+XA9HBkwc1ObEfgjO2lapqhjIfg2+qnVCmBD2
+Frj8SabJH4fZlV0F61ksSvfPZp8OH/hxcuW+BnYp7F+Tm3+4g30LXB17oHCO
+hjZ6Bpwr7O6lNrCoHHbi/LO3wmPUp9WLotiHuQm+YogBZp8NO058ezqzjH01
+nDJ0oebqW+xxcJpYJejIK/bf4Ii2M8LE6KDfhU++14kzNYNFb+HegPAHAyTs
+Gu6C3bA8IeyW8GkFm1njwtl94K07Ty0w2MG+AzZK7/epOcSeC3eFJcwzv80u
+hzOSzwgnDHsv/NE99HhrF7umh2CZxX3J7IG66AvgzoHJ2oX6sCgQbpBHVOjN
+Z98N+y5uLi7wYs+H3xxW0432ZP8TnnD4+IA529lFqwXbCqdnWgK7HhxtlDVU
+9Vf2pfDGK2tVQo+wh8DTbJUeR5WzH4Drv04STlz2IjhYHB9o1sLeBHcLp4lr
+E/uXnoJdTx7aWtfGbgiXzK4VdpgeuiPs2HNsxChNWBQJG3R/UbNlOnsq3Hbi
+s8t7W/YbsHrnyJEp9uzP4VNXFU2d7dhVvATvlS/JkS9hN4bDE5tL7qxid4G9
+MZ6e7FFe/60fexZsc0waeEzKfhMuapMqJ/zb38DlN7SrA9zYh3tjf2y44Kvh
+yD4HjjvQPqvYid0TVpkauLfelX0bPIN/7CfhyDFGTtW8X9E97//f/ztYW9zo
+pTCWffS3gp3TnOUaBuzzYInLGrPlyuy+8C353eut3Vz/RPhJkPidwWuu/1m4
+wRg/QOw1sJv0cujrUvaP8Pd2Ju8fFbFryXA/gVgQdltYJ3XSs4kZ7N/BRXOx
+AdmT4Foc5/HsF+CkWUn3OzexP4YXdD53HunHruCD9di4y6pKyq4PTwiKElaE
+fRk8Gtvbjj0Mjox7di/bkD0Z3jquwr9EzH4ZThWmcVgT99ffcNXt9LzQR9xf
+X60R7DNJs6yvkH0KLCmNCTHIZF8JD+HvAftGONN05YbNAexpcOiH3c7BHuzF
+sF6y+ac6R/aXvN5WLSpCj32wr+CeDJlVgRr7TFhdPf/W61aeT67wgLqi8XMb
+eD5Fwz+d+kU4gtmPwnHtY2Mzc7St/gHlSPCp
+          "]]},
+        Annotation[#, "Charting`Private`Tag#1"]& ], 
+       TagBox[
+        {RGBColor[0, 0, 1], PointSize[0.02], AbsoluteThickness[2], 
+         PointBox[{{3.8914611*^9, 10.6869565217391}, {3.8914611*^9, 
+          10.6869565217391}}]},
+        Annotation[#, "Charting`Private`Tag#2"]& ], 
+       TagBox[
+        {RGBColor[1, 0, 0], PointSize[0.02], AbsoluteThickness[2], 
+         PointBox[{{3.8914386*^9, 7.70869565217391}, {3.8914386*^9, 
+          7.70869565217391}}]},
+        Annotation[#, "Charting`Private`Tag#3"]& ]},
+      {"WolframDynamicHighlight", <|
+       "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>}], 
+     DynamicBox[(Charting`HighlightActionBox["DynamicHighlight", {}, 
+       Slot["HighlightElements"], 
+       Slot["LayoutOptions"], 
+       Slot["Meta"], 
+       Charting`HighlightActionFunction["DynamicHighlight", {{
+          Annotation[{
+            Directive[
+             PointSize[0.009166666666666668], 
+             AbsoluteThickness[2], 
+             GrayLevel[0]], 
+            Point[CompressedData["
+1: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
+eD5Fwz+d+kU4gtmPwnHtY2Mzc7St/gHlSPCp
+             "]]}, "Charting`Private`Tag#1"], 
+          Annotation[{
+            Directive[
+             AbsoluteThickness[2], 
+             RGBColor[0, 0, 1], PointSize -> 0.02], 
+            
+            Point[{{3.8914611*^9, 10.6869565217391}, {3.8914611*^9, 
+             10.6869565217391}}]}, "Charting`Private`Tag#2"], 
+          Annotation[{
+            Directive[
+             AbsoluteThickness[2], 
+             RGBColor[1, 0, 0], PointSize -> 0.02], 
+            
+            Point[{{3.8914386*^9, 7.70869565217391}, {3.8914386*^9, 
+             7.70869565217391}}]}, "Charting`Private`Tag#3"]}}, <|
+        "HighlightElements" -> <|
+          "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+         "LayoutOptions" -> <|
+          "PlotRange" -> {{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+            10.6869565217391}}, "Frame" -> {{True, True}, {True, True}}, 
+           "AxesOrigin" -> {3.8914281*^9, 7.543236714975862}, 
+           "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {False, False}, 
+           "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+           "DefaultStyle" -> {
+             Directive[
+              AbsoluteThickness[2], 
+              RGBColor[1, 0, 0], PointSize -> 0.02], 
+             Directive[
+              AbsoluteThickness[2], 
+              RGBColor[0, 0, 1], PointSize -> 0.02], 
+             Directive[
+              PointSize[0.009166666666666668], 
+              AbsoluteThickness[2], 
+              GrayLevel[0]]}, 
+           "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> (({
+               DateString[
+                Part[#, 1], "DateShort"], 
+               Part[#, 2]}& )[{
+                Identity[
+                 Part[#, 1]], 
+                Identity[
+                 Part[#, 2]]}]& ), 
+             "ScalingFunctions" -> {{Identity, Identity}, {
+               Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+           False|>, 
+         "Meta" -> <|
+          "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+           DateListPlot, "GroupHighlight" -> False|>|>]]& )[<|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PlotRange" -> {{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+           10.6869565217391}}, "Frame" -> {{True, True}, {True, True}}, 
+          "AxesOrigin" -> {3.8914281*^9, 7.543236714975862}, 
+          "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {False, False}, 
+          "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+          "DefaultStyle" -> {
+            Directive[
+             AbsoluteThickness[2], 
+             RGBColor[1, 0, 0], PointSize -> 0.02], 
+            Directive[
+             AbsoluteThickness[2], 
+             RGBColor[0, 0, 1], PointSize -> 0.02], 
+            Directive[
+             PointSize[0.009166666666666668], 
+             AbsoluteThickness[2], 
+             GrayLevel[0]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> (({
+              DateString[
+               Part[#, 1], "DateShort"], 
+              Part[#, 2]}& )[{
+               Identity[
+                Part[#, 1]], 
+               Identity[
+                Part[#, 2]]}]& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          DateListPlot, "GroupHighlight" -> False|>|>],
+      ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+       4.503599627370496*^15, -4.503599627370496*^15}}]},
+    Annotation[{{
+       Annotation[{
+         Directive[
+          PointSize[0.009166666666666668], 
+          AbsoluteThickness[2], 
+          GrayLevel[0]], 
+         Point[CompressedData["
+1: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
+eD5Fwz+d+kU4gtmPwnHtY2Mzc7St/gHlSPCp
+          "]]}, "Charting`Private`Tag#1"], 
+       Annotation[{
+         Directive[
+          AbsoluteThickness[2], 
+          RGBColor[0, 0, 1], PointSize -> 0.02], 
+         Point[{{3.8914611*^9, 10.6869565217391}, {3.8914611*^9, 
+          10.6869565217391}}]}, "Charting`Private`Tag#2"], 
+       Annotation[{
+         Directive[
+          AbsoluteThickness[2], 
+          RGBColor[1, 0, 0], PointSize -> 0.02], 
+         Point[{{3.8914386*^9, 7.70869565217391}, {3.8914386*^9, 
+          7.70869565217391}}]}, "Charting`Private`Tag#3"]}}, <|
+     "HighlightElements" -> <|
+       "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+      "LayoutOptions" -> <|
+       "PlotRange" -> {{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+         10.6869565217391}}, "Frame" -> {{True, True}, {True, True}}, 
+        "AxesOrigin" -> {3.8914281*^9, 7.543236714975862}, 
+        "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {False, False}, 
+        "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), "DefaultStyle" -> {
+          Directive[
+           AbsoluteThickness[2], 
+           RGBColor[1, 0, 0], PointSize -> 0.02], 
+          Directive[
+           AbsoluteThickness[2], 
+           RGBColor[0, 0, 1], PointSize -> 0.02], 
+          Directive[
+           PointSize[0.009166666666666668], 
+           AbsoluteThickness[2], 
+           GrayLevel[0]]}, 
+        "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> (({
+            DateString[
+             Part[#, 1], "DateShort"], 
+            Part[#, 2]}& )[{
+             Identity[
+              Part[#, 1]], 
+             Identity[
+              Part[#, 2]]}]& ), 
+          "ScalingFunctions" -> {{Identity, Identity}, {
+            Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>, 
+      "Meta" -> <|
+       "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+        DateListPlot, "GroupHighlight" -> False|>|>, 
+     "DynamicHighlight"]], {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{None, None},
+  AxesOrigin->{3.8914281*^9, 7.543236714975862},
+  DisplayFunction->Identity,
+  Frame->{{True, True}, {True, True}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->FrontEndValueCache[{{Automatic, Automatic}, {
+      Charting`DateTicksFunction[Automatic, DateTicksFormat -> {Automatic}], 
+      Charting`DateTicksFunction[
+      Automatic, DateTicksFormat -> {Automatic}, "TickLabels" -> None]}}, {{
+     Automatic, Automatic}, {{{3.8914236*^9, 
+        FormBox[
+         StyleBox["\"15:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         StyleBox["\"18:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         StyleBox["\"21:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         StyleBox["\"00:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         StyleBox["\"03:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         StyleBox["\"06:00\"", 
+          Directive[], {}, StripOnInput -> False], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914236*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914272*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914308*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891438*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914416*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914488*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914524*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914596*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914632*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914704*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891474*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}}, {{3.8914236*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+         Rational[1, 72], 0}, 
+        Directive[]}, {3.8914236*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914272*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914308*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914344*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891438*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914416*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914452*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914488*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914524*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891456*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914596*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914632*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914668*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914704*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.891474*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}, {3.8914776*^9, 
+        FormBox[
+         TemplateBox[{0, 0}, "Spacer2"], TraditionalForm], {
+        0.009722222222222222, 0.}, 
+        Directive[]}}}}],
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "NoShowPlotTheme" -> Automatic, "AxisPadding" -> Scaled[0.02], 
+    "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultMeshStyle" -> 
+    AbsolutePointSize[6], "DefaultPlotStyle" -> {
+      Directive[
+       RGBColor[0.368417, 0.506779, 0.709798], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.880722, 0.611041, 0.142051], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.560181, 0.691569, 0.194885], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.922526, 0.385626, 0.209179], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.528488, 0.470624, 0.701351], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.772079, 0.431554, 0.102387], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.363898, 0.618501, 0.782349], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[1, 0.75, 0], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.647624, 0.37816, 0.614037], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.571589, 0.586483, 0.], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.915, 0.3325, 0.2125], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.40082222609352647`, 0.5220066643438841, 0.85], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.9728288904374106, 0.621644452187053, 0.07336199581899142], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.736782672705901, 0.358, 0.5030266573755369], 
+       AbsoluteThickness[2]], 
+      Directive[
+       RGBColor[0.28026441037696703`, 0.715, 0.4292089322474965], 
+       AbsoluteThickness[2]]}, "DomainPadding" -> Scaled[0.02], 
+    "PointSizeFunction" -> "SmallPointSize", "RangePadding" -> Scaled[0.05], 
+    "AllowMicroRanges" -> {True, False}, "OptimizePlotMarkers" -> True, 
+    "IncludeHighlighting" -> "CurrentPoint", "HighlightStyle" -> Automatic, 
+    "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> (({
+        DateString[
+         Part[#, 1], "DateShort"], 
+        Part[#, 2]}& )[{
+         Identity[
+          Part[#, 1]], 
+         Identity[
+          Part[#, 2]]}]& ), "CopiedValueFunction" -> (({
+        DateString[
+         Part[#, 1], "DateShort"], 
+        Part[#, 2]}& )[{
+         Identity[
+          Part[#, 1]], 
+         Identity[
+          Part[#, 2]]}]& )}},
+  PlotRange->{{3.8914281*^9, 3.8914737*^9}, {7.543236714975862, 
+   10.6869565217391}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.05], 
+     Scaled[0.05]}},
+  Ticks->{{}, Automatic}]], "Output",
+ CellChangeTimes->{3.9194837170795*^9, 3.919483960618363*^9},
+ CellLabel->"Out[86]=",ExpressionUUID->"6bd64d73-8b01-46a0-b801-a9cf359d9133"]
+}, Open  ]],
+
+Cell["If all looks good, get the values for the peaks:", "Text",
+ CellChangeTimes->{{3.908529156438648*^9, 3.9085291656222095`*^9}, {
+   3.911719060545198*^9, 3.9117190709983597`*^9}, 
+   3.911822138742264*^9},ExpressionUUID->"c4e9e649-129f-4387-9890-\
+ddb8ac4ad8ed"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DateObject", "/@", 
+  RowBox[{"peaks", "[", "\"\<Times\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.90852917013772*^9, 3.908529190060994*^9}},
+ CellLabel->"In[87]:=",ExpressionUUID->"e07b084b-6a7b-4a47-8ca6-0d8bb62bdc2a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  TemplateBox[{
+    RowBox[{"\"Wed 26 Apr 2023 01:25:00\"", 
+      StyleBox[
+       RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+         StyleBox[
+          RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> False]}], 
+       FontColor -> GrayLevel[0.5]]}], 
+    RowBox[{"DateObject", "[", 
+      RowBox[{
+        RowBox[{"{", 
+          
+          RowBox[{"2023", ",", "4", ",", "26", ",", "1", ",", "25", ",", 
+            "0"}], "}"}], ",", "\"Instant\"", ",", "\"Gregorian\"", ",", 
+        RowBox[{"-", "4.`"}]}], "]"}]},
+   "DateObject",
+   Editable->False], "}"}]], "Output",
+ CellChangeTimes->{3.9194837172688313`*^9, 3.919483960689415*^9},
+ CellLabel->"Out[87]=",ExpressionUUID->"6c4035d5-d50f-4f9f-8988-f25564a2589e"]
+}, Open  ]],
+
+Cell["... And for the troughs:", "Text",
+ CellChangeTimes->{{3.908529199159236*^9, 
+  3.908529202512241*^9}},ExpressionUUID->"d2d8097d-5a55-4841-845b-\
+c6cf4def6e8c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DateObject", "/@", 
+  RowBox[{"troughs", "[", "\"\<Times\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.908529204439624*^9, 3.908529213217707*^9}},
+ CellLabel->"In[88]:=",ExpressionUUID->"eb654667-5997-4745-8bba-7046200f4134"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  TemplateBox[{
+    RowBox[{"\"Tue 25 Apr 2023 19:10:00\"", 
+      StyleBox[
+       RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+         StyleBox[
+          RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> False]}], 
+       FontColor -> GrayLevel[0.5]]}], 
+    RowBox[{"DateObject", "[", 
+      RowBox[{
+        RowBox[{"{", 
+          
+          RowBox[{"2023", ",", "4", ",", "25", ",", "19", ",", "10", ",", 
+            "0"}], "}"}], ",", "\"Instant\"", ",", "\"Gregorian\"", ",", 
+        RowBox[{"-", "4.`"}]}], "]"}]},
+   "DateObject",
+   Editable->False], "}"}]], "Output",
+ CellChangeTimes->{3.919483717327223*^9, 3.9194839607211123`*^9},
+ CellLabel->"Out[88]=",ExpressionUUID->"704b610a-abae-4746-9b97-e0d783421696"]
+}, Open  ]],
+
+Cell["\<\
+Note:
+With this amount of data, (2 peaks, 2 troughs) our best estimate of when the \
+next high tide will come in is \[OpenCurlyDoubleQuote]take the time between \
+the last two high tides, and wait that long after the most recent high tide\
+\[CloseCurlyDoubleQuote]. Same deal with the low tides.
+This may be good enough, but there are more elegant methods if you are able \
+to collect more tide cycles.\
+\>", "Text",
+ CellChangeTimes->{{3.9085293398717885`*^9, 3.9085294201367655`*^9}, {
+  3.908529496889925*^9, 3.9085295149355865`*^9}, {3.9085295519371243`*^9, 
+  3.9085295562177863`*^9}, {3.908529900875357*^9, 3.9085299013565598`*^9}, {
+  3.9085299316458035`*^9, 3.908529934752496*^9}, {3.9085332154964886`*^9, 
+  3.908533221765582*^9}},ExpressionUUID->"3adacb44-1244-4f33-a5d7-\
+18ccdc007e38"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.911810014236875*^9, 3.911822149025221*^9},
+ CellLabel->"In[89]:=",ExpressionUUID->"9bdf4451-e392-411b-8f18-1e0de4189c0d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"location", "=", 
+   RowBox[{"Entity", "[", 
+    RowBox[{"\"\<City\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Nassau\>\"", ",", "\"\<NewProvidence\>\"", ",", 
+       "\"\<Bahamas\>\""}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"timespec1", "=", " ", 
+   RowBox[{"DateObject", "[", 
+    RowBox[{"{", 
+     RowBox[{"2023", ",", "4", ",", "25", ",", "0", ",", "0"}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"firsthigh1", " ", "=", " ", 
+   RowBox[{"TideData", "[", 
+    RowBox[{"location", ",", "\"\<HighTide\>\"", ",", "timespec1"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"firstlow1", " ", "=", " ", 
+   RowBox[{"TideData", "[", 
+    RowBox[{"location", ",", "\"\<LowTide\>\"", ",", "timespec1"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"secondhigh1", " ", "=", " ", 
+   RowBox[{"TideData", "[", 
+    RowBox[{"location", ",", "\"\<HighTide\>\"", ",", 
+     RowBox[{"firsthigh1", "[", "\"\<Time\>\"", "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"secondlow1", " ", "=", " ", 
+   RowBox[{"TideData", "[", 
+    RowBox[{"location", ",", "\"\<LowTide\>\"", ",", 
+     RowBox[{"firstlow1", "[", "\"\<Time\>\"", "]"}]}], " ", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"print", "[", 
+  RowBox[{"\"\<Highs \>\"", ",", 
+   RowBox[{"firsthigh1", "[", "\"\<Time\>\"", "]"}], ",", 
+   RowBox[{"secondhigh1", "[", "\"\<Time\>\"", "]"}]}], "  ", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"print", "[", 
+   RowBox[{"\"\<Lows \>\"", ",", 
+    RowBox[{"firstlow1", "[", "\"\<Time\>\"", "]"}], ",", " ", 
+    RowBox[{"secondlow1", "[", "\"\<Time\>\"", "]"}]}], " ", "]"}], 
+  "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{
+  3.9117257882070303`*^9, 3.911810030584325*^9, {3.911817434751708*^9, 
+   3.911817583562518*^9}, {3.911817624101873*^9, 3.911817633934136*^9}, {
+   3.911817667172264*^9, 3.911817773389349*^9}, {3.911821888634205*^9, 
+   3.911821963957842*^9}, 3.911821998397887*^9, 3.9118221088125153`*^9, 
+   3.9118221933463182`*^9, {3.9118222876274014`*^9, 3.911822408021019*^9}, {
+   3.911822469529944*^9, 3.9118224984519453`*^9}, {3.9118225713650312`*^9, 
+   3.911822572343987*^9}, {3.9118226770789747`*^9, 3.911822677975848*^9}, {
+   3.9191398514010983`*^9, 3.919139858824101*^9}, {3.9191404460382557`*^9, 
+   3.9191404470027313`*^9}, {3.919140505285437*^9, 3.9191405439308643`*^9}, {
+   3.919140574571409*^9, 3.919140574631783*^9}, {3.9191413787182007`*^9, 
+   3.919141396094455*^9}, {3.919227310002963*^9, 3.9192273109700727`*^9}, {
+   3.919483559204377*^9, 3.9194835661303177`*^9}, {3.919483659609133*^9, 
+   3.9194836598436823`*^9}},
+ CellLabel->"In[90]:=",ExpressionUUID->"cc88d7a8-e4cc-4f2b-913e-56df69acb8c2"],
+
+Cell[BoxData[
+ RowBox[{"print", "[", 
+  RowBox[{"\<\"Highs \"\>", ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 12:29:31\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "12", ",", "29", ",", 
+             FractionBox["255", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False], ",", 
+   TemplateBox[{
+     RowBox[{"\"Wed 26 Apr 2023 01:02:47\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "26", ",", "1", ",", "2", ",", 
+             FractionBox["383", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False]}], "]"}]], "Output",
+ CellChangeTimes->{3.919483722901635*^9, 3.919483968240823*^9},
+ CellLabel->"Out[96]=",ExpressionUUID->"83268c61-25e3-4bdc-8f95-3e36b579da95"],
+
+Cell[BoxData[
+ RowBox[{"print", "[", 
+  RowBox[{"\<\"Lows \"\>", ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 06:52:58\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "6", ",", "52", ",", 
+             FractionBox["465", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False], ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 18:14:03\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "18", ",", "14", ",", 
+             FractionBox["29", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False]}], "]"}]], "Output",
+ CellChangeTimes->{3.919483722901635*^9, 3.919483968243733*^9},
+ CellLabel->"Out[97]=",ExpressionUUID->"507b7db1-5424-471b-9856-536a3ed71568"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"print", "[", 
+  RowBox[{"\"\<Lows \>\"", ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 06:52:58\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "6", ",", "52", ",", 
+             FractionBox["465", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False], ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 18:14:03\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "18", ",", "14", ",", 
+             FractionBox["29", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Low", " ", "tide", " ", 
+  RowBox[{"calc", ":"}]}]}], "Input",
+ CellChangeTimes->{{3.9194838203491507`*^9, 3.9194838227670116`*^9}, {
+  3.919483913495716*^9, 3.919483921145157*^9}},
+ EmphasizeSyntaxErrors->True,
+ CellLabel->"In[98]:=",ExpressionUUID->"d6bc93c5-8fe3-4d72-baeb-0e991309edb3"],
+
+Cell[BoxData[
+ RowBox[{"print", "[", 
+  RowBox[{"\<\"Lows \"\>", ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 06:52:58\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "6", ",", "52", ",", 
+             FractionBox["465", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False], ",", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 18:14:03\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "18", ",", "14", ",", 
+             FractionBox["29", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False]}], "]"}]], "Output",
+ CellChangeTimes->{3.919483968299183*^9},
+ CellLabel->"Out[98]=",ExpressionUUID->"35c4abce-d9bb-42b9-b591-9235e75ded5c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 18:14:03\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "25", ",", "18", ",", "14", ",", 
+             FractionBox["29", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False], "-", 
+   TemplateBox[{
+     RowBox[{"\"Tue 25 Apr 2023 19:10:00\"", 
+       StyleBox[
+        RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+          StyleBox[
+           RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> False]}],
+         FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           
+           RowBox[{"2023", ",", "4", ",", "25", ",", "19", ",", "10", ",", 
+             "0"}], "}"}], ",", "\"Instant\"", ",", "\"Gregorian\"", ",", 
+         RowBox[{"-", "4.`"}]}], "]"}]},
+    "DateObject",
+    Editable->False]}]}]], "Input",
+ CellChangeTimes->{
+  3.9191414475325727`*^9, 3.91922740698308*^9, {3.919483825898746*^9, 
+   3.919483875699807*^9}, {3.919483925623933*^9, 3.919483927086812*^9}},
+ CellLabel->"In[99]:=",ExpressionUUID->"a5f048b5-d154-4be5-b22c-ba3b7f8ec3ae"],
+
+Cell[BoxData[
+ TemplateBox[{
+   RowBox[{"-", "55.93958333333334`"}], "\"min\"", "minutes", "\"Minutes\""},
+  "Quantity"]], "Output",
+ CellChangeTimes->{
+  3.919483722956724*^9, {3.9194838369273376`*^9, 3.919483854465*^9}, 
+   3.9194839683559513`*^9},
+ CellLabel->"Out[99]=",ExpressionUUID->"ecfc041e-e95c-4bf4-88a2-58ddbbc6812c"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"High", " ", "tide", " ", 
+   RowBox[{"calc", ":"}]}]}]], "Input",
+ CellChangeTimes->{{3.919483930752489*^9, 3.919483951484706*^9}},
+ EmphasizeSyntaxErrors->True,
+ CellLabel->
+  "In[100]:=",ExpressionUUID->"3a11e652-d645-47d3-9dfd-d8221a816b3d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   TemplateBox[{
+     RowBox[{"\"Wed 26 Apr 2023 01:02:47\"", 
+       StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           RowBox[{"2023", ",", "4", ",", "26", ",", "1", ",", "2", ",", 
+             FractionBox["383", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+         "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+    "DateObject",
+    Editable->False], "-", 
+   TemplateBox[{
+     RowBox[{"\"Wed 26 Apr 2023 01:25:00\"", 
+       StyleBox[
+        RowBox[{"\"GMT\"", "\[InvisibleSpace]", 
+          StyleBox[
+           RowBox[{"-", "4"}], NumberMarks -> False, StripOnInput -> False]}],
+         FontColor -> GrayLevel[0.5]]}], 
+     RowBox[{"DateObject", "[", 
+       RowBox[{
+         RowBox[{"{", 
+           
+           RowBox[{"2023", ",", "4", ",", "26", ",", "1", ",", "25", ",", 
+             "0"}], "}"}], ",", "\"Instant\"", ",", "\"Gregorian\"", ",", 
+         RowBox[{"-", "4.`"}]}], "]"}]},
+    "DateObject",
+    Editable->False]}], "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.919483880004582*^9, 3.919483904166092*^9}},
+ CellLabel->
+  "In[100]:=",ExpressionUUID->"a5ffcd05-8af7-4424-ac73-d63971c856fd"],
+
+Cell[BoxData[
+ TemplateBox[{
+   RowBox[{"-", "22.202083333333334`"}], "\"min\"", "minutes", "\"Minutes\""},
+  "Quantity"]], "Output",
+ CellChangeTimes->{3.919483905153255*^9, 3.919483968413207*^9},
+ CellLabel->
+  "Out[100]=",ExpressionUUID->"bfbc716f-1bca-4340-8b8a-959948d406a7"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[LineSeparator]", 
+  RowBox[{
+   RowBox[{"data1", " ", "=", " ", 
+    RowBox[{"TideData", "[", 
+     RowBox[{"location", ",", "\"\<WaterLevel\>\"", ",", 
+      RowBox[{"DateRange", "[", " ", 
+       RowBox[{
+        RowBox[{"DateObject", "[", 
+         RowBox[{"{", 
+          RowBox[{"2023", ",", "4", ",", "25", ",", "0", ",", "0"}], "}"}], 
+         "]"}], ",", 
+        RowBox[{"DateObject", "[", 
+         RowBox[{"{", 
+          RowBox[{"2023", ",", "4", ",", "27", ",", "0", ",", "0"}], "}"}], 
+         "]"}], ",", "\"\<Minute\>\""}], "]"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{
+  3.911807357765279*^9, {3.911807476643866*^9, 3.911807514673417*^9}, 
+   3.911807684031033*^9, 3.911822526893794*^9, {3.9191400604524612`*^9, 
+   3.9191400927099237`*^9}, {3.9192273621851788`*^9, 3.919227369085966*^9}, {
+   3.919483576054647*^9, 3.9194835904092693`*^9}, {3.9194836777411003`*^9, 
+   3.91948367786502*^9}},
+ CellLabel->
+  "In[101]:=",ExpressionUUID->"9f9586a3-4058-4bcd-a8ce-3fa9bd78b0af"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.911807372138845*^9, 3.911807419933608*^9}},
+ CellLabel->
+  "In[102]:=",ExpressionUUID->"0716f004-1392-4fb8-a7db-ef3180ab5ec6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{"data", "=", 
+    RowBox[{"TideData", "[", 
+     RowBox[{
+      RowBox[{"Entity", "[", 
+       RowBox[{"\"\<City\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Nassau\>\"", ",", "\"\<NewProvidence\>\"", ",", 
+          "\"\<Bahamas\>\""}], "}"}]}], "]"}], ",", 
+      "\"\<PropertyAssociation\>\"", ",", 
+      RowBox[{"DateObject", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"2023", ",", "4", ",", "25"}], "}"}], ",", 
+        RowBox[{"TimeZone", "->", "\"\<GMT-4\>\""}]}], "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[LineSeparator]"}]}]], "Input",
+ CellChangeTimes->{{3.911719197554647*^9, 3.9117191997877197`*^9}, {
+  3.911807698111062*^9, 3.911807730049713*^9}, {3.9118078034712067`*^9, 
+  3.911807809769937*^9}, {3.911822510601047*^9, 3.911822521492351*^9}, {
+  3.9194835997562304`*^9, 3.9194836098090887`*^9}, {3.919483680995618*^9, 
+  3.919483681117552*^9}},
+ CellLabel->
+  "In[103]:=",ExpressionUUID->"1f929183-e3a5-45fc-90cd-c69c9554b2f2"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Coordinates\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"25.083333333333332`", ",", 
+      RowBox[{"-", "77.35`"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"DateEstablished\"\>", "\[Rule]", 
+    RowBox[{"Missing", "[", "\<\"NotAvailable\"\>", "]"}]}], ",", 
+   RowBox[{"\<\"DateInstalled\"\>", "\[Rule]", 
+    RowBox[{"Missing", "[", "\<\"NotAvailable\"\>", "]"}]}], ",", 
+   RowBox[{"\<\"DateRemoved\"\>", "\[Rule]", 
+    RowBox[{"Missing", "[", "\<\"NotAvailable\"\>", "]"}]}], ",", 
+   RowBox[{"\<\"DurationOfFall\"\>", "\[Rule]", 
+    TemplateBox[{"5.75`", "\"h\"", "hours", "\"Hours\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"DurationOfRise\"\>", "\[Rule]", 
+    TemplateBox[{"5.609375`", "\"h\"", "hours", "\"Hours\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"Elevation\"\>", "\[Rule]", 
+    TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"GreatDiurnalRange\"\>", "\[Rule]", 
+    TemplateBox[{"0.925`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"HarmonicAmplitudes\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.39`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.06`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"N\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"N2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"N2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.09`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"K\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"K1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"K1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.09`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"O\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"O1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"O1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.07`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "6"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M6\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M6\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MK\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MK3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MK3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MN\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MN4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MN4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"\[Nu]\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"NU2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"NU2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.02`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "6"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S6\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S6\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MU\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MU2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MU2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2\\\"N\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2N2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2N2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.02`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"OO\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"OO1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"OO1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"\[Lambda]\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"LAM2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"LAM2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"J\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"J1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"J1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"m\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MM\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MM\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "\"sa\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"SSA\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"SSA\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.03`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "\"a\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"SA\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"SA\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.1`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"sf\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MSF\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MSF\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"f\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MF\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MF\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{"\"\[Rho]\"", 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"RHO\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"RHO\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"Q\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"Q1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"Q1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"T\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"T2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"T2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"R\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"R2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"R2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2Q\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2Q1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2Q1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"P\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"P1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"P1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.03`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2SM\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2SM2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2SM2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"L\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"L2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"L2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.02`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2\\\"MK\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2MK3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2MK3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"K\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"K2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"K2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.01`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "8"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M8\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M8\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MS\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MS4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MS4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HarmonicNames\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      TemplateBox[{
+        SubscriptBox["\"M\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"M2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"M2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"S\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"S2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"S2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"N\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"N2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"N2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"K\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"K1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"K1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "4"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"M4\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"M4\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"O\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"O1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"O1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "6"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"M6\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"M6\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"MK\"", "3"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MK3\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MK3\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"S\"", "4"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"S4\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"S4\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"MN\"", "4"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MN4\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MN4\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"\[Nu]\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"NU2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"NU2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"S\"", "6"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"S6\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"S6\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"MU\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MU2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MU2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"2\\\"N\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"2N2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"2N2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"OO\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"OO1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"OO1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"\[Lambda]\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"LAM2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"LAM2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"S\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"S1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"S1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"M1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"M1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"J\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"J1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"J1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "\"m\""], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MM\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MM\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"S\"", "\"sa\""], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"SSA\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"SSA\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"S\"", "\"a\""], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"SA\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"SA\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "\"sf\""], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MSF\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MSF\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "\"f\""], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MF\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MF\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{"\"\[Rho]\"", 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"RHO\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"RHO\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"Q\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"Q1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"Q1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"T\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"T2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"T2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"R\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"R2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"R2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"2Q\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"2Q1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"2Q1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"P\"", "1"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"P1\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"P1\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"2SM\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"2SM2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"2SM2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "3"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"M3\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"M3\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"L\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"L2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"L2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"2\\\"MK\"", "3"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"2MK3\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"2MK3\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"K\"", "2"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"K2\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"K2\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"M\"", "8"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"M8\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"M8\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"], ",", 
+      TemplateBox[{
+        SubscriptBox["\"MS\"", "4"], 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"TidalConstituent\"", ",", "\"MS4\""}], "]"}], 
+        "\"Entity[\\\"TidalConstituent\\\", \\\"MS4\\\"]\"", 
+        "\"tidal constituent\""},
+       "Entity"]}], "}"}]}], ",", 
+   RowBox[{"\<\"HarmonicPhases\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"6.362`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"28.900000000000002`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"N\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"N2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"N2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "14.769`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"K\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"K1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"K1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "158.179`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"31.59`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"O\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"O1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"O1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "162.504`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "6"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M6\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M6\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "3.492`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MK\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MK3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MK3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "173.845`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "89.218`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MN\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MN4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MN4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"12.49`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"\[Nu]\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"NU2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"NU2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "12.079`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "6"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S6\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S6\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "163.147`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MU\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MU2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MU2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "15.388`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2\\\"N\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2N2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2N2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "34.075`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"OO\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"OO1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"OO1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"171.133`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"\[Lambda]\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"LAM2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"LAM2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"25.76`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "136.745`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"37.109`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"J\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"J1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"J1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "150.466`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"m\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MM\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MM\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "97.211`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "\"sa\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"SSA\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"SSA\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"54.376`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "\"a\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"SA\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"SA\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"167.28`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"sf\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MSF\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MSF\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "142.784`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"f\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MF\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MF\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "3.696`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{"\"\[Rho]\"", 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"RHO\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"RHO\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "168.839`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"Q\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"Q1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"Q1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"178.816`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"T\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"T2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"T2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "2.328`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"R\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"R2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"R2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "124.47200000000001`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2Q\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2Q1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2Q1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "133.802`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"P\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"P1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"P1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "162.648`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2SM\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2SM2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2SM2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"66.136`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"5.226`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"L\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"L2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"L2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"22.879`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2\\\"MK\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2MK3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2MK3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"-", "93.274`"}], 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"K\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"K2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"K2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"28.669`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "8"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M8\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M8\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"42.427`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MS\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MS4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MS4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"55.631`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], "degrees", 
+         "\"AngularDegrees\""},
+        "QuantityPostfix"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HarmonicSpeeds\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"28.9841`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"30.`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"N\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"N2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"N2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"28.4397`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"K\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"K1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"K1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"15.0411`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"57.9682`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"O\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"O1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"O1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"13.943`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "6"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M6\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M6\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"86.9523`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MK\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MK3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MK3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"44.0252`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"60.`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MN\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MN4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MN4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"57.4238`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"\[Nu]\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"NU2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"NU2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"28.5126`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "6"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S6\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S6\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"90.`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MU\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MU2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MU2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"27.9682`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2\\\"N\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2N2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2N2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"27.8954`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"OO\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"OO1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"OO1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"16.1391`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"\[Lambda]\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"LAM2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"LAM2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"29.4556`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"S1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"S1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"15.`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"14.4967`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"J\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"J1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"J1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"15.5854`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"m\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MM\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MM\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.544375`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "\"sa\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"SSA\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"SSA\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.0821373`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"S\"", "\"a\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"SA\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"SA\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"0.0410686`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"sf\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MSF\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MSF\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"1.0159`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "\"f\""], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MF\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MF\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"1.09803`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{"\"\[Rho]\"", 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"RHO\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"RHO\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"13.4715`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"Q\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"Q1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"Q1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"13.3987`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"T\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"T2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"T2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"29.9589`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"R\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"R2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"R2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"30.0411`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2Q\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2Q1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2Q1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"12.8543`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"P\"", "1"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"P1\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"P1\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"14.9589`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2SM\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2SM2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2SM2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"31.0159`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"43.4762`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"L\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"L2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"L2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"29.5285`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"2\\\"MK\"", "3"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"2MK3\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"2MK3\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"42.9271`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"K\"", "2"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"K2\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"K2\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"30.0821`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"M\"", "8"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"M8\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"M8\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"115.936`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}], ",", 
+      RowBox[{
+       TemplateBox[{
+         SubscriptBox["\"MS\"", "4"], 
+         RowBox[{"Entity", "[", 
+           RowBox[{"\"TidalConstituent\"", ",", "\"MS4\""}], "]"}], 
+         "\"Entity[\\\"TidalConstituent\\\", \\\"MS4\\\"]\"", 
+         "\"tidal constituent\""},
+        "Entity"], "\[Rule]", 
+       TemplateBox[{"58.9841`", 
+         RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+         RowBox[{"\"per \"", "\[InvisibleSpace]", "\"hour\""}], 
+         "degrees per hour", 
+         FractionBox["\"AngularDegrees\"", "\"Hours\""]},
+        "QuantityUnitPostfix"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HighestAstronomicalTide\"\>", "\[Rule]", 
+    TemplateBox[{"1.965`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"HighestWaterLevelOnStationDatum\"\>", "\[Rule]", 
+    TemplateBox[{"1.798`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"HighHighTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Tue 25 Apr 2023 12:29:31\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "25", ",", "12", ",", "29", ",", 
+                 FractionBox["255", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"1.048`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HighLowTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Tue 25 Apr 2023 06:52:58\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "25", ",", "6", ",", "52", ",", 
+                 FractionBox["465", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"0.584`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HighNeapTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Fri 28 Apr 2023 02:50:20\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "28", ",", "2", ",", "50", ",", 
+                 FractionBox["165", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"1.2690000000000001`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HighPerigeanSpringTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Mon 3 Jul 2023 20:48:09\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "7", ",", "3", ",", "20", ",", "48", ",", 
+                 FractionBox["73", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"1.6340000000000001`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HighSpringTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Fri 5 May 2023 20:40:00\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "5", ",", "5", ",", "20", ",", "40", ",", 
+                 FractionBox["1", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"1.467`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"HighTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Tue 25 Apr 2023 12:29:31\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "25", ",", "12", ",", "29", ",", 
+                 FractionBox["255", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"1.048`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LowestAstronomicalTide\"\>", "\[Rule]", 
+    TemplateBox[{
+      RowBox[{"-", "0.091`"}], "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"LowestWaterLevelOnStationDatum\"\>", "\[Rule]", 
+    TemplateBox[{"0.244`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"LowHighTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Tue 25 Apr 2023 12:29:31\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "25", ",", "12", ",", "29", ",", 
+                 FractionBox["255", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"1.048`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LowLowTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Tue 25 Apr 2023 18:14:31\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "25", ",", "18", ",", "14", ",", 
+                 FractionBox["255", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"0.5730000000000001`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LowNeapTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Thu 27 Apr 2023 20:05:20\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "27", ",", "20", ",", "5", ",", 
+                 FractionBox["165", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"0.64`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LowPerigeanSpringTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Mon 3 Jul 2023 13:54:42\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "7", ",", "3", ",", "13", ",", "54", ",", 
+                 FractionBox["343", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"0.379`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LowSpringTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Sat 6 May 2023 02:55:56\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "5", ",", "6", ",", "2", ",", "55", ",", 
+                 FractionBox["451", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"0.5`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LowTide\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Time\"\>", "\[Rule]", 
+       TemplateBox[{
+         RowBox[{"\"Tue 25 Apr 2023 06:52:58\"", 
+           StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+         RowBox[{"DateObject", "[", 
+           RowBox[{
+             RowBox[{"{", 
+               RowBox[{"2023", ",", "4", ",", "25", ",", "6", ",", "52", ",", 
+                 FractionBox["465", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+             "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+        "DateObject",
+        Editable->False]}], ",", 
+      RowBox[{"\<\"Height\"\>", "\[Rule]", 
+       TemplateBox[{"0.584`", "\"m\"", "meters", "\"Meters\""},
+        "Quantity"]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"LunatidalInterval\"\>", "\[Rule]", 
+    TemplateBox[{"7.101388888888889`", "\"h\"", "hours", "\"Hours\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanDiurnalHighWaterInequality\"\>", "\[Rule]", 
+    TemplateBox[{"0.079`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanDiurnalLowWaterInequality\"\>", "\[Rule]", 
+    TemplateBox[{"0.026000000000000002`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanDiurnalTideLevel\"\>", "\[Rule]", 
+    RowBox[{"Missing", "[", "\<\"NotAvailable\"\>", "]"}]}], ",", 
+   RowBox[{"\<\"MeanHigherHighWater\"\>", "\[Rule]", 
+    TemplateBox[{"1.432`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanHighWater\"\>", "\[Rule]", 
+    TemplateBox[{"1.353`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanLowerLowWater\"\>", "\[Rule]", 
+    TemplateBox[{"0.507`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanLowWater\"\>", "\[Rule]", 
+    TemplateBox[{"0.534`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"MeanSeaLevel\"\>", "\[Rule]", 
+    RowBox[{"Missing", "[", "\<\"NotAvailable\"\>", "]"}]}], ",", 
+   RowBox[{"\<\"MeanTideLevel\"\>", "\[Rule]", 
+    TemplateBox[{"0.937`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"Position\"\>", "\[Rule]", 
+    RowBox[{"GeoPosition", "[", 
+     RowBox[{"{", 
+      RowBox[{"25.083333333333332`", ",", 
+       RowBox[{"-", "77.35`"}]}], "}"}], "]"}]}], ",", 
+   RowBox[{"\<\"Station\"\>", "\[Rule]", 
+    TemplateBox[{"\"Nassau\"", 
+      RowBox[{"Entity", "[", 
+        RowBox[{"\"TideStation\"", ",", "\"Bahamas::727\""}], "]"}], 
+      "\"Entity[\\\"TideStation\\\", \\\"Bahamas::727\\\"]\"", 
+      "\"tide station\""},
+     "Entity"]}], ",", 
+   RowBox[{"\<\"StationDistance\"\>", "\[Rule]", 
+    TemplateBox[{
+     "3.2790914284527397`", "\"km\"", "kilometers", "\"Kilometers\""},
+     "Quantity"]}], ",", 
+   RowBox[{"\<\"StationName\"\>", "\[Rule]", "\<\"Nassau\"\>"}], ",", 
+   RowBox[{"\<\"TideType\"\>", 
+    "\[Rule]", "\<\"mixed, mainly semidiurnal\"\>"}], ",", 
+   RowBox[{"\<\"WaterLevel\"\>", "\[Rule]", 
+    TemplateBox[{"1.3760000000000001`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.919483730033834*^9, 3.919483973890333*^9},
+ CellLabel->
+  "Out[103]=",ExpressionUUID->"e7f414d5-c41e-4d7f-996e-23cd606c4350"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"location", "=", 
+  RowBox[{"Entity", "[", 
+   RowBox[{"\"\<City\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Nassau\>\"", ",", "\"\<NewProvidence\>\"", ",", "\"\<Bahamas\>\""}],
+      "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"data2", " ", "=", " ", 
+  RowBox[{"TideData", "[", 
+   RowBox[{"location", ",", "\"\<WaterLevel\>\"", ",", 
+    RowBox[{"DateRange", "[", " ", 
+     RowBox[{
+      RowBox[{"DateObject", "[", 
+       RowBox[{"{", 
+        RowBox[{"2024", ",", "4", ",", "25", ",", "0", ",", "0"}], "}"}], 
+       "]"}], ",", 
+      RowBox[{"DateObject", "[", 
+       RowBox[{"{", 
+        RowBox[{"2023", ",", "4", ",", "25", ",", "0", ",", "0"}], "}"}], 
+       "]"}], ",", "\"\<Minute\>\""}], "]"}]}], "]"}]}], "\[LineSeparator]", 
+ RowBox[{"data3", " ", "=", " ", 
+  RowBox[{"TideData", "[", 
+   RowBox[{"location", ",", "\"\<HighTide\>\"", ",", 
+    RowBox[{"DateObject", "[", 
+     RowBox[{"{", 
+      RowBox[{"2024", ",", "3", ",", "11", ",", "0", ",", "0"}], "}"}], 
+     "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"data4", " ", "=", " ", 
+  RowBox[{"TideData", "[", 
+   RowBox[{"location", ",", "\"\<HighTide\>\"", ",", 
+    RowBox[{"data3", "[", "\"\<Time\>\"", "]"}]}], " ", 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"data5", " ", "=", " ", 
+  RowBox[{"TideData", "[", 
+   RowBox[{"location", ",", "\"\<LowTide\>\"", ",", 
+    RowBox[{"DateObject", "[", 
+     RowBox[{"{", 
+      RowBox[{"2023", ",", "3", ",", "11", ",", "0", ",", "0"}], "}"}], 
+     "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"data6", " ", "=", " ", 
+  RowBox[{"TideData", "[", 
+   RowBox[{"location", ",", "\"\<LowTide\>\"", ",", 
+    RowBox[{"data5", "[", "\"\<Time\>\"", "]"}]}], " ", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.91180803001377*^9, 3.9118080795001698`*^9}, {
+   3.9118081106934357`*^9, 3.911808186119279*^9}, {3.911808265280949*^9, 
+   3.911808298963149*^9}, {3.911808333104661*^9, 3.9118083651520233`*^9}, {
+   3.911808411108803*^9, 3.911808452696567*^9}, {3.91180849539924*^9, 
+   3.911808495850185*^9}, {3.911808570283774*^9, 3.9118085764897757`*^9}, {
+   3.911808727098233*^9, 3.91180879489859*^9}, {3.911808840405594*^9, 
+   3.911808843908286*^9}, {3.9118094659981728`*^9, 3.911809483082487*^9}, {
+   3.9118095284976482`*^9, 3.911809593730454*^9}, {3.91180962502295*^9, 
+   3.911809634536631*^9}, 3.911809681972477*^9, {3.9118098317023783`*^9, 
+   3.91180983260688*^9}, {3.911809875675617*^9, 3.9118099102569017`*^9}, {
+   3.919139960759313*^9, 3.9191399723536587`*^9}, {3.919140115962467*^9, 
+   3.919140129508464*^9}, {3.919227380022038*^9, 3.9192273942303267`*^9}, {
+   3.919483684858726*^9, 3.919483699526198*^9}},
+ CellLabel->
+  "In[104]:=",ExpressionUUID->"0471f7cf-0a2c-41a4-afa8-f5d6be074fca"],
+
+Cell[BoxData[
+ TemplateBox[{"\"Nassau\"", 
+   RowBox[{"Entity", "[", 
+     RowBox[{"\"City\"", ",", 
+       RowBox[{"{", 
+         RowBox[{"\"Nassau\"", ",", "\"NewProvidence\"", ",", "\"Bahamas\""}],
+          "}"}]}], "]"}], 
+   "\"Entity[\\\"City\\\", {\\\"Nassau\\\", \\\"NewProvidence\\\", \
+\\\"Bahamas\\\"}]\"", "\"city\""},
+  "Entity"]], "Output",
+ CellChangeTimes->{3.9194837302402983`*^9, 3.9194839740765*^9},
+ CellLabel->
+  "Out[104]=",ExpressionUUID->"84d0542a-3d0a-487a-933c-78f6064b5ffc"],
+
+Cell[BoxData[
+ TemplateBox[{"0.541`", "\"m\"", "meters", "\"Meters\""},
+  "Quantity"]], "Output",
+ CellChangeTimes->{3.9194837302402983`*^9, 3.9194839751272507`*^9},
+ CellLabel->
+  "Out[105]=",ExpressionUUID->"8d2778c8-f041-4bb3-a909-4134abc35612"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Time\"\>", "\[Rule]", 
+    TemplateBox[{
+      RowBox[{"\"Mon 11 Mar 2024 09:19:13\"", 
+        StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+      RowBox[{"DateObject", "[", 
+        RowBox[{
+          RowBox[{"{", 
+            RowBox[{"2024", ",", "3", ",", "11", ",", "9", ",", "19", ",", 
+              FractionBox["105", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+          "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+     "DateObject",
+     Editable->False]}], ",", 
+   RowBox[{"\<\"Height\"\>", "\[Rule]", 
+    TemplateBox[{"1.431`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9194837302402983`*^9, 3.91948397601729*^9},
+ CellLabel->
+  "Out[106]=",ExpressionUUID->"f7f7bc73-2b9b-48b0-95b5-9c42d44ab87e"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Time\"\>", "\[Rule]", 
+    TemplateBox[{
+      RowBox[{"\"Mon 11 Mar 2024 21:44:03\"", 
+        StyleBox["\"EDT\"", FontColor -> GrayLevel[0.5]]}], 
+      RowBox[{"DateObject", "[", 
+        RowBox[{
+          RowBox[{"{", 
+            RowBox[{"2024", ",", "3", ",", "11", ",", "21", ",", "44", ",", 
+              FractionBox["29", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+          "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+     "DateObject",
+     Editable->False]}], ",", 
+   RowBox[{"\<\"Height\"\>", "\[Rule]", 
+    TemplateBox[{"1.478`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9194837302402983`*^9, 3.919483976881496*^9},
+ CellLabel->
+  "Out[107]=",ExpressionUUID->"c173b78a-ba96-430a-a651-81c209beca0a"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Time\"\>", "\[Rule]", 
+    TemplateBox[{
+      RowBox[{"\"Sat 11 Mar 2023 03:52:58\"", 
+        StyleBox["\"EST\"", FontColor -> GrayLevel[0.5]]}], 
+      RowBox[{"DateObject", "[", 
+        RowBox[{
+          RowBox[{"{", 
+            RowBox[{"2023", ",", "3", ",", "11", ",", "3", ",", "52", ",", 
+              FractionBox["465", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+          "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+     "DateObject",
+     Editable->False]}], ",", 
+   RowBox[{"\<\"Height\"\>", "\[Rule]", 
+    TemplateBox[{"0.49`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9194837302402983`*^9, 3.919483977816876*^9},
+ CellLabel->
+  "Out[108]=",ExpressionUUID->"c8314492-04e6-4ff0-9b05-617a919c8dd1"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Time\"\>", "\[Rule]", 
+    TemplateBox[{
+      RowBox[{"\"Sat 11 Mar 2023 16:00:56\"", 
+        StyleBox["\"EST\"", FontColor -> GrayLevel[0.5]]}], 
+      RowBox[{"DateObject", "[", 
+        RowBox[{
+          RowBox[{"{", 
+            RowBox[{"2023", ",", "3", ",", "11", ",", "16", ",", "0", ",", 
+              FractionBox["449", "8"]}], "}"}], ",", "\"Instant\"", ",", 
+          "\"Gregorian\"", ",", "\"America/Nassau\""}], "]"}]},
+     "DateObject",
+     Editable->False]}], ",", 
+   RowBox[{"\<\"Height\"\>", "\[Rule]", 
+    TemplateBox[{"0.446`", "\"m\"", "meters", "\"Meters\""},
+     "Quantity"]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9194837302402983`*^9, 3.919483978688162*^9},
+ CellLabel->
+  "Out[109]=",ExpressionUUID->"272cbd5a-0b56-479e-8085-cebcdee913bb"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.911809678256751*^9},
+ NumberMarks->False,
+ CellLabel->
+  "In[110]:=",ExpressionUUID->"2fda9b94-33f3-4947-8521-553b59ecad9f"],
+
+Cell[BoxData[""], "Input",
+ CellLabel->
+  "In[111]:=",ExpressionUUID->"8a804671-702c-4213-8e3b-7aa50dd40adf"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.911807934121374*^9, 3.911807968501545*^9}, {
+   3.9118084417818823`*^9, 3.9118084419100533`*^9}, 3.911808493785645*^9},
+ CellLabel->
+  "In[112]:=",ExpressionUUID->"f57e4136-0ca1-4049-848c-ac60e62e141f"]
+},
+WindowSize->{1255, 724},
+WindowMargins->{{Automatic, -15}, {Automatic, 1}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"13.3 for Mac OS X x86 (64-bit) (July 24, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"9b6c0154-7eb5-49cd-bc32-bf2612dd1419"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 4781, 100, 241, "Input",ExpressionUUID->"0c2b5782-7226-46b4-bb63-db16636bde72"],
+Cell[5364, 124, 23107, 528, 245, "Output",ExpressionUUID->"e3c7fdd5-3d70-4cec-8c94-dfb516afb283"]
+}, Open  ]],
+Cell[28486, 655, 174, 3, 35, "Text",ExpressionUUID->"ee15c3e1-9769-45f1-9bfc-350e9239be18"],
+Cell[CellGroupData[{
+Cell[28685, 662, 4035, 83, 304, "Input",ExpressionUUID->"8759c983-bc2e-4b0a-ad37-049e85922997"],
+Cell[32723, 747, 20583, 404, 73, "Output",ExpressionUUID->"25e5db83-53bf-4c6c-a7ff-db53a30b1a03"],
+Cell[53309, 1153, 25154, 582, 245, "Output",ExpressionUUID->"6bd64d73-8b01-46a0-b801-a9cf359d9133"]
+}, Open  ]],
+Cell[78478, 1738, 267, 4, 35, "Text",ExpressionUUID->"c4e9e649-129f-4387-9890-ddb8ac4ad8ed"],
+Cell[CellGroupData[{
+Cell[78770, 1746, 247, 4, 30, "Input",ExpressionUUID->"e07b084b-6a7b-4a47-8ca6-0d8bb62bdc2a"],
+Cell[79020, 1752, 760, 19, 44, "Output",ExpressionUUID->"6c4035d5-d50f-4f9f-8988-f25564a2589e"]
+}, Open  ]],
+Cell[79795, 1774, 166, 3, 35, "Text",ExpressionUUID->"d2d8097d-5a55-4841-845b-c6cf4def6e8c"],
+Cell[CellGroupData[{
+Cell[79986, 1781, 250, 4, 30, "Input",ExpressionUUID->"eb654667-5997-4745-8bba-7046200f4134"],
+Cell[80239, 1787, 761, 19, 44, "Output",ExpressionUUID->"704b610a-abae-4746-9b97-e0d783421696"]
+}, Open  ]],
+Cell[81015, 1809, 807, 14, 104, "Text",ExpressionUUID->"3adacb44-1244-4f33-a5d7-18ccdc007e38"],
+Cell[81825, 1825, 169, 2, 30, "Input",ExpressionUUID->"9bdf4451-e392-411b-8f18-1e0de4189c0d"],
+Cell[CellGroupData[{
+Cell[82019, 1831, 2873, 63, 241, "Input",ExpressionUUID->"cc88d7a8-e4cc-4f2b-913e-56df69acb8c2"],
+Cell[84895, 1896, 1132, 26, 43, "Output",ExpressionUUID->"83268c61-25e3-4bdc-8f95-3e36b579da95"],
+Cell[86030, 1924, 1131, 26, 43, "Output",ExpressionUUID->"507b7db1-5424-471b-9856-536a3ed71568"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87198, 1955, 1303, 30, 61, "Input",ExpressionUUID->"d6bc93c5-8fe3-4d72-baeb-0e991309edb3"],
+Cell[88504, 1987, 1109, 26, 43, "Output",ExpressionUUID->"35c4abce-d9bb-42b9-b591-9235e75ded5c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[89650, 2018, 1334, 33, 38, "Input",ExpressionUUID->"a5f048b5-d154-4be5-b22c-ba3b7f8ec3ae"],
+Cell[90987, 2053, 329, 7, 36, "Output",ExpressionUUID->"ecfc041e-e95c-4bf4-88a2-58ddbbc6812c"]
+}, Open  ]],
+Cell[91331, 2063, 302, 7, 52, "Input",ExpressionUUID->"3a11e652-d645-47d3-9dfd-d8221a816b3d"],
+Cell[CellGroupData[{
+Cell[91658, 2074, 1256, 32, 60, "Input",ExpressionUUID->"a5ffcd05-8af7-4424-ac73-d63971c856fd"],
+Cell[92917, 2108, 280, 6, 36, "Output",ExpressionUUID->"bfbc716f-1bca-4340-8b8a-959948d406a7"]
+}, Open  ]],
+Cell[93212, 2117, 1031, 23, 52, "Input",ExpressionUUID->"9f9586a3-4058-4bcd-a8ce-3fa9bd78b0af"],
+Cell[94246, 2142, 175, 3, 30, "Input",ExpressionUUID->"0716f004-1392-4fb8-a7db-ef3180ab5ec6"],
+Cell[CellGroupData[{
+Cell[94446, 2149, 1040, 25, 73, "Input",ExpressionUUID->"1f929183-e3a5-45fc-90cd-c69c9554b2f2"],
+Cell[95489, 2176, 79099, 1926, 1164, "Output",ExpressionUUID->"e7f414d5-c41e-4d7f-996e-23cd606c4350"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[174625, 4107, 2774, 58, 136, "Input",ExpressionUUID->"0471f7cf-0a2c-41a4-afa8-f5d6be074fca"],
+Cell[177402, 4167, 502, 12, 43, "Output",ExpressionUUID->"84d0542a-3d0a-487a-933c-78f6064b5ffc"],
+Cell[177907, 4181, 248, 5, 36, "Output",ExpressionUUID->"8d2778c8-f041-4bb3-a909-4134abc35612"],
+Cell[178158, 4188, 868, 20, 45, "Output",ExpressionUUID->"f7f7bc73-2b9b-48b0-95b5-9c42d44ab87e"],
+Cell[179029, 4210, 869, 20, 45, "Output",ExpressionUUID->"c173b78a-ba96-430a-a651-81c209beca0a"],
+Cell[179901, 4232, 868, 20, 45, "Output",ExpressionUUID->"c8314492-04e6-4ff0-9b05-617a919c8dd1"],
+Cell[180772, 4254, 869, 20, 45, "Output",ExpressionUUID->"272cbd5a-0b56-479e-8085-cebcdee913bb"]
+}, Open  ]],
+Cell[181656, 4277, 172, 4, 30, "Input",ExpressionUUID->"2fda9b94-33f3-4947-8521-553b59ecad9f"],
+Cell[181831, 4283, 109, 2, 30, "Input",ExpressionUUID->"8a804671-702c-4213-8e3b-7aa50dd40adf"],
+Cell[181943, 4287, 251, 4, 30, "Input",ExpressionUUID->"f57e4136-0ca1-4049-848c-ac60e62e141f"]
+}
+]
+*)
+
