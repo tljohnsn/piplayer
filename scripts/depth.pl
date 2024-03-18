@@ -11,6 +11,7 @@ my $socket = new IO::Socket::INET(
     Protocol  => 'tcp'
 ) or die "Socket konnte nicht erstellt werden!\n$!\n";
 
+system("sudo date -s \"`gpspipe -w -n 10 |grep time |tail -n1 | cut -d"," -f3 | cut -c9-27`Z\"");
 print "Client kommuniziert auf Port 5005\n";
 my $dt = DateTime->now;
 $dt->set_time_zone('America/New_York');
