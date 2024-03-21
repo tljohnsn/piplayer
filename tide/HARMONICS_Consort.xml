@@ -284,9 +284,9 @@ No values collected
    reference="Nassau, New Providence Island, Bahamas">
 <offsets>
    <max>
-      <timeadd value="+00:25"/>
+      <timeadd value="+00:30"/>
    </max><min>
-      <timeadd value="+00:55"/>
+      <timeadd value="+01:18"/>
    </min>
 </offsets>
 </subordinatestation>
