@@ -272,5 +272,23 @@ No values collected
    </min>
 </offsets>
 </subordinatestation>
+
+<subordinatestation name="Highbourne Cay, Exumas, Bahamas TJ"
+   latitude="24.71297020"
+   longitude="-76.83016195"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20240315"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:30"/>
+   </max><min>
+      <timeadd value="+01:18"/>
+   </min>
+</offsets>
+</subordinatestation>
  
 </document>
