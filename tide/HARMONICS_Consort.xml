@@ -59,7 +59,7 @@ Collected 2023-02-16
 </subordinatestation>
 
 <!-- Comments on Plane Bay, Great Guana, Bahamas:
-Collected 2023-02-11
+Collected 2023-02-11, Updated 2024-03-21
 24 04 40
 76 23 7
 -->
@@ -73,9 +73,13 @@ Collected 2023-02-11
    date_imported="20230425"
    restriction="Public Domain"
    reference="Nassau, New Providence Island, Bahamas">
-<simpleoffsets>
-   <timeadd value="+0:45"/>
-</simpleoffsets>
+<offsets>
+   <max>
+      <timeadd value="+01:02"/>
+   </max><min>
+      <timeadd value="+01:09"/>
+   </min>
+</offsets>
 </subordinatestation>
 
 <subordinatestation name="Flamingo Cay, Jumentos, Bahamas TJ"
