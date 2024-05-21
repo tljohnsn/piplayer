@@ -1,3 +1,5 @@
+#!/bin/bash
+#https://d0m.me/2023/10/01/debian-12-bookworm-install-php-7-4/
 curl -sSL https://packages.sury.org/php/README.txt | bash -x
 apt update
 apt remove php php-common php-mysql php-curl php-xml php-gd php-curl php-sqlite3 php-json php-xml php-mbstring
