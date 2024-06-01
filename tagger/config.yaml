@@ -29,7 +29,7 @@ convert:
    never_convert_lossy_files: yes
    album_art_maxwidth: 1024
    quiet: no
-   command: ~/piplayer/encode.sh
+   command: /Users/tljohnsn/piplayer/tagger/encode.sh $source $dest
    extension: mp3
 fetchart:
    enforce_ratio: 2.5%
