@@ -27,7 +27,10 @@ convert:
    auto: yes
    copy_album_art: yes
    never_convert_lossy_files: yes
-   quiet: no   
+   album_art_maxwidth: 1024
+   quiet: no
+   command: ~/piplayer/encode.sh
+   extension: mp3
 fetchart:
    enforce_ratio: 2.5%
    store_source: yes
