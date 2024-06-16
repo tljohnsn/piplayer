@@ -12,6 +12,7 @@ dos2unix -c mac $file
 #    $file
 
 sed -i \
+    -e "s%/Users//g" \
     -e "s%/Music/convertedflacs%convertedflacspi%g" \
     -e "s%/Music/mp3zlaptop%mp3zpi%g" \
     $file

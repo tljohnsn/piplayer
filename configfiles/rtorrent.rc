@@ -28,7 +28,7 @@ execute.throw = sh, -c, (cat,\
 ## Listening port for incoming peer traffic (fixed; you can also randomize it)
 network.port_range.set = 50000-50000
 network.port_random.set = no
-
+network.scgi.open_port = 127.0.0.1:5001
 
 ## Tracker-less torrent and UDP tracker support
 ## (conservative settings for 'private' trackers, change for 'public')
