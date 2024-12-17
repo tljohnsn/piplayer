@@ -21,7 +21,7 @@ systemctl mask gpsd.service
 sudo sed -i -e 's/GPSD_OPTIONS=""/GPSD_OPTIONS="-G -n"/' /etc/default/gpsd
 
 fi
-if [ `grep -c 127.127.28.0 /etc/ntp.conf` -lt 1 ]; then
+if [ `grep -c 127.127.28.0 /etc/ntp.conf 2>/dev/null` -lt 1 ]; then
 echo "
 server 127.127.28.0 prefer
 fudge 127.127.28.0 flag1 1 refid PPS

@@ -54,7 +54,8 @@ git config --global core.editor emacs
 git config --global pull.rebase false
 
 sudo apt update
-sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers \
+sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
+     emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers screen \
      apache2 php php-common php-mysql php-curl php-xml composer php-gd ffmpeg \
      php-curl php-sqlite3 php-json php-xml php-mbstring imagemagick \
      inotify-tools expect gridsite-clients alsa-tools sqlite3 ntp rsyslog
