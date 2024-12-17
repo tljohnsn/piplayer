@@ -34,3 +34,7 @@ cd ~pi
 sudo piplayer/scripts/install-pat.sh
 ```
 
+### Configure another hotspot
+```bash
+nmcli --ask device wifi connect "Verizon-MiFi8800L-CF30"
+```
