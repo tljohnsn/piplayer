@@ -30,8 +30,9 @@ pair-jbl-port.sh
 
 ### Install pat for ham radio
 ```bash
+#Do not run as root
 cd ~pi
-sudo piplayer/scripts/install-pat.sh
+piplayer/scripts/install-pat.sh
 ```
 
 ### Configure another hotspot
