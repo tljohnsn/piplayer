@@ -56,9 +56,10 @@ git config --global pull.rebase false
 sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
      emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers screen \
-     apache2  composer ffmpeg \
+     apache2 ffmpeg \
      imagemagick \
      inotify-tools expect gridsite-clients alsa-tools sqlite3 ntp rsyslog
+# removed composer and php stuff
 sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent samba samba-common-bin 
 sudo apt -y install bluealsa
 sudo apt -y install pulseaudio-module-bluetooth 
@@ -114,8 +115,8 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
     sudo systemctl disable mpd.socket
     mkdir -p ~pi/mpd
     curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
-    apt -y update
-    apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
+    sudo apt -y update
+    sudo apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
 else
     sudo systemctl enable --now mpd.service
     sudo apt -y install php php-common php-mysql php-curl php-xml php-gd php-curl php-sqlite3 php-json php-xml php-mbstring

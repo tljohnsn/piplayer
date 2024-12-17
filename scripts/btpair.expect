@@ -3,7 +3,7 @@
 set prompt "#"
 set address [lindex $argv 0]
 
-spawn sudo bluetoothctl
+spawn bluetoothctl
 expect -re $prompt
 send "remove $address\r"
 sleep 1
@@ -13,7 +13,7 @@ send_user "\nSleeping\r"
 sleep 5
 expect -re $prompt
 send_user "\nDone sleeping waiting to see $address\r"
-expect -re "address"
+expect -re "$address"
 expect -re $prompt
 send "scan off\r"
 sleep 2

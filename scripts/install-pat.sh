@@ -30,4 +30,4 @@ git apply /home/pi/piplayer/configfiles/pat.diff
 mkdir -p /home/pi/.config/pat
 cp /home/pi/piplayer/configfiles/config.json /home/pi/.config/pat/config.json
 source /boot/tunes.txt
-sed -i -e "s%secure_login_password\":.*,%secure_login_password\": \"`echo $pi_ssh_password`\",%" ~/.config/pat/config.json
+sed -i -e "s%secure_login_password\":.*,%secure_login_password\": \"`echo $pi_ssh_password`\",%" /home/pi/.config/pat/config.json
