@@ -9,6 +9,7 @@ if [ "$tracker" == "flacsfor.me" ]; then
     echo "Its from red" >>/tmp/dlcomplete.txt
     cp -a "$2" /Users/tljohnsn/mp3zstaging
     cp -a "$2" /Users/tljohnsn/red/download
+    gfind /Users/tljohnsn/Downloads -maxdepth 1 -mmin -60 -name "*.torrent" -print0 | gxargs -0r -i cp -a {} /Users/tljohnsn/red/adtorrent2/.
 osascript - "/Users/tljohnsn/piplayer/tagger/go.sh" <<EOF
 on run argv
 tell application "iTerm"
