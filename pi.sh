@@ -190,7 +190,7 @@ sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc
 sudo rm /var/www/html/index.html
 phpver=`ls /etc/php/`
 echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-timezone.ini
-echo 'max_execution_time = 120' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
+echo 'max_execution_time = 600' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
 sudo timedatectl set-timezone US/Central
 
 if [ "$wifi_mode" = "join" ]; then
