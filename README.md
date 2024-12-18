@@ -35,6 +35,11 @@ cd ~pi
 piplayer/scripts/install-pat.sh
 ```
 
+### Block chartplotter internet access
+```bash
+piplayer/scripts/consortmasq.sh wlanboard
+```
+
 ### Configure another hotspot
 ```bash
 nmcli --ask device wifi connect "Verizon-MiFi8800L-CF30"
