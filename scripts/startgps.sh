@@ -9,5 +9,5 @@ if [ -e /dev/ttyAMA0 ]; then
 #    gpsd /dev/ttyAMA0 -G
 fi
 
-#screen -dm -S cgps bash /usr/bin/cgps
+screen -d -m -S cgps /usr/bin/cgps
 
