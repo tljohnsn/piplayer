@@ -25,7 +25,7 @@ bash ~pi/piplayer/pi.sh
 * This uses the mac address configured in /boot/tunes.txt for pairing
 
 ```bash
-pair-jbl-port.sh
+piplayer/scripts/pair-jbl-port.sh
 ```
 
 ### Install pat for ham radio
