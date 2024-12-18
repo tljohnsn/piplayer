@@ -31,3 +31,5 @@ mkdir -p /home/pi/.config/pat
 cp /home/pi/piplayer/configfiles/config.json /home/pi/.config/pat/config.json
 source /boot/tunes.txt
 sed -i -e "s%secure_login_password\":.*,%secure_login_password\": \"`echo $pi_ssh_password`\",%" /home/pi/.config/pat/config.json
+
+crontab -u pi ~/piplayer/configfiles/pi.cron
