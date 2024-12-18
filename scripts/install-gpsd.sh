@@ -33,6 +33,7 @@ if [ `grep -c 127.127.28.0 /etc/ntpsec/ntp.conf` -lt 1 ]; then
 echo "
 server 127.127.28.0 prefer
 fudge 127.127.28.0 flag1 1 refid PPS
+tinker panic 0
 " | sudo tee -a /etc/ntpsec/ntp.conf
 fi
 

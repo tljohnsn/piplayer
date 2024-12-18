@@ -46,7 +46,7 @@ mpc consume on
 mpc volume 80%
 
 nohup ~pi/piplayer/scripts/startpat.bullseye.sh </dev/null >/dev/null 2>/dev/null &
-#nohup ~pi/piplayer/scripts/startgps.sh </dev/null >/dev/null 2>/dev/null &
+nohup ~pi/piplayer/scripts/startgps.sh </dev/null >/dev/null 2>/dev/null &
 nohup ~pi/piplayer/scripts/startrtorrent.sh </dev/null >/dev/null 2>/dev/null &
 nohup /home/pi/piplayer/scripts/startsound.sh >/dev/null 2>/dev/null &
 

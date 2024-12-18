@@ -189,9 +189,10 @@ sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
 sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
 sudo rm /var/www/html/index.html
 phpver=`ls /etc/php/`
-echo 'date.timezone = "US/Central"' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-timezone.ini
+zone=`timedatectl status | awk '/zone/ {print $3}'`
+echo "date.timezone = \"$zone\"" | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-timezone.ini
 echo 'max_execution_time = 600' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
-sudo timedatectl set-timezone US/Central
+#sudo timedatectl set-timezone US/Central
 
 if [ "$wifi_mode" = "join" ]; then
     sudo bash ~pi/piplayer/scripts/danielst.sh
