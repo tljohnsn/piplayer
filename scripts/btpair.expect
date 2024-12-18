@@ -9,11 +9,11 @@ send "remove $address\r"
 sleep 1
 expect -re $prompt
 send "scan on\r"
-send_user "\nSleeping\r"
+send_user "\nSleeping scan on\r"
 sleep 5
 expect -re $prompt
-send_user "\nDone sleeping waiting to see $address\r"
-expect -re "$address"
+send_user "\n\rDone sleeping waiting to see $address\n\r"
+expect -re "NEW.*$address"
 expect -re $prompt
 send "scan off\r"
 sleep 2
