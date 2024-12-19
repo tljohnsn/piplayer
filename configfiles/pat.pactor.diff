@@ -1,0 +1,56 @@
+diff --git a/web/dist/index.html b/web/dist/index.html
+index 0e55c96..854dbe5 100644
+--- a/web/dist/index.html
++++ b/web/dist/index.html
+@@ -199,9 +199,9 @@
+                           data-width="100%"
+                           id="transportSelect"
+                         >
++                          <option value="pactor">PACTOR</option>
+                           <option value="ardop">ARDOP</option>
+                           <option value="ax25">AX.25</option>
+-                          <option value="pactor">PACTOR</option>
+                           <option value="telnet">Telnet</option>
+                           <option value="varafm">VARA FM</option>
+                           <option value="varahf">VARA HF</option>
+@@ -302,10 +302,10 @@
+                 <div class="col-md-4">
+                   <select class="selectpicker form-control" data-width="100%" id="modeSearchSelect">
+                     <optgroup label="mode">
++                      <option value="pactor" selected>Pactor</option>
+                       <option value="">(any mode)</option>
+-                      <option value="ardop" selected>ARDOP</option>
++                      <option value="ardop">ARDOP</option>
+                       <option value="packet">Packet</option>
+-                      <option value="pactor">Pactor</option>
+                       <option value="varafm">VARA FM</option>
+                       <option value="varahf">VARA HF</option>
+                     </optgroup>
+diff --git a/web/src/index.html b/web/src/index.html
+index 0e55c96..137d027 100644
+--- a/web/src/index.html
++++ b/web/src/index.html
+@@ -199,9 +199,9 @@
+                           data-width="100%"
+                           id="transportSelect"
+                         >
++                          <option value="pactor" selected>PACTOR</option>
+                           <option value="ardop">ARDOP</option>
+                           <option value="ax25">AX.25</option>
+-                          <option value="pactor">PACTOR</option>
+                           <option value="telnet">Telnet</option>
+                           <option value="varafm">VARA FM</option>
+                           <option value="varahf">VARA HF</option>
+@@ -302,10 +302,10 @@
+                 <div class="col-md-4">
+                   <select class="selectpicker form-control" data-width="100%" id="modeSearchSelect">
+                     <optgroup label="mode">
++                      <option value="pactor" selected>Pactor</option>
+                       <option value="">(any mode)</option>
+-                      <option value="ardop" selected>ARDOP</option>
++                      <option value="ardop" >ARDOP</option>
+                       <option value="packet">Packet</option>
+-                      <option value="pactor">Pactor</option>
+                       <option value="varafm">VARA FM</option>
+                       <option value="varahf">VARA HF</option>
+                     </optgroup>
