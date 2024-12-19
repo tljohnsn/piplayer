@@ -222,6 +222,8 @@ sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/firmware/cmdline.txt
 echo "    HostKeyAlgorithms=+ssh-rsa" | sudo tee /etc/ssh/ssh_config
 echo "    PubkeyAcceptedAlgorithms=+ssh-rsa" | sudo tee -a /etc/ssh/ssh_config
 
+echo "set enable-bracketed-paste off" | sudo tee -a /etc/inputrc
+
 echo "" | sudo tee /etc/motd
 
 if [ "$pi_ssh_password" != "raspberry" ]; then
