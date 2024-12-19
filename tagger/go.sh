@@ -47,5 +47,6 @@ echo "If everything looks good, drag the folders from mp3zrenamed into mp3zlapto
 echo 
 echo "now run this command to send files from mp3zlaptop to tunes:"
 echo " ~/piplayer/tagger/syncssh.sh"
+echo " ~/piplayer/tagger/mbpsync.sh"
 echo " mpc update"
 echo " mpc add mp3zpi/Square\ One\ -\ In\ Full\ Bloom/10\ Kitty\ Cat.mp3"
