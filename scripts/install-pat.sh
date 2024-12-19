@@ -25,6 +25,7 @@ cd /home/pi
 git clone https://github.com/la5nta/pat
 cd /home/pi/pat
 git apply /home/pi/piplayer/configfiles/pat.diff
+git apply /home/pi/piplayer/configfiles/pat.pactor.diff
 ./make.bash
 
 mkdir -p /home/pi/.config/pat
