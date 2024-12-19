@@ -40,6 +40,13 @@ piplayer/scripts/install-pat.sh
 piplayer/scripts/consortmasq.sh wlanboard
 ```
 
+### Add ssh key for rompr backup
+```bash
+sudo su - root
+ssh-keygen -t rsa
+ssh-copy-id trentj@hot.useractive.com
+```
+
 ### Configure another hotspot
 ```bash
 nmcli --ask device wifi connect "Verizon-MiFi8800L-CF30"
