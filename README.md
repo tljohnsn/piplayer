@@ -37,7 +37,7 @@ piplayer/scripts/install-pat.sh
 
 ### Block chartplotter internet access
 ```bash
-piplayer/scripts/consortmasq.sh wlanboard
+sudo ~/piplayer/scripts/consortmasq.sh wlanboard
 ```
 
 ### Add ssh key for rompr backup
