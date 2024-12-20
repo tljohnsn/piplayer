@@ -1,5 +1,5 @@
 #!/bin/bash
-#pip3 install torrent_parser
+#/Users/tljohnsn/piplayer/tagger/dlcomplete.sh "%N" "%F" "%T" "%K"
 echo "Torrent name $1" >>/tmp/dlcomplete.txt
 echo "Root path $2"  >>/tmp/dlcomplete.txt
 echo "Tracker $3"   >>/tmp/dlcomplete.txt
