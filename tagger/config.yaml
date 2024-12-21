@@ -35,6 +35,8 @@ fetchart:
    enforce_ratio: 2.5%
    store_source: yes
    cover_names: cover.jpg
+   max_filesize: 500000
+   maxwidth: 500
 embedart:
    ifempty: yes
 ftintitle:
