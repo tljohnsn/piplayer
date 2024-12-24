@@ -2,12 +2,15 @@
 cd /home/pi
 apt -y install gpsd gpsd-clients scons libncurses5-dev cimg-dev libdatetime-perl
 source /etc/os-release
-if [ "$VERSION_CODENAME" != "bookworm" ]; then
+if [ "$VERSION_CODENAME" != "anything" ]; then
 wget https://download-mirror.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.xz
 tar -xf gpsd-3.25.tar.xz
 cd gpsd-3.25
 scons
+mv /usr/sbin/gpsd /usr/sbin/gpsd.322
+mv /usr/bin/cgps /usr/bin/cgps.322
 cp ./gpsd-3.25/gpsd/gpsd /usr/sbin
+cp ./gpsd-3.25/clients/cgps /usr/bin
 
 systemctl stop gpsd.socket
 systemctl stop gpsd.service
