@@ -277,14 +277,14 @@ No values collected
 </offsets>
 </subordinatestation>
 
-<subordinatestation name="Highbourne Cay, Exumas, Bahamas TJ"
-   latitude="24.71297020"
-   longitude="-76.83016195"
+<subordinatestation name="Mackie Shoal, Bahamas TJ"
+   latitude="25.40677168"
+   longitude="-78.273579975"
    timezone=":America/Nassau"
    country="Bahamas"
    source="consort@trentjohnson.net"
    restriction="Public Domain"
-   date_imported="20240315"
+   date_imported="20240324"
    reference="Nassau, New Providence Island, Bahamas">
 <offsets>
    <max>
