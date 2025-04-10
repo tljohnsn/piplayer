@@ -295,21 +295,21 @@ No values collected
 </offsets>
 </subordinatestation>
 
-<subordinatestation name="Morgans Bluff, Andros, Bahamas TJ"
-   latitude="25.1770000000"
-   longitude="-78.028"
+<subordinatestation name="Warderick Wells, Exuma, BS"
+   latitude="24.39735175"
+   longitude="-76.63275925"
    timezone=":America/Nassau"
    country="Bahamas"
    source="consort@trentjohnson.net"
    restriction="Public Domain"
-   date_imported="20250325"
+   date_imported="20250408"
    reference="Nassau, New Providence Island, Bahamas">
 <offsets>
    <max>
-      <timeadd value="+00:13"/>
+      <timeadd value="-00:13"/>
    </max>
    <min>
-      <timeadd value="-00:45"/>
+      <timeadd value="+00:20"/>
    </min>
 </offsets>
 </subordinatestation>
