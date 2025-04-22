@@ -16,6 +16,8 @@ $datestring="$datestring" . "Z\n";
 print "sudo date -s $datestring";
 system("sudo date -s \"`gpspipe -w -n 10 |grep time |tail -n1 | cut -d"," -f3 | cut -c9-27`Z\"");
 system("sudo date -s $datestring");
+print("The time is set to:\n");
+system("date");
 print "Client kommuniziert auf Port 5005\n";
 my $dt = DateTime->now;
 $dt->set_time_zone('America/New_York');
