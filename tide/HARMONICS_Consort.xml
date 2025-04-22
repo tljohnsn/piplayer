@@ -252,10 +252,10 @@ No values collected
    country="Bahamas"
    source="consort@trentjohnson.net"
    restriction="Public Domain"
-   date_imported="20230417"
+   date_imported="20250415"
    reference="Nassau, New Providence Island, Bahamas">
 <simpleoffsets>
-   <timeadd value="+0:30"/>
+   <timeadd value="+0:50"/>
 </simpleoffsets>
 </subordinatestation>
    
