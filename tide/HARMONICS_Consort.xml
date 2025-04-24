@@ -321,14 +321,14 @@ No values collected
    country="Bahamas"
    source="consort@trentjohnson.net"
    restriction="Public Domain"
-   date_imported="20250408"
+   date_imported="20250424"
    reference="Nassau, New Providence Island, Bahamas">
 <offsets>
    <max>
       <timeadd value="+00:35"/>
    </max>
    <min>
-      <timeadd value="+00:60"/>
+      <timeadd value="+01:00"/>
    </min>
 </offsets>
 </subordinatestation>
