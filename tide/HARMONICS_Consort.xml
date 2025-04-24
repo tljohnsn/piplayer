@@ -314,4 +314,24 @@ No values collected
 </offsets>
 </subordinatestation>
 
+<subordinatestation name="Isaac Bay, Great Guana Cay, Exuma, BS"
+   latitude="24.00355964"
+   longitude="-76.34273861"
+   timezone=":America/Nassau"
+   country="Bahamas"
+   source="consort@trentjohnson.net"
+   restriction="Public Domain"
+   date_imported="20250408"
+   reference="Nassau, New Providence Island, Bahamas">
+<offsets>
+   <max>
+      <timeadd value="+00:35"/>
+   </max>
+   <min>
+      <timeadd value="+00:60"/>
+   </min>
+</offsets>
+</subordinatestation>
+
+
 </document>
