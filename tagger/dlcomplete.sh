@@ -26,3 +26,24 @@ end tell
 end run
 EOF
 fi
+
+if [ "$tracker" == "t.myanonamouse.net" ]; then
+    echo "Its from mam" >>/tmp/dlcomplete.txt
+    cp -a "$2" /Users/tljohnsn/red/download
+    gfind /Users/tljohnsn/Downloads -maxdepth 1 -mmin -60 -name "*.torrent" -print0 | gxargs -0r -i cp -a {} /Users/tljohnsn/red/adtorrent2/.
+osascript - "/Users/tljohnsn/piplayer/tagger/mbpsync.sh" <<EOF
+on run argv
+tell application "iTerm"
+    activate
+    set new_term to (create window with default profile)
+    tell new_term
+        tell the current session
+            repeat with arg in argv
+               write text arg
+            end repeat
+        end tell
+    end tell
+end tell
+end run
+EOF
+fi
