@@ -5,6 +5,7 @@ echo "Root path $2"  >>/tmp/dlcomplete.txt
 echo "Tracker $3"   >>/tmp/dlcomplete.txt
 echo "Id $4"  >>/tmp/dlcomplete.txt
 tracker=`echo "$3" | cut -d / -f 3`
+mkdir -p /Users/tljohnsn/red/{adtorrent2,download}
 if [ "$tracker" == "flacsfor.me" ]; then
     echo "Its from red" >>/tmp/dlcomplete.txt
     cp -a "$2" /Users/tljohnsn/mp3zstaging
