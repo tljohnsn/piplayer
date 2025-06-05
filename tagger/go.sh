@@ -2,6 +2,14 @@
 if [ -x /usr/local/bin/mid3v2 ]; then
     mid3v2=/usr/local/bin/mid3v2
 fi
+
+if [ -x /usr/local/opt/ffmpeg\@4/bin/ffmpeg ]; then
+    echo "Use ffmpeg4"
+    export PATH="/usr/local/opt/ffmpeg@4/bin:$PATH"
+    export LDFLAGS="-L/usr/local/opt/ffmpeg@4/lib"
+    export CPPFLAGS="-I/usr/local/opt/ffmpeg@4/include"
+fi
+
 if [ -x $HOME/Library/Python/3.9/bin/mid3v2 ]; then
     mid3v2=$HOME/Library/Python/3.9/bin/mid3v2
 fi
