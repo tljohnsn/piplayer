@@ -26,6 +26,7 @@ python3 setup.py install
 #cp beetsplug/beetsplug/autosingleton.py /usr/local/lib/python3.9/site-packages/beetsplug/
 
 pip3 install requests
+pip3 install --break-system-packages standard-aifc standard-sunau
 
 mkdir -p ~/{.config/beets,data,mp3zstaging,mp3zrenamed}
 cp ~/piplayer/tagger/config.yaml ~/.config/beets
