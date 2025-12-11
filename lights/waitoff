@@ -1,3 +1,4 @@
 #!/bin/bash
 /home/pi/sunwait/sunwait wait sunrise angle 5 40.1164N 88.2434W
 /home/pi/piplayer/lights/alloff
+/home/pi/piplayer/lights/xmason.sh
