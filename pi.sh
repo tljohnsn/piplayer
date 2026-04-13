@@ -41,7 +41,7 @@ fi
 
 if [ ! -f /usr/bin/git ]; then
    exit "run me as root for debian install"
-   apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync alsa-utils net-tools acpid
+   apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync alsa-utils net-tools acpid dos2unix unzip
    echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
    chmod 440 /etc/sudoers.d/010_pi-nopasswd
    systemctl enable --now avahi-daemon
@@ -55,10 +55,11 @@ git config --global pull.rebase false
 
 sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
-     emacs-nox dos2unix hostapd dnsmasq raspberrypi-kernel-headers screen \
+     emacs-nox dos2unix hostapd dnsmasq screen \
      apache2 ffmpeg \
      imagemagick \
      inotify-tools expect gridsite-clients alsa-tools sqlite3 ntp rsyslog
+sudo apt -y install raspberrypi-kernel-headers
 # removed composer and php stuff
 sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent samba samba-common-bin 
 sudo apt -y install bluealsa
@@ -117,6 +118,16 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
     curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
     sudo apt -y update
     sudo apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
+    if [ `arch` = "i386" ]; then
+	sudo apt install build-essential autoconf libtool bison re2c pkg-config libxml2-dev libsqlite3-dev libssl-dev apache2-dev
+	sudo apt-get install libonig-dev libcurl4-openssl-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev 
+	wget https://www.php.net/distributions/php-7.4.33.tar.gz
+	cd php-7.4.33
+	./configure --with-apxs2=/usr/bin/apxs --enable-zts --with-pdo-mysql --with-curl --enable-gd --with-jpeg --with-webp --enable-json --enable-mbstring
+	make
+	a2dismod mpm_event
+	a2enmod mpm_prefork
+    fi
 else
     sudo systemctl enable --now mpd.service
     sudo apt -y install php php-common php-mysql php-curl php-xml php-gd php-curl php-sqlite3 php-json php-xml php-mbstring

@@ -16,5 +16,5 @@ git clone https://github.com/tljohnsn/sunwait.git
 cd sunwait
 make
 
-cron ~/piplayer/pi.cron
+crontab ~/piplayer/configfiles/pi.cron
 
