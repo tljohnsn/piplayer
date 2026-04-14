@@ -118,9 +118,6 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
     sudo systemctl disable mpd.service
     sudo systemctl disable mpd.socket
     mkdir -p ~pi/mpd
-    curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
-    sudo apt -y update
-    sudo apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
     if [ `arch` = "i686" ]; then
 	sudo apt install build-essential autoconf libtool bison re2c pkg-config libxml2-dev libsqlite3-dev libssl-dev apache2-dev
 	sudo apt-get install libonig-dev libcurl4-openssl-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev libreadline-dev
@@ -131,6 +128,7 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
 		    --enable-json --enable-mbstring --enable-intl --with-readline \
 		    --with-config-file-path=/etc/php/7.3/apache2 --with-config-file-scan-dir=/etc/php/7.3/apache2/conf.d
 	make
+	sudo make install
         sudo mkdir -p /etc/php/7.3/apache2/conf.d
 	echo "log_errors = on" | sudo tee -a /etc/php/7.3/apache2/php.ini
 	echo "output_buffering = 4096" | sudo tee -a /etc/php/7.3/apache2/php.ini
@@ -138,6 +136,10 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
 	sudo a2enmod mpm_prefork
 	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/php7.3.conf /etc/apache2/conf-enabled/php7.3.conf
 	sudo apt remove apparmor
+    else
+	curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
+	sudo apt -y update
+	sudo apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
     fi
 else
     sudo systemctl enable --now mpd.service
