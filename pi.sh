@@ -119,6 +119,10 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
     sudo systemctl disable mpd.socket
     mkdir -p ~pi/mpd
     if [ `arch` = "i686" ]; then
+	if [ -f "/opt/myscripts/php-7.4.33.i386.tar.gz" ]; then
+	    tar -xzf /opt/myscripts/php-7.4.33.i386.tar.gz
+	    cd php-7.4.33
+	else
 	sudo apt install build-essential autoconf libtool bison re2c pkg-config libxml2-dev libsqlite3-dev libssl-dev apache2-dev
 	sudo apt-get install libonig-dev libcurl4-openssl-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev libreadline-dev
 	wget https://www.php.net/distributions/php-7.4.33.tar.gz
@@ -128,6 +132,7 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
 		    --enable-json --enable-mbstring --enable-intl --with-readline \
 		    --with-config-file-path=/etc/php/7.3/apache2 --with-config-file-scan-dir=/etc/php/7.3/apache2/conf.d
 	make
+	fi
 	sudo make install
         sudo mkdir -p /etc/php/7.3/apache2/conf.d
 	echo "log_errors = on" | sudo tee -a /etc/php/7.3/apache2/php.ini
