@@ -121,7 +121,7 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
     curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
     sudo apt -y update
     sudo apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
-    if [ `arch` = "i386" ]; then
+    if [ `arch` = "i686" ]; then
 	sudo apt install build-essential autoconf libtool bison re2c pkg-config libxml2-dev libsqlite3-dev libssl-dev apache2-dev
 	sudo apt-get install libonig-dev libcurl4-openssl-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev libreadline-dev
 	wget https://www.php.net/distributions/php-7.4.33.tar.gz
