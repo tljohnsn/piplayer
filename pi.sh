@@ -57,21 +57,24 @@ sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
      emacs-nox dos2unix hostapd dnsmasq screen \
      apache2 ffmpeg \
-     imagemagick \
+     imagemagick rtorrent unrar-free\
      inotify-tools expect gridsite-clients alsa-tools sqlite3 ntp rsyslog
 sudo apt -y install raspberrypi-kernel-headers
 # removed composer and php stuff
 sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent samba samba-common-bin 
-sudo apt -y install bluealsa
-sudo apt -y install pulseaudio-module-bluetooth 
+
+if [ `arch` = "armv7l" ]; then
+    sudo apt -y install bluealsa
+    sudo apt -y install pulseaudio-module-bluetooth 
+fi
 
 #systemctl enable ssh
 #systemctl start ssh
 
 #Install and configure Samba to open a share at /home/ftp/local
 sudo mkdir -p -m 777 /home/ftp/local/{mp3zpi,convertedflacspi,playlists}
-sudo chown -R pi.pi /home/ftp/local
 cp -a ~pi/piplayer/playlists/* /home/ftp/local/playlists
+sudo chown -R pi:pi /home/ftp/local
 
 if [ `grep -c ftp/local /etc/samba/smb.conf` -lt 1 ]; then
 sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
@@ -120,13 +123,21 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
     sudo apt -y install php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-json php7.4-mbstring
     if [ `arch` = "i386" ]; then
 	sudo apt install build-essential autoconf libtool bison re2c pkg-config libxml2-dev libsqlite3-dev libssl-dev apache2-dev
-	sudo apt-get install libonig-dev libcurl4-openssl-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev 
+	sudo apt-get install libonig-dev libcurl4-openssl-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev libreadline-dev
 	wget https://www.php.net/distributions/php-7.4.33.tar.gz
+	tar -xzf php-7.4.33.tar.gz
 	cd php-7.4.33
-	./configure --with-apxs2=/usr/bin/apxs --enable-zts --with-pdo-mysql --with-curl --enable-gd --with-jpeg --with-webp --enable-json --enable-mbstring
+	./configure --with-apxs2=/usr/bin/apxs --enable-zts --with-pdo-mysql --with-curl --enable-gd --with-jpeg --with-webp \
+		    --enable-json --enable-mbstring --enable-intl --with-readline \
+		    --with-config-file-path=/etc/php/7.3/apache2 --with-config-file-scan-dir=/etc/php/7.3/apache2/conf.d
 	make
-	a2dismod mpm_event
-	a2enmod mpm_prefork
+        sudo mkdir -p /etc/php/7.3/apache2/conf.d
+	echo "log_errors = on" | sudo tee -a /etc/php/7.3/apache2/php.ini
+	echo "output_buffering = 4096" | sudo tee -a /etc/php/7.3/apache2/php.ini
+	sudo a2dismod mpm_event
+	sudo a2enmod mpm_prefork
+	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/php7.3.conf /etc/apache2/conf-enabled/php7.3.conf
+	sudo apt remove apparmor
     fi
 else
     sudo systemctl enable --now mpd.service
@@ -183,6 +194,8 @@ if [ -n $bt_addr ]; then
 fi
 
 #https://nxnjz.net/2019/01/installation-of-ampache-on-debian-9/
+
+#Modules for rompr
 sudo a2enmod rewrite
 sudo a2enmod expires
 
@@ -202,7 +215,7 @@ sudo rm /var/www/html/index.html
 phpver=`ls /etc/php/`
 zone=`timedatectl status | awk '/zone/ {print $3}'`
 echo "date.timezone = \"$zone\"" | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-timezone.ini
-echo 'max_execution_time = 600' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
+echo 'max_execution_time = 1800' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
 #sudo timedatectl set-timezone US/Central
 
 if [ "$wifi_mode" = "join" ]; then
