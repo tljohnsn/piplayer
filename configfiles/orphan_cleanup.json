@@ -1,0 +1,19 @@
+{
+  "core": {
+    "debug": false
+
+  },
+  "rutorrent": {
+    "url": "http://localhost/rut",
+    "download_folder": "/home/pi/rtorrent/download",
+    "path_mappings": {
+      "/home/pi/rtorrent/download": [
+        "/home/pi/rtorrent/download"
+      ]
+    }
+  },
+  "cleanup": {
+    "auto_remove": false,
+    "show_total_orphans_size": true
+  }
+}

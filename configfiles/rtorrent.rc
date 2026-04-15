@@ -124,4 +124,15 @@ log.add_output = "info", "log"
 #Start if hash check indicates complete TJ 2024-07-12
 method.set_key = event.download.hash_done, simple, "branch={d.complete=,d.start=}"
 
+# SCHEDULE: Set "last_active" custom field for items that have upload
+# Was d.peers_connected, changed to d.up.rate
+# https://github.com/rakshasa/rtorrent/issues/305#issuecomment-114076405
+method.insert = d.last_active, simple|value, "if=$d.up.rate=,$cat=$system.time=,$d.custom=last_active"
+method.insert = d.last_active.set, simple|private, "d.custom.set=last_active,$cat=$system.time="
+schedule = update_last_active, 24, 42, "d.multicall2=started,\"branch=$d.up.rate=,d.last_active.set=\""
+method.insert = d.last_active.print, simple|private, "print=\"$cat={$convert.date=$d.last_active=, \\\" \\\", $convert.time=$d.last_active=}\""
+method.insert  = d.last_active.check, simple|private, "or={d.up.rate=,not=$d.custom=last_active}"
+method.set_key = event.download.resumed, last_active_r, "branch={d.last_active.check=,d.last_active.set= ;d.save_full_session=}"
+method.set_key = event.download.finished, last_active_f, "d.last_active.set= ;d.save_full_session="
+
 ### END of rtorrent.rc ###
