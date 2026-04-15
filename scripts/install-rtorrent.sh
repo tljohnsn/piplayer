@@ -37,4 +37,4 @@ sudo sed -i -e "s/5000/5001/" /var/www/html/rut/conf/config.php
 
 cd ~pi
 git clone https://github.com/tljohnsn/rtorrent_orphan_cleanup.git
-install -b -u pi -g pi -m 600 ~pi/piplayer/configfiles/orphan_cleanup.json ~pi/rtorrent_orphan_cleanup/orphan_cleanup.json
+install -b -o pi -g pi -m 600 ~pi/piplayer/configfiles/orphan_cleanup.json ~pi/rtorrent_orphan_cleanup/orphan_cleanup.json
