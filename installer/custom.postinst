@@ -63,8 +63,8 @@ cp -a /tmp/extras/. /opt/myscripts/.
 #cp /tmp/extras/myfiles.tar.gz /opt/myscripts
 #cp /tmp/extras/VBoxGuestAdditions.iso /opt/myscripts
 cd /opt/myscripts
-
 tar -xzf myfiles.tar.gz
+tar -xvf hostkeys.tgz -C /etc/ssh
 
 cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
 
