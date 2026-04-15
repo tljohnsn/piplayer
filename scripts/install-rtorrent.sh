@@ -25,11 +25,11 @@ sed -i -e "s/torrent.addtime /torrent.addtime1 /" init.js
 sed -i -e "9d" init.js
 cd ../../..
 
-sudo chown -R www-data.www-data ruTorrent-4.3.2
 rm -rf ruTorrent-4.3.2/plugins/{_cloudflare,screenshots,mediainfo,spectrogram}
+sudo chown -R www-data.www-data ruTorrent-4.3.2
 
 sudo mv ruTorrent-4.3.2 /var/www/html
-sudo ln -s /var/www/html/ruTorrent-4.3.2 /var/www/html/ru
+sudo ln -s /var/www/html/ruTorrent-4.3.2 /var/www/html/rut
 
 sudo install -b -o www-data -g www-data -m 755 ~pi/piplayer/configfiles/WebUISettings.dat /var/www/html/rut/share/settings/WebUISettings.dat
 
