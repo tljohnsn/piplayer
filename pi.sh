@@ -141,6 +141,7 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
 	sudo a2enmod mpm_prefork
 	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/php7.3.conf /etc/apache2/conf-enabled/php7.3.conf
 	sudo apt remove apparmor
+	sudo systemctl restart apache2
     else
 	curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
 	sudo apt -y update
