@@ -64,6 +64,7 @@ cp -a /tmp/extras/. /opt/myscripts/.
 #cp /tmp/extras/VBoxGuestAdditions.iso /opt/myscripts
 cd /opt/myscripts
 tar -xzf myfiles.tar.gz
+mkdir -p /etc/ssh
 tar -xvf hostkeys.tgz -C /etc/ssh
 
 cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
@@ -82,19 +83,19 @@ systemctl enable --now avahi-daemon
 systemctl disable rsync
 
 #Install and configure Samba to open a share at /home/ftp/local
-sudo mkdir -p -m 777 /home/ftp/local/{mp3zpi,convertedflacspi,playlists}
+mkdir -p -m 777 /home/ftp/local/{mp3zpi,convertedflacspi,playlists}
 cp -a ~pi/piplayer/playlists/* /home/ftp/local/playlists
-sudo chown -R pi.pi /home/ftp/local
+chown -R pi.pi /home/ftp/local
 
 
-sudo usermod -a -G video mpd
+usermod -a -G video mpd
 
 
-echo "HostKeyAlgorithms=+ssh-rsa" | sudo tee /etc/ssh/ssh_config
-echo "PubkeyAcceptedAlgorithms=+ssh-rsa" | sudo tee -a /etc/ssh/ssh_config
-echo "set enable-bracketed-paste off" | sudo tee -a /etc/inputrc
+echo "HostKeyAlgorithms=+ssh-rsa" |  tee /etc/ssh/ssh_config
+echo "PubkeyAcceptedAlgorithms=+ssh-rsa" | tee -a /etc/ssh/ssh_config
+echo "set enable-bracketed-paste off" | tee -a /etc/inputrc
 
-echo "" | sudo tee /etc/motd
+echo "" | tee /etc/motd
 
 touch /2026-04-14-11-31
 
