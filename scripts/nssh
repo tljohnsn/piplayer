@@ -1,0 +1,6 @@
+#!/bin/sh
+# ssh with no host keys
+exec ssh -A -o 'UserKnownHostsFile /dev/null' \
+     -oHostKeyAlgorithms=+ssh-dss \
+     -oKexAlgorithms=+diffie-hellman-group1-sha1 \
+     -o 'StrictHostKeyChecking no' "$@"
