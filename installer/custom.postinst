@@ -32,7 +32,7 @@ tar -pxzf /media/cdrom/simple-cdd/extras.tar.gz
 
 # Download
 #git clone https://github.com/accel-ppp/accel-ppp.git /opt/accel-ppp-code
-git clone https://github.com/piplayer.git /home/pi/piplayer
+git clone https://github.com/tljohnsn/piplayer.git /home/pi/piplayer
 
 #mkdir -p /opt/accel-ppp/build
 #cd /opt/accel-ppp/build
