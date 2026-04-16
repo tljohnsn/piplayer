@@ -6,6 +6,8 @@ ln -s ~/piplayer/installer/custom.packages .
 ln -s ~/piplayer/installer/custom.preseed .
 ln -s ~/piplayer/installer/custom.postinst .
 
+build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed --no-do-mirror --dvd --logfile ./out.log
+
 
 sudo xorriso -osirrox on -indev debian-12-i386-CD-1.iso  -extract / isofiles/
 sudo chmod u+w isofiles/simple-cdd/custom.postinst

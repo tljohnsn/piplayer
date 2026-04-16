@@ -197,7 +197,7 @@ sudo sed -i -e "s/join_wifi_network/$join_wifi_network/" \
 
 
 # Configure sound to always route through bluetooth
-if [ -n $bt_addr ]; then
+if [ -n "$bt_addr" ]; then
     sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/asound.conf /etc
 fi
 
