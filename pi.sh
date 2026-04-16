@@ -139,6 +139,8 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
 	echo "output_buffering = 4096" | sudo tee -a /etc/php/7.3/apache2/php.ini
 	sudo a2dismod mpm_event
 	sudo a2enmod mpm_prefork
+	sudo a2enmod proxy
+	sudo a2enmod proxy_http
 	sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/php7.3.conf /etc/apache2/conf-enabled/php7.3.conf
 	sudo apt remove apparmor
 	sudo systemctl restart apache2
@@ -209,6 +211,9 @@ sudo a2enmod expires
 
 sudo a2enmod headers
 sudo a2enmod deflate
+
+sudo a2enmod proxy
+sudo a2enmod proxy_http
 
 sudo systemctl enable --now apache2.service
 
