@@ -5,7 +5,8 @@ rm custom.p*
 ln -s ~/piplayer/installer/custom.packages .
 ln -s ~/piplayer/installer/custom.preseed .
 ln -s ~/piplayer/installer/custom.postinst .
-
+cd ..
+tar -pczf extras.tar.gz extras/
 build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed --no-do-mirror --dvd --logfile ./out.log
 
 
