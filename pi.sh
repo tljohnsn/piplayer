@@ -214,6 +214,7 @@ sudo a2enmod deflate
 
 sudo a2enmod proxy
 sudo a2enmod proxy_http
+sudo a2enmod proxy_scgi
 
 sudo systemctl enable --now apache2.service
 

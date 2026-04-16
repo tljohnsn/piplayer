@@ -35,6 +35,10 @@ sudo install -b -o www-data -g www-data -m 755 ~pi/piplayer/configfiles/WebUISet
 
 sudo sed -i -e "s/5000/5001/" /var/www/html/rut/conf/config.php
 
+sudo sed -i -e "s%# modules, e.g.%ProxyPass /rut/RPC2 scgi://127.0.0.1:5001/%" /etc/apache2/sites-enabled/000-default.conf
+
 cd ~pi
 git clone https://github.com/tljohnsn/rtorrent_orphan_cleanup.git
-install -b -o pi -g pi -m 600 ~pi/piplayer/configfiles/orphan_cleanup.json ~pi/rtorrent_orphan_cleanup/orphan_cleanup.json
+install -b -o pi -g pi -m 600 ~pi/piplayer/configfiles/orphan_cleanup.json ~pi/rtorrent_orphan_cleanup/config.json
+
+screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0
