@@ -83,3 +83,5 @@ libavif-dev
 libreadline-dev
 
 socat
+libnss-mdns
+avahi-utils
