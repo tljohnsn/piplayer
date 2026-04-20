@@ -134,6 +134,7 @@ if [ "$VERSION_CODENAME" = "bookworm" ]; then
 	make
 	fi
 	sudo make install
+	sudo ln -s /usr/local/bin/php /usr/bin
         sudo mkdir -p /etc/php/7.3/apache2/conf.d
 	echo "log_errors = on" | sudo tee -a /etc/php/7.3/apache2/php.ini
 	echo "output_buffering = 4096" | sudo tee -a /etc/php/7.3/apache2/php.ini
