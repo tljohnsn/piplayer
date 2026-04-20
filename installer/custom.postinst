@@ -97,7 +97,16 @@ echo "set enable-bracketed-paste off" | tee -a /etc/inputrc
 
 echo "" | tee /etc/motd
 
-touch /2026-04-14-11-31
+touch /2026-04-20-17-31
+
+#Don't clear screen
+mkdir -p /etc/systemd/system/getty@tty1.service.d
+echo "[Service]" | tee /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+
+sed -i -e 's/^GRUB_CMDLINE_LINUX_DEFAULT.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet consoleblank=0 nomodeset"/' /etc/default/grub
 
 ######### Post-Post cleanup ####################################################
 rm -rf /tmp/extras
