@@ -6,5 +6,8 @@ su -c "aplay -t raw -r 48000 -c 2 -f S16_LE /dev/zero" - pi | tee -a /var/log/ap
 if [ "$VERSION_CODENAME" = "bookworm" ]; then
    su -c "mpd /home/pi/piplayer/configfiles/mpd.bookworm.conf" - pi | tee -a /var/log/aplay.log
 fi
-amixer sset 'Master' 50%
-
+if [ `arch` = "i686" ]; then
+    amixer sset 'Master' 95%
+else
+    amixer sset 'Master' 50%
+fi
