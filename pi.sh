@@ -56,7 +56,7 @@ git config --global pull.rebase false
 sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
      emacs-nox dos2unix hostapd dnsmasq screen \
-     apache2 ffmpeg \
+     apache2 ffmpeg libnss-mdns \
      imagemagick rtorrent unrar-free\
      inotify-tools expect gridsite-clients alsa-tools sqlite3 ntp rsyslog
 sudo apt -y install raspberrypi-kernel-headers
