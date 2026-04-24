@@ -95,6 +95,11 @@ echo "HostKeyAlgorithms=+ssh-rsa" |  tee /etc/ssh/ssh_config
 echo "PubkeyAcceptedAlgorithms=+ssh-rsa" | tee -a /etc/ssh/ssh_config
 echo "set enable-bracketed-paste off" | tee -a /etc/inputrc
 
+echo "HostKeyAlgorithms=+ssh-rsa" |  tee -a /etc/ssh/sshd_config
+echo "PubkeyAcceptedAlgorithms=+ssh-rsa" | tee -a /etc/ssh/sshd_config
+echo "HostKeyAlgorithms=+ssh-rsa" | tee -a /etc/ssh/sshd_config
+
+
 echo "" | tee /etc/motd
 
 touch /2026-04-20-17-31
