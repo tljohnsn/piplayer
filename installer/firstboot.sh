@@ -1,5 +1,6 @@
 #!/bin/bash
-apt -y install ifupdown2 emacs-nox sudo
+apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns \
+    proxmox-auto-install-assistant xorriso simple-cdd build-essential net-tools
 touch /root/trent.was.here
 sed -i -e "s/bridge-fd 0/bridge-fd 0\n\tbridge-vlan-aware yes\n\tbridge-vids 2-4094/" /etc/network/interfaces
 echo "thunderbolt" | tee -a /etc/modules
