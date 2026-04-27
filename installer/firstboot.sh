@@ -32,7 +32,9 @@ apt -y update
 apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns \
     proxmox-auto-install-assistant xorriso simple-cdd build-essential net-tools
 
-git clone https://github.com/tljohnsn/piplayer.git /home/pi/piplayer
+git clone https://github.com/tljohnsn/piplayer.git /root/piplayer
+ln -s /root/piplayer/installer/answer.toml /root
+ln -s piplayer/installer/firstboot.sh /root
 
 cat ~/piplayer/configfiles/bashrc.txt >>~root/.bashrc
 cat ~/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
