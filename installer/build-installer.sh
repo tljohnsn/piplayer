@@ -10,7 +10,7 @@ cd ..
 sed -i -e s/ftp.de.debian.org/ftp.us.debian.org/ custom.conf
 tar -pczf extras.tar.gz extras/
 build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed --no-do-mirror --dvd --logfile ./out.log
-
+dd if=proxmox-ve_9.1-1-auto-from-iso.iso of=/dev/sda bs=4M status=progress
 
 proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso --answer-file answer.toml --on-first-boot firstboot.sh
 
