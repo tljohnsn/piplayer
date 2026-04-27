@@ -34,5 +34,5 @@ lvm.minfree = 500
 
 [first-boot]
 source = "from-iso"
-ordering = "network-online"
+ordering = "fully-up"
 #ordering = "before-network"

@@ -29,7 +29,7 @@ sed -i -e "s/enterprise/no-subscription/"  /etc/apt/sources.list.d/ceph.sources
 echo "set enable-bracketed-paste off" | tee -a /etc/inputrc
 
 apt -y update
-apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns \
+apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns git \
     proxmox-auto-install-assistant xorriso simple-cdd build-essential net-tools
 
 git clone https://github.com/tljohnsn/piplayer.git /root/piplayer

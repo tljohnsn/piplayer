@@ -14,6 +14,9 @@ build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyb
 proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso --answer-file piplayer/installer/answer.toml \
 			       --on-first-boot piplayer/installer/firstboot.sh
 dd if=proxmox-ve_9.1-1-auto-from-iso.iso of=/dev/sda bs=4M status=progress
+pvecm expected 1
+pvecm delnode pve2
+
 
 
 sudo xorriso -osirrox on -indev debian-12-i386-CD-1.iso  -extract / isofiles/
