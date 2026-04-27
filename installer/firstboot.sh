@@ -36,8 +36,8 @@ git clone https://github.com/tljohnsn/piplayer.git /root/piplayer
 ln -s /root/piplayer/installer/answer.toml /root
 ln -s piplayer/installer/firstboot.sh /root
 
-cat ~/piplayer/configfiles/bashrc.txt >>~root/.bashrc
-cat ~/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
+cat /root/piplayer/configfiles/bashrc.txt >>~root/.bashrc
+cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
 
 useradd -m -s /bin/bash -u 1025 -p "$y$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" tljohnsn
 mkdir -p /home/tljohnsn/.ssh

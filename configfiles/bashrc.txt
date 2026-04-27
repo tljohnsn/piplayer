@@ -1,3 +1,5 @@
+alias ls='ls --color=auto'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 export GOPATH=$HOME/.local/share/go
 export PATH=$HOME/.local/share/go/bin:$PATH
 export XTIDE_DEFAULT_LOCATION="Nassau, New Providence Island, Bahamas"
