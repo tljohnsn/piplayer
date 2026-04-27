@@ -25,6 +25,7 @@ enabled = false
 filesystem = "ext4"
 #zfs.raid = "raid0"
 disk-list = ["nvme0n1"]
+lvm.minfree = 500
 #disk-list = ["nvme0n1","sda"]
 
 #[post-installation-webhook]
