@@ -1,5 +1,5 @@
 #!/bin/bash
-touch /root/trent.was.here
+touch /root/trent.was.here-2026-04-29.2
 sed -i -e "s/bridge-fd 0/bridge-fd 0\n\tbridge-vlan-aware yes\n\tbridge-vids 2-4094/" /etc/network/interfaces
 echo "thunderbolt" | tee -a /etc/modules
 echo "thunderbolt-net" | tee -a /etc/modules
@@ -9,7 +9,7 @@ LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | se
 echo "auto thunderbolt0
 iface thunderbolt0 inet static
 	address 10.0.69.$LDQ/24
-" | tee -a /root/interfaces
+" | >> /root/interfaces
 
 echo "Types: deb
 URIs: http://download.proxmox.com/debian/pve
