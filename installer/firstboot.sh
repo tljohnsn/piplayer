@@ -3,13 +3,13 @@ touch /root/trent.was.here
 sed -i -e "s/bridge-fd 0/bridge-fd 0\n\tbridge-vlan-aware yes\n\tbridge-vids 2-4094/" /etc/network/interfaces
 echo "thunderbolt" | tee -a /etc/modules
 echo "thunderbolt-net" | tee -a /etc/modules
-
-sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /etc/network/interfaces
+cp /etc/network/interfaces /root
+sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /root/interfaces
 LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
 echo "auto thunderbolt0
 iface thunderbolt0 inet static
 	address 10.0.69.$LDQ/24
-" | tee -a /etc/network/interfaces
+" | tee -a /root/interfaces
 
 echo "Types: deb
 URIs: http://download.proxmox.com/debian/pve
@@ -36,7 +36,7 @@ sed -i -e "s/enterprise/no-subscription/"  /etc/apt/sources.list.d/ceph.sources
 echo "set enable-bracketed-paste off" | tee -a /etc/inputrc
 
 apt -y update
-apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns git \
+apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns git pv \
     proxmox-auto-install-assistant xorriso simple-cdd build-essential net-tools
 
 sleep 10
@@ -68,7 +68,7 @@ echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noc
 echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 
-lvcreate -n images -L200G pve
+lvcreate -y -n images -L200G pve
 mkfs.ext4 -L images  /dev/pve/images
 mkdir /images
 echo "/dev/pve/images /images ext4 defaults 1 2" | tee -a /etc/fstab

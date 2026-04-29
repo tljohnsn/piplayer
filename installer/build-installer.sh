@@ -16,6 +16,7 @@ proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso
 dd if=proxmox-ve_9.1-1-auto-from-iso.iso of=/dev/sda bs=4M status=progress
 pvecm expected 1
 pvecm delnode pve2
+journalctl -u proxmox-first-boot-multi-user.service
 
 
 
