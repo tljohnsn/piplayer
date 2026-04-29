@@ -1,15 +1,8 @@
 #!/bin/bash
-touch /root/trent.was.here-2026-04-29.2
+touch /root/trent.was.here-2026-04-29.3
 sed -i -e "s/bridge-fd 0/bridge-fd 0\n\tbridge-vlan-aware yes\n\tbridge-vids 2-4094/" /etc/network/interfaces
 echo "thunderbolt" | tee -a /etc/modules
 echo "thunderbolt-net" | tee -a /etc/modules
-cp /etc/network/interfaces /root
-sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /root/interfaces
-LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
-echo "auto thunderbolt0
-iface thunderbolt0 inet static
-	address 10.0.69.$LDQ/24
-" | >> /root/interfaces
 
 echo "Types: deb
 URIs: http://download.proxmox.com/debian/pve
@@ -31,21 +24,33 @@ echo "Enabled: no" | tee -a /etc/apt/sources.list.d/pve-enterprise.sources
 
 sed -i -e "s/enterprise.proxmox/download.proxmox/" /etc/apt/sources.list.d/ceph.sources
 sed -i -e "s/enterprise/no-subscription/"  /etc/apt/sources.list.d/ceph.sources
+echo "Enabled: no" | tee -a /etc/apt/sources.list.d/ceph.sources
 
 
 echo "set enable-bracketed-paste off" | tee -a /etc/inputrc
+
+mkdir -p /etc/systemd/system/getty@tty1.service.d
+echo "[Service]" | tee /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+
+lvcreate -y -n images -L200G pve
+mkfs.ext4 -L images  /dev/pve/images
+mkdir /images
+echo "/dev/pve/images /images ext4 defaults 1 2" | tee -a /etc/fstab
+mount -a
+pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
+
+sleep 10
 
 apt -y update
 apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns git pv \
     proxmox-auto-install-assistant xorriso simple-cdd build-essential net-tools
 
-sleep 10
-
 git clone https://github.com/tljohnsn/piplayer.git /root/piplayer
 ln -s /root/piplayer/installer/answer.toml /root
 ln -s piplayer/installer/firstboot.sh /root
-
-sleep 10
 
 cat /root/piplayer/configfiles/bashrc.txt >>~root/.bashrc
 cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
@@ -62,17 +67,14 @@ systemctl disable rsync
 
 echo "" | tee /etc/motd
 
-mkdir -p /etc/systemd/system/getty@tty1.service.d
-echo "[Service]" | tee /etc/systemd/system/getty@tty1.service.d/noclear.conf
-echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
-echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
-echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+cp /etc/network/interfaces /root
+sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /root/interfaces
+LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
+echo "auto thunderbolt0
+iface thunderbolt0 inet static
+	address 10.0.69.$LDQ/24
+"  >> /root/interfaces
 
-lvcreate -y -n images -L200G pve
-mkfs.ext4 -L images  /dev/pve/images
-mkdir /images
-echo "/dev/pve/images /images ext4 defaults 1 2" | tee -a /etc/fstab
-mount -a
-pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
-
-
+NEWHN=`host 10.0.2.$LDQ ns1.useractive.com |grep pointer | cut -d " " -f 5 | cut -d . -f 1`
+sed -i -e s/pveauto/$NEWHN/g /etc/hosts /etc/hostname /etc/postfix/main.cf
+hostname -F /etc/hostname
