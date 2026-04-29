@@ -4,6 +4,13 @@ sed -i -e "s/bridge-fd 0/bridge-fd 0\n\tbridge-vlan-aware yes\n\tbridge-vids 2-4
 echo "thunderbolt" | tee -a /etc/modules
 echo "thunderbolt-net" | tee -a /etc/modules
 
+sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /etc/network/interfaces
+LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
+echo "auto thunderbolt0
+iface thunderbolt0 inet static
+	address 10.0.69.$LDQ/24
+" | tee -a /etc/network/interfaces
+
 echo "Types: deb
 URIs: http://download.proxmox.com/debian/pve
 Suites: trixie
@@ -32,14 +39,18 @@ apt -y update
 apt -y install ifupdown2 emacs-nox sudo rsyslog libnss-mdns git \
     proxmox-auto-install-assistant xorriso simple-cdd build-essential net-tools
 
+sleep 10
+
 git clone https://github.com/tljohnsn/piplayer.git /root/piplayer
 ln -s /root/piplayer/installer/answer.toml /root
 ln -s piplayer/installer/firstboot.sh /root
 
+sleep 10
+
 cat /root/piplayer/configfiles/bashrc.txt >>~root/.bashrc
 cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
 
-useradd -m -s /bin/bash -u 1025 -p "$y$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" tljohnsn
+useradd -m -s /bin/bash -u 1025 -p "\$y\$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" tljohnsn
 mkdir -p /home/tljohnsn/.ssh
 cp /root/.ssh/authorized_keys /home/tljohnsn/.ssh
 chown tljohnsn /home/tljohnsn/.ssh/authorized_keys

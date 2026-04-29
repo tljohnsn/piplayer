@@ -14,11 +14,15 @@ root-ssh-keys = [
 source = "from-dhcp"
 
 [network.interface-name-pinning]
-enabled = false
+enabled = true
 
 #[network.interface-name-pinning.mapping]
-#"24:8a:07:1e:05:bc" = "lan0"
-#"24:8a:07:1e:05:bd" = "lan1"
+#1tb
+#"88:ae:dd:76:5e:ee" = "lan0" 
+#"02:be:00:55:39:99" = "thunderbolt0"
+#4tb
+#"88:ae:dd:75:98:dd" = "lan0"
+#"02:a7:44:c0:1f:51" = "thunderbolt0"
 #"b4:2e:99:ac:ad:b4" = "mgmt"
 
 [disk-setup]
