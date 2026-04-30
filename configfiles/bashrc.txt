@@ -1,6 +1,12 @@
 alias ls='ls --color=auto'
+alias slogin="ssh -A"
+alias sut="sudo su"
+alias c="clear"
+
 export PS1='\[\e[0;37m\]\[\e[36m\]\u\[\e[0m\]@\[\e[0;33m\]\h\[\e[0m\]:\[\e[1;36m\]\w\[\e[0m\e[1;34m\]\$\[\e[37m\]\[\e[0m\] '
 export PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME%%.*}:${PWD/#$HOME/~}"; echo -ne "\007"'
+
+export PATH="/sbin:/usr/sbin:/usr/local/sbin:$PATH"
 export GOPATH=$HOME/.local/share/go
 export PATH=$HOME/.local/share/go/bin:$PATH
 export XTIDE_DEFAULT_LOCATION="Nassau, New Providence Island, Bahamas"
