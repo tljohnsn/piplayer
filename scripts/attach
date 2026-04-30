@@ -2,3 +2,4 @@
 machineid=`qm list | grep $1 | awk '{ print $1}'`
 echo $machineid
 qm terminal $machineid
+echo disconnect from $machineid
