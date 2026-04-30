@@ -8,3 +8,4 @@ export VISUAL=emacs
 export EDITOR=emacs
 set enable-bracketed-paste off
 alias ttide="tide -b \"`date --date=yesterday +%F` 00:00\"  -em pSsMm"
+#attach (){ qm terminal `qm list | grep fs0 | awk '{ print $1}'`; }
