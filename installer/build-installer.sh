@@ -18,7 +18,7 @@ pvecm expected 1
 pvecm delnode pve2
 rm -rf /etc/pve/nodes/pve2
 journalctl -u proxmox-first-boot-multi-user.service
-
+https://forum.proxmox.com/threads/how-to-enable-a-be202ngw-device.163798/
 
 
 sudo xorriso -osirrox on -indev debian-12-i386-CD-1.iso  -extract / isofiles/
