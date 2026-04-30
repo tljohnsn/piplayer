@@ -67,6 +67,9 @@ systemctl disable rsync
 
 echo "" | tee /etc/motd
 
+wget https://raw.githubusercontent.com/foundObjects/pve-nag-buster/master/install.sh
+sudo bash install.sh
+
 cp /etc/network/interfaces /root
 sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /root/interfaces
 LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
