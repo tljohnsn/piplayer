@@ -35,7 +35,8 @@ echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noc
 echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 
-lvcreate -y -n images -L200G pve
+#lvcreate -y -n images -L200G pve
+lvcreate -V200G -T pve/data -n images
 mkfs.ext4 -L images  /dev/pve/images
 mkdir /images
 echo "/dev/pve/images /images ext4 defaults 1 2" | tee -a /etc/fstab
