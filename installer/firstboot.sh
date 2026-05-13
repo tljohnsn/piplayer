@@ -74,10 +74,12 @@ sudo bash install.sh
 cp /etc/network/interfaces /root
 sed -i -e "s/iface thunderbolt0 inet manual/#iface thunderbolt0 inet manual/g" /root/interfaces
 LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
-echo "auto thunderbolt0
+echo "iface vmbr0 inet6 auto
+auto thunderbolt0
 iface thunderbolt0 inet static
 	address 10.0.69.$LDQ/24
 "  >> /root/interfaces
+echo "net.ipv6.conf.vmbr0.accept_ra=2" >/etc/sysctl.d/ipv6.conf
 
 NEWHN=`host 10.0.2.$LDQ ns1.useractive.com |grep pointer | cut -d " " -f 5 | cut -d . -f 1`
 sed -i -e s/pveauto/$NEWHN/g /etc/hosts /etc/hostname /etc/postfix/main.cf
