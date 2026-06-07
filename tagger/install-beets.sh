@@ -7,6 +7,14 @@ brew install curl ffmpeg@4
 brew install chromaprint eye-d3 mid3v2
 
 pip3 install https://github.com/beetbox/beets/tarball/master
+pipx install beets
+pipx inject beets pylast
+pipx inject beets pyacoustid
+pipx inject beets python-dateutil
+pipx inject beets beets-oldestdate
+pipx inject beets git+https://git.aubio.org/aubio/aubio/
+pipx inject beets beets-bpmanalyser
+
 
 pip3 install beets-bpmanalyser
 #beet bpmanalyser bpm:0
