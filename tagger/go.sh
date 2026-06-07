@@ -3,6 +3,10 @@ if [ -x /usr/local/bin/mid3v2 ]; then
     mid3v2=/usr/local/bin/mid3v2
 fi
 
+if [ -x /opt/homebrew/bin/id3v2 ]; then
+    mid3v2=/opt/homebrew/bin/id3v2
+fi
+
 if [ -x /usr/local/opt/ffmpeg\@4/bin/ffmpeg ]; then
     echo "Use ffmpeg4"
     export PATH="/usr/local/opt/ffmpeg@4/bin:$PATH"
