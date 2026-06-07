@@ -14,6 +14,13 @@ pipx inject beets python-dateutil
 pipx inject beets beets-oldestdate
 pipx inject beets git+https://git.aubio.org/aubio/aubio/
 pipx inject beets beets-bpmanalyser
+emacs /Users/tljohnsn/.local/pipx/venvs/beets/lib/python3.14/site-packages/beets/ui/__init__.py
+<         buf = fcntl.ioctl(0, termios.TIOCGWINSZ, struct.pack("HHHH", 0, 0, 0, 0))
+<         rows, cols, _, _ = struct.unpack("HHHH", buf)
+<         # buf = fcntl.ioctl(0, termios.TIOCGWINSZ, " " * 4)
+---
+>         buf = fcntl.ioctl(0, termios.TIOCGWINSZ, " " * 4)
+
 
 
 pip3 install beets-bpmanalyser
