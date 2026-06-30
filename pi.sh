@@ -58,14 +58,14 @@ git config --global pull.rebase false
 
 sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
-     emacs-nox dos2unix hostapd dnsmasq screen \
+     emacs-nox dos2unix screen \
      apache2 ffmpeg libnss-mdns \
      imagemagick rtorrent unrar-free\
      inotify-tools expect gridsite-clients alsa-tools sqlite3 rsyslog
 sudo apt -y install raspberrypi-kernel-headers
 sudo apt -y install ntp
 # removed composer and php stuff
-#sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent
+#sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent hostapd dnsmasq
 sudo DEBIAN_FRONTEND=noninteractive apt install -y samba samba-common-bin 
 
 if [ `arch` = "armv7l" ]; then
