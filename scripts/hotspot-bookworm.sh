@@ -10,9 +10,9 @@ export create_wifi_password=9e6a188321
 
 source /boot/firmware/tunes.txt
 
-nmcli con delete preconfigured
-nmcli con delete wlanboard
-nmcli con delete TEST-AP
+#nmcli con delete preconfigured
+#nmcli con delete wlanboard
+#nmcli con delete TEST-AP
 
 
 #sudo nmcli device wifi connect Jupiter --ask ifname wlan1
@@ -33,5 +33,6 @@ sudo nmcli device wifi hotspot ifname wlanboard con-name "$create_wifi_network" 
 sudo nmcli con mod "$create_wifi_network" autoconnect true
 nmcli dev wifi show-password
 
-nmcli con mod preconfigured connection.interface-name wlan1
+
+sudo nmcli con mod preconfigured connection.interface-name wlan1
 
