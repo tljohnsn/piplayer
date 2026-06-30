@@ -5,13 +5,19 @@
 #
 #systemctl disable dnsmasq
 #systemctl stop dnsmasq
+create_wifi_network=pi
+create_wifi_password=pi
 
+source /boot/firmware/tunes.txt
 
 nmcli con delete preconfigured
 nmcli con delete wlanboard
 nmcli con delete TEST-AP
 
-nmcli con add type wifi ifname wlanboard mode ap con-name TEST-AP ssid tunes2 autoconnect true
+
+sudo nmcli device wifi connect Jupiter --ask ifname wlan1
+
+nmcli con add type wifi ifname wlan0 mode ap con-name TEST-AP ssid pi autoconnect true
 nmcli con modify TEST-AP 802-11-wireless.band bg
 nmcli con modify TEST-AP 802-11-wireless.channel 3
 nmcli con modify TEST-AP 802-11-wireless.cloned-mac-address B8:27:EB:C4:F4:4E
@@ -19,3 +25,12 @@ nmcli con modify TEST-AP ipv4.method shared ipv4.address 192.168.4.1/24
 nmcli con modify TEST-AP ipv6.method disabled
 nmcli con modify TEST-AP wifi-sec.key-mgmt wpa-psk
 nmcli con modify TEST-AP wifi-sec.psk "9e6a188321"
+
+sudo nmcli device wifi hotspot ifname wlan0 ssid pi password 9e6a188321
+sudo nmcli con mod Hotspot  autoconnect true
+
+sudo nmcli device wifi hotspot ifname wlanboard con-name "$create_wifi_network" ssid "$create_wifi_network"  password "$create_wifi_password"
+sudo nmcli con mod "$create_wifi_network" autoconnect true
+nmcli dev wifi show-password
+
+
