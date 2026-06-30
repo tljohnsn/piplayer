@@ -27,6 +27,9 @@ fi
 source /etc/os-release
 #Configure the shell
 cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
+echo "set enable-bracketed-paste off" | sudo tee -a /etc/inputrc
+echo "" | sudo tee /etc/motd
+
 
 sudo sed -i -e "s/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
 sudo locale-gen
@@ -62,7 +65,8 @@ sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
 sudo apt -y install raspberrypi-kernel-headers
 sudo apt -y install ntp
 # removed composer and php stuff
-sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent samba samba-common-bin 
+#sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent
+sudo DEBIAN_FRONTEND=noninteractive apt install -y samba samba-common-bin 
 
 if [ `arch` = "armv7l" ]; then
     sudo apt -y install bluealsa
@@ -180,9 +184,9 @@ fi
 
 
 echo 'net.ipv4.ip_forward=1' |sudo tee -a /etc/sysctl.d/routed-ap.conf
-sudo iptables -t nat -A POSTROUTING -o $wan_interface -j MASQUERADE
-sudo netfilter-persistent save
-sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+#sudo iptables -t nat -A POSTROUTING -o $wan_interface -j MASQUERADE
+#sudo netfilter-persistent save
+#sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 
 #git clone https://github.com/lwfinger/rtl8188eu.git
 #cd rtl8188eu
@@ -191,14 +195,14 @@ sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 
 sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/72-wlan-pi3bplus.rules /etc/udev/rules.d/
 sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/wlan.conf /etc/modprobe.d/wlan.conf
-sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/hostapd.conf /etc/hostapd/hostapd.conf
-sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/wpa_supplicant-wlan2.conf /etc/wpa_supplicant/wpa_supplicant-wlan2.conf
+#sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/hostapd.conf /etc/hostapd/hostapd.conf
+#sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/wpa_supplicant-wlan2.conf /etc/wpa_supplicant/wpa_supplicant-wlan2.conf
 
-sudo sed -i -e "s/join_wifi_network/$join_wifi_network/" \
-     -e "s/join_wifi_password/$join_wifi_password/" \
-     -e "s/create_wifi_network/$create_wifi_network/" \
-     -e "s/create_wifi_password/$create_wifi_password/" \
-     /etc/hostapd/hostapd.conf /etc/wpa_supplicant/wpa_supplicant-wlan2.conf
+#sudo sed -i -e "s/join_wifi_network/$join_wifi_network/" \
+#     -e "s/join_wifi_password/$join_wifi_password/" \
+#     -e "s/create_wifi_network/$create_wifi_network/" \
+#     -e "s/create_wifi_password/$create_wifi_password/" \
+#     /etc/hostapd/hostapd.conf /etc/wpa_supplicant/wpa_supplicant-wlan2.conf
 
 
 # Configure sound to always route through bluetooth
@@ -235,9 +239,9 @@ echo "date.timezone = \"$zone\"" | sudo tee -a /etc/php/$phpver/apache2/conf.d/9
 echo 'max_execution_time = 1800' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
 #sudo timedatectl set-timezone US/Central
 
-if [ "$wifi_mode" = "join" ]; then
-    sudo bash ~pi/piplayer/scripts/danielst.sh
-fi
+#if [ "$wifi_mode" = "join" ]; then
+#    sudo bash ~pi/piplayer/scripts/danielst.sh
+#fi
 
 if [ "$eth0_mode" = "consort" ]; then
         echo '
@@ -256,16 +260,12 @@ sudo nmcli con up "Wired connection 1"
 sudo nmcli con mod preconfigured ipv6.method disabled
 fi
 
-sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
-sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/cmdline.txt
-sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/firmware/cmdline.txt
+#sudo sed -i -e "s/raspberrypi/$host_name/" /etc/hosts /etc/mailname /etc/hostname
+#sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/cmdline.txt
+#sudo sed -i -e "s/rootwait/rootwait ipv6.disable=1/" /boot/firmware/cmdline.txt
 
 echo "    HostKeyAlgorithms=+ssh-rsa" | sudo tee /etc/ssh/ssh_config
 echo "    PubkeyAcceptedAlgorithms=+ssh-rsa" | sudo tee -a /etc/ssh/ssh_config
-
-echo "set enable-bracketed-paste off" | sudo tee -a /etc/inputrc
-
-echo "" | sudo tee /etc/motd
 
 if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password
