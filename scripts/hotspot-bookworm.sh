@@ -14,7 +14,6 @@ source /boot/firmware/tunes.txt
 #nmcli con delete wlanboard
 #nmcli con delete TEST-AP
 
-
 #sudo nmcli device wifi connect Jupiter --ask ifname wlan1
 #
 #nmcli con add type wifi ifname wlan0 mode ap con-name TEST-AP ssid pi autoconnect true
@@ -33,6 +32,12 @@ sudo nmcli device wifi hotspot ifname wlanboard con-name "$create_wifi_network" 
 sudo nmcli con mod "$create_wifi_network" autoconnect true
 nmcli dev wifi show-password
 
+
+if [ ! -z "$join_wifi_password" ]; then
+    sudo nmcli device wifi connect $join_wifi_network password "$join_wifi_password" ifname wlan1
+else
+    sudo nmcli device wifi connect $join_wifi_network --ask ifname wlan1
+fi
 
 sudo nmcli con mod preconfigured connection.interface-name wlan1
 
