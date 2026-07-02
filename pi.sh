@@ -274,6 +274,6 @@ if [ "$pi_ssh_password" != "raspberry" ]; then
     echo "pi:$pi_ssh_password" | sudo chpasswd
 fi
 
-echo "Finished\n\n"
-echo "  To setup as an AP for $create_wifi_network reboot, then run:
-echo "piplayer/scripts/hotspot-bookworm.sh\n\n"
+echo -e "Finished\n\n"
+echo -e "  To setup as an AP for $create_wifi_network reboot, then run:"
+echo -e "piplayer/scripts/hotspot-bookworm.sh\n\n"
