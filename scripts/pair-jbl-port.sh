@@ -1,4 +1,7 @@
 #!/bin/bash
+#Stbd (green)
+bt_addr=F8:DF:15:C4:51:C0
+#Port (red)
 bt_addr=00:42:79:D5:49:2B
 source /boot/tunes.txt
 
