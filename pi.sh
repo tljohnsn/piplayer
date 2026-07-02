@@ -69,8 +69,9 @@ sudo apt -y install ntp
 sudo DEBIAN_FRONTEND=noninteractive apt install -y samba samba-common-bin 
 
 if [ `arch` = "armv7l" ]; then
-    sudo apt -y install bluealsa
-    sudo apt -y install pulseaudio-module-bluetooth 
+    echo "removed alsa bt stuff for bookworm"
+#    sudo apt -y install bluealsa
+#    sudo apt -y install pulseaudio-module-bluetooth 
 fi
 
 #systemctl enable ssh
@@ -207,7 +208,8 @@ sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/wlan.conf /etc/m
 
 # Configure sound to always route through bluetooth
 if [ -n "$bt_addr" ]; then
-    sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/asound.conf /etc
+    echo removed for bookworm
+    #sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/asound.conf /etc
 fi
 
 #https://nxnjz.net/2019/01/installation-of-ampache-on-debian-9/
@@ -271,3 +273,7 @@ if [ "$pi_ssh_password" != "raspberry" ]; then
     echo Changing pi login password
     echo "pi:$pi_ssh_password" | sudo chpasswd
 fi
+
+echo "Finished\n\n"
+echo "  To setup as an AP for $create_wifi_network reboot, then run:
+echo "piplayer/scripts/hotspot-bookworm.sh\n\n"
