@@ -56,6 +56,8 @@ git config --global user.name "Your Name"
 git config --global core.editor emacs
 git config --global pull.rebase false
 
+sudo rfkill unblock all
+
 sudo apt update
 sudo apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
      emacs-nox dos2unix screen \
