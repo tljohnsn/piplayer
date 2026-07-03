@@ -27,6 +27,8 @@ source /boot/firmware/tunes.txt
 
 #sudo nmcli device wifi hotspot ifname wlan0 ssid pi password 9e6a188321
 #sudo nmcli con mod Hotspot  autoconnect true
+#sudo nmcli connection add type wifi con-name ArubaPhone11 ifname wlan1 ssid "ArubaPhone11" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "9e6a188321"
+
 
 sudo nmcli device wifi hotspot ifname wlanboard con-name "$create_wifi_network" ssid "$create_wifi_network"  password "$create_wifi_password"
 sudo nmcli con mod "$create_wifi_network" autoconnect true
