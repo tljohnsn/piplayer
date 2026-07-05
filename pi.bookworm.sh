@@ -62,6 +62,9 @@ sudo rfkill unblock all
 
 sudo mkdir -p -m 777 /home/ftp/local/{mp3zpi,convertedflacspi,playlists}
 sudo chown -R pi:pi /home/ftp/local
+cd
+rm -rf Bookshelf Documents Downloads Music Pictures Public Templates Videos
+mkdir ~/mpd
 
 curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
 sudo apt -y update

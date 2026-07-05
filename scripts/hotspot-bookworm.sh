@@ -14,6 +14,8 @@ source /boot/firmware/tunes.txt
 #nmcli con delete wlanboard
 #nmcli con delete TEST-AP
 
+#watch -c -n 1 "sudo nmcli device wifi rescan ifname wlan3; sudo nmcli --color yes device wifi list ifname wlan3"
+
 #sudo nmcli device wifi connect Jupiter --ask ifname wlan1
 #
 #nmcli con add type wifi ifname wlan0 mode ap con-name TEST-AP ssid pi autoconnect true
