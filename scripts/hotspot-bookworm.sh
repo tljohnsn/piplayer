@@ -38,8 +38,10 @@ sudo nmcli con mod "$create_wifi_network" autoconnect true
 
 
 if [ ! -z "$join_wifi_password" ]; then
+    echo $join_wifi_password
     #sudo nmcli device wifi connect $join_wifi_network password "$join_wifi_password" ifname wlan1
 else
+    echo join_wifi_password not set
     #sudo nmcli device wifi connect $join_wifi_network --ask ifname wlan1
 fi
 
