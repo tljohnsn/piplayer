@@ -29,13 +29,11 @@ source /boot/firmware/tunes.txt
 
 #sudo nmcli con mod Hotspot  autoconnect true
 
-sudo nmcli connection add type wifi con-name ArubaPhone11 ifname wlan3 ssid "$join_wifi_network" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "join_wifi_password"
+sudo nmcli connection add type wifi con-name "$join_wifi_network" ifname wlan3 ssid "$join_wifi_network" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$join_wifi_password"
 sudo nmcli device wifi rescan ifname wlan3
 sudo nmcli device wifi list   ifname wlan3
 
 sudo nmcli device wifi hotspot ifname wlanboard con-name "$create_wifi_network" ssid "$create_wifi_network"  password "$create_wifi_password"
-sudo nmcli con mod "$create_wifi_network" autoconnect true
-
 
 if [ ! -z "$join_wifi_password" ]; then
     echo $join_wifi_password
@@ -52,4 +50,4 @@ sudo nmcli con mod "$create_wifi_network" autoconnect true
 sudo nmcli con mod "$join_wifi_network" autoconnect true
 sudo nmcli con mod preconfigured autoconnect true
 
-nmcli dev wifi show-password
+sudo nmcli dev wifi show-password
