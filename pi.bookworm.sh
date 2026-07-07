@@ -1,0 +1,155 @@
+#!/bin/bash
+#Setup variables
+host_name=raspberrypi
+wan_interface=eth0
+join_wifi_network=Jupiter
+join_wifi_password=secret
+create_wifi_network=raspberrypi
+create_wifi_password=secret
+wifi_mode=join
+db_ampache_password=ampache_password
+db_root_password=root
+pi_ssh_password=raspberry
+spotify_client_id=1135194687c7ddd6c4f02ceac94a58f9
+spotify_client_secret=104eb248d68e6467c3b8087dc0c687cd
+ampache_key=fb76b35ab9df5b171af92d75d5e3a714d42c8a1b70d01504bb7a0f8548efcc
+sshkey0=AAAAB3NzaC1yc2EAAAABJQAAAIEAlRchb+Hm1VM7dYqDZ0D6zCtnf/dH5ba4NkGZ9gFGkHdgQLlepCCYuOUnoCr0N40lQWGdOuCVsWVEsClzRNmLTBXNgF4uDVx+S1Zw/uw/zJ89jWT/WdPr6+hT2s7z8OBe1HGI3zyW7ftzBpUWE9W2qiiPXwUXUAOvn+pX15DPrjE=
+sshkey1=AAAAB3NzaC1yc2EAAAADAQABAAAAgQDMEFJLHUXdVfnJ71zabt7P2YSHVe8fE/ueFUH9Rc2uUsJqiBK9l8g/0yfzqoFexdVjgOH3/B4/xvpShJTar0+/FaGOSWPq6KA36KxfBFurLPeA7ngD0j2D/yCx8dXJIziyveFf9bNJYYT0vQBU0pIlsGjfaRhFye2CKzCA0T2jQQ==
+
+if [ -f /boot/firmware/tunes.txt ]; then
+    sudo ln -s /boot/firmware/tunes.txt /boot
+fi
+
+if [ -f /boot/tunes.txt ]; then
+    source /boot/tunes.txt
+fi
+
+source /etc/os-release
+#Configure the shell
+cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
+echo "set enable-bracketed-paste off" | sudo tee -a /etc/inputrc
+echo "" | sudo tee /etc/motd
+
+echo "    HostKeyAlgorithms=+ssh-rsa" | sudo tee /etc/ssh/ssh_config
+echo "    PubkeyAcceptedAlgorithms=+ssh-rsa" | sudo tee -a /etc/ssh/ssh_config
+
+sudo sed -i -e "s/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
+sudo locale-gen
+
+if [ ! -f ~pi/.ssh/authorized_keys ]; then
+mkdir -p ~pi/.ssh
+echo "ssh-rsa $sshkey0 newlaptopkey" >>~pi/.ssh/authorized_keys
+echo "ssh-rsa $sshkey1 tljohnsn@smack.office.useractive.com" >>~pi/.ssh/authorized_keys
+chown pi ~pi/.ssh/authorized_keys
+chmod 600 ~pi/.ssh/authorized_keys
+fi
+
+if [ ! -f /usr/bin/git ]; then
+   exit "run me as root for debian install"
+   apt-get -y install sudo wget openssh-server linux-libc-dev git gnupg python3-pip curl avahi-daemon rsync alsa-utils net-tools acpid dos2unix unzip
+   echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
+   chmod 440 /etc/sudoers.d/010_pi-nopasswd
+   systemctl enable --now avahi-daemon
+   systemctl disable rsync
+fi
+
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+git config --global core.editor emacs
+git config --global pull.rebase false
+
+sudo rfkill unblock all
+
+sudo mkdir -p -m 777 /home/ftp/local/{mp3zpi,convertedflacspi,playlists}
+sudo chown -R pi:pi /home/ftp/local
+cd
+rm -rf Bookshelf Documents Downloads Music Pictures Public Templates Videos
+mkdir ~/mpd
+
+curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
+sudo apt -y update
+sudo DEBIAN_FRONTEND=noninteractive apt -y -m install mpg321 automake libsdl-ttf2.0-dev libsdl-image1.2-dev \
+     emacs-nox dos2unix screen \
+     apache2 ffmpeg libnss-mdns mtr \
+     imagemagick rtorrent unrar-free usbmuxd \
+     inotify-tools expect gridsite-clients alsa-tools sqlite3 rsyslog \
+     samba samba-common-bin \
+     mpd mpc \
+     php7.4 php7.4-common php7.4-mysql php7.4-mysql php7.4-curl php7.4-xml php7.4-gd php7.4-curl \
+     php7.4-sqlite3 php7.4-json php7.4-mbstring
+#sudo apt -y install raspberrypi-kernel-headers
+#sudo apt -y install ntp
+
+
+#Install and configure Samba to open a share at /home/ftp/local
+cp -a ~pi/piplayer/playlists/* /home/ftp/local/playlists
+sudo chown -R pi:pi /home/ftp/local
+
+if [ `grep -c ftp/local /etc/samba/smb.conf` -lt 1 ]; then
+sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
+echo '
+[public]
+   path = /home/ftp/local
+   public = yes
+   only guest = yes
+   writable = yes
+   printable = no
+   veto files = /._*/.DS_Store/.sync/
+   delete veto files = yes
+' | sudo tee -a /etc/samba/smb.conf
+sudo systemctl enable smbd
+sudo systemctl restart smbd
+fi
+sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/cleanftp /etc/cron.daily/
+
+#install mpd
+sudo apt -y install mpd mpc
+# Added for pi https://docs.mopidy.com/en/latest/installation/raspberrypi/
+sudo usermod -a -G video mpd
+sudo install -b -o root -g root -m 755 ~pi/piplayer/scripts/backuprompr /etc/cron.daily/
+
+sudo systemctl disable mpd.service
+sudo systemctl disable mpd.socket
+
+echo 'net.ipv4.ip_forward=1' |sudo tee -a /etc/sysctl.d/routed-ap.conf
+
+sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/72-wlan-pi3bplus.rules /etc/udev/rules.d/
+sudo install -b -o root -g root -m 644 ~pi/piplayer/configfiles/wlan.conf /etc/modprobe.d/wlan.conf
+
+#Modules for rompr
+sudo a2enmod rewrite
+sudo a2enmod expires
+
+sudo a2enmod headers
+sudo a2enmod deflate
+
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod proxy_scgi
+
+#set tz for php
+phpver=`ls /etc/php/`
+zone=`timedatectl status | awk '/zone/ {print $3}'`
+echo "date.timezone = \"$zone\"" | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-timezone.ini
+echo 'max_execution_time = 1800' | sudo tee -a /etc/php/$phpver/apache2/conf.d/99-tunes.ini
+
+sudo systemctl stop apache2.service
+sudo systemctl enable --now apache2.service
+
+#Install rompr
+~pi/piplayer/scripts/install-rompr.sh
+
+#Finish
+sudo install -b -o www-data -g www-data -m 644 ~pi/piplayer/configfiles/index.php /var/www/html/index.php
+sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/rc.local /etc
+sudo install -b -o root -g root -m 755 ~pi/piplayer/configfiles/smb.service /etc/avahi/services/smb.service
+sudo rm /var/www/html/index.html
+
+if [ "$pi_ssh_password" != "raspberry" ]; then
+    echo Changing pi login password
+    echo "pi:$pi_ssh_password" | sudo chpasswd
+fi
+
+echo -e "Finished\n\n"
+echo -e "  To setup as an AP for $create_wifi_network reboot, then run:"
+echo -e "piplayer/scripts/hotspot-bookworm.sh\n\n"
