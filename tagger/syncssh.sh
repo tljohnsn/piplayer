@@ -1,8 +1,10 @@
 #!/bin/bash
 if [ -z "$src" ]; then
+    export src="/media/pi/Userworld/Music"
     src="/Music"
 fi
 if [ -z "$dst" ]; then
+    export dst="/home/ftp/local"
     dst="pi@tunes.local:/home/ftp/local"
 fi
 if [ -z "$rsync" ]; then
