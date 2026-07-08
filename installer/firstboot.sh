@@ -84,3 +84,6 @@ echo "net.ipv6.conf.vmbr0.accept_ra=2" >/etc/sysctl.d/ipv6.conf
 NEWHN=`host 10.0.2.$LDQ ns1.useractive.com |grep pointer | cut -d " " -f 5 | cut -d . -f 1`
 sed -i -e s/pveauto/$NEWHN/g /etc/hosts /etc/hostname /etc/postfix/main.cf
 hostname -F /etc/hostname
+
+echo "zabbix:*:403:" |sudo tee -a /etc/group
+echo "zabbix:*:403:403:zabbix:/usr/share/zabbix:/bin/false" | sudo tee -a /etc/passwd
