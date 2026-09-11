@@ -14,8 +14,8 @@ echo "HostKeyAlgorithms=+ssh-rsa
 PubkeyAcceptedAlgorithms=+ssh-rsa
 " | tee -a /etc/ssh/ssh_config
 
-apt -y install fupdown2 emacs-nox sudo rsyslog libnss-mdns git pv gpg
-
+apt -y install emacs-nox sudo rsyslog libnss-mdns git pv gpg
+#apt -y install fupdown2 rdnssd
 git clone https://github.com/tljohnsn/piplayer.git /root/piplayer
 cat /root/piplayer/configfiles/bashrc.txt >>~root/.bashrc
 cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
