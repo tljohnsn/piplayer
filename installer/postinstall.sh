@@ -53,3 +53,8 @@ sudo echo "deb http://download.proxmox.com/debian/pbs trixie pbs-no-subscription
     | sudo tee -a /etc/apt/sources.list.d/proxmox-backup-server.list
 echo "deb [signed-by=/etc/apt/keyrings/hp-mcp.gpg] https://downloads.linux.hpe.com/SDR/repo/mcp/debian trixie/current non-free" |sudo tee -a /etc/apt/sources.list.d/hp-mcp.list
 
+mkdir -p /etc/systemd/system/getty@tty1.service.d
+echo "[Service]" | tee /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
