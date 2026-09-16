@@ -19,18 +19,26 @@ cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
 cat /root/piplayer/configfiles/bashrc.txt >>/home/tljohnsn/.bashrc
 
 #setup keys
-mkdir -p /home/tljohnsn/.ssh
+mkdir -p /home/tljohnsn/.ssh /etc/skel/.ssh
 sshkey0=`grep ^sshkey0 /root/piplayer/pi.sh | cut -c 9-`
 echo "ssh-rsa $sshkey0 newlaptopkey" >>~tljohnsn/.ssh/authorized_keys
 echo "ssh-rsa $sshkey0 newlaptopkey" >>~root/.ssh/authorized_keys
+echo "ssh-rsa $sshkey0 newlaptopkey" >>/etc/skel/.ssh/authorized_keys
 
 chown tljohnsn:tljohnsn ~tljohnsn/.ssh/authorized_keys /home/tljohnsn/.ssh
 chown root:root ~root/.ssh/authorized_keys
 
-chmod 600  ~tljohnsn/.ssh/authorized_keys ~root/.ssh/authorized_keys
+chmod 600  ~tljohnsn/.ssh/authorized_keys ~root/.ssh/authorized_keys /etc/skel/.ssh/authorized_keys
 
 echo "tljohnsn ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_tljohnsn-nopasswd
 chmod 440 /etc/sudoers.d/010_tljohnsn-nopasswd
+
+useradd -m -s /bin/bash "\$y\$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" pi
+echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
+chmod 440 /etc/sudoers.d/010_pi-nopasswd
+
+useradd -m -s /bin/bash -u 9806 "\$y\$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" trentj
+
 systemctl enable --now avahi-daemon
 systemctl disable rsync
 
