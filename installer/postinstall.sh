@@ -33,11 +33,11 @@ chmod 600  ~tljohnsn/.ssh/authorized_keys ~root/.ssh/authorized_keys /etc/skel/.
 echo "tljohnsn ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_tljohnsn-nopasswd
 chmod 440 /etc/sudoers.d/010_tljohnsn-nopasswd
 
-useradd -m -s /bin/bash "\$y\$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" pi
+useradd -m -s /bin/bash -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" pi
 echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
 chmod 440 /etc/sudoers.d/010_pi-nopasswd
 
-useradd -m -s /bin/bash -u 9806 "\$y\$j9T$T4hKMWt/iUBHQ15MpKjG31$MgIwrN16i2tleH1GLg4lwh6e3LeuIlMo2C9rc8gcPnD" trentj
+useradd -m -s /bin/bash -u 9806 -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" trentj
 
 systemctl enable --now avahi-daemon
 systemctl disable rsync
