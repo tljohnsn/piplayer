@@ -63,3 +63,4 @@ echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/get
 #Put grub on the serial console
 echo "GRUB_TERMINAL=\"console serial\"" >/etc/default/grub.d/99-serial.cfg
 echo "GRUB_SERIAL_COMMAND=\"serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1\"" >>/etc/default/grub.d/99-serial.cfg
+update-grub
