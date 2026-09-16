@@ -53,8 +53,13 @@ sudo echo "deb http://download.proxmox.com/debian/pbs trixie pbs-no-subscription
     | sudo tee -a /etc/apt/sources.list.d/proxmox-backup-server.list
 echo "deb [signed-by=/etc/apt/keyrings/hp-mcp.gpg] https://downloads.linux.hpe.com/SDR/repo/mcp/debian trixie/current non-free" |sudo tee -a /etc/apt/sources.list.d/hp-mcp.list
 
+#Stop the screen clearing
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 echo "[Service]" | tee /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
+
+#Put grub on the serial console
+echo "GRUB_TERMINAL=\"console serial\"" >/etc/default/grub.d/99-serial.cfg
+echo "GRUB_SERIAL_COMMAND=\"serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1\"" >>/etc/default/grub.d/99-serial.cfg
