@@ -67,7 +67,7 @@ update-grub
 
 wget http://ac.trentjohnson.net/tunes.txt -O /boot/tunes.txt
 wget http://ac.trentjohnson.net/wildcard.key -O /root/wildcard.key
-wget http://ac.trentjohnson.net//hostkeys.tgz -O /root/hostkeys.tgz
+wget http://ac.trentjohnson.net//hostkeys.deb -O /root/hostkeys.tgz
 
 cd /etc/ssh
 tar -xzf /root/hostkeys.tgz
