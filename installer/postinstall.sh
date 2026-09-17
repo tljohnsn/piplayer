@@ -65,8 +65,8 @@ echo "GRUB_TERMINAL=\"console serial\"" >/etc/default/grub.d/99-serial.cfg
 echo "GRUB_SERIAL_COMMAND=\"serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1\"" >>/etc/default/grub.d/99-serial.cfg
 update-grub
 
-wget http://ac.trentjohnson.net/tunes.txt -O /boot/tunes.txt
-wget http://ac.trentjohnson.net/wildcard.key -O /root/wildcard.key
+wget http://ac.trentjohnson.net/tunes.deb -O /boot/tunes.txt
+wget http://ac.trentjohnson.net/wildcard.deb -O /root/wildcard.key
 wget http://ac.trentjohnson.net//hostkeys.deb -O /root/hostkeys.tgz
 
 cd /etc/ssh
