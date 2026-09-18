@@ -74,6 +74,7 @@ tar -xzf /root/hostkeys.tgz
 
 echo '#!/bin/bash' >/etc/rc.local
 echo "source /boot/tunes.txt" >>/etc/rc.local
+echo "sleep 6" >>/etc/rc.local
 echo 'curl -k -6 "https://`hostname -s`.trentjohnson.net:$dns_key@dyn.dns.he.net/nic/update?hostname=`hostname -s`.trentjohnson.net"' >>/etc/rc.local
 
 chmod 755 /etc/rc.local
