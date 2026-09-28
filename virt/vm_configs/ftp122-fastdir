@@ -1,0 +1,13 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="8"
+RAM="16384"
+INTERFACES=( 141 131 )
+FILESIZE="16"
+SYSTYPE="fastdir-webvm"
+COMMON="$OSTYPE$VERSION"
+#EXTRAKEYS="fastdir-web"
+#lvcreate -L 138G -n db6-fastdir vg0
+#DISKS=( "path=/virt/images/$HOSTNAME.img,device=disk,bus=virtio,format=raw,size=$FILESIZE" "path=/dev/vg0/${HOSTNAME},device=disk,bus=virtio" )
+. /virt/vm_configs/$COMMON

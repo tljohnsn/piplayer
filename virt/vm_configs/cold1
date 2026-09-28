@@ -1,0 +1,13 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="8"
+VCPUS="2"
+RAM="4192"
+#54:52:0a:00:8d:6a
+INTERFACES=( 199 141 )
+FILESIZE="10"
+SYSTYPE="studentweb8"
+COMMON="$OSTYPE$VERSION"
+EXTRAKEYS="1-cold"
+#HOSTNAMEOVERRIDE="cold1.userworld.com"
+. /virt/vm_configs/$COMMON

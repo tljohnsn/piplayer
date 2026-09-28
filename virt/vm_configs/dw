@@ -1,0 +1,12 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="2"
+RAM="4096"
+INTERFACES=( 131 )
+FILESIZE="8"
+SYSTYPE="generic"
+#Uncomment the follow to add extra spacewalk keys
+#EXTRAKEYS=""
+COMMON="$OSTYPE$VERSION"
+. /virt/vm_configs/$COMMON

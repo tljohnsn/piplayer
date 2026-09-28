@@ -1,0 +1,10 @@
+#!/bin/bash
+OSTYPE="windows"
+VERSION="2k8"
+VCPUS="1"
+RAM="4096"
+INTERFACES=( 15 )
+BACKINGIMG="/virt/vs2010ts/vs2010ts-2011-09-29.qcow2"
+DISKS=( "path=/virt/$HOSTNAME.qcow2,device=disk,bus=virtio,format=qcow2" "path=/vmtemplates/iso/en_visual_studio_2010_professional_x86_dvd_509727.iso,device=cdrom,bus=ide" )
+COMMON="$OSTYPE$VERSION"
+. /virt/vm_configs/$COMMON

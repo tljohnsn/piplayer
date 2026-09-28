@@ -1,0 +1,12 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="2"
+RAM="2048"
+INTERFACES=( 199 131 69 )
+FILESIZE="10"
+SYSTYPE="sink"
+COMMON="$OSTYPE$VERSION"
+EXTRAKEYS="1-sink1"
+HOSTNAMEOVERRIDE="sink1.useractive.com"
+. /virt/vm_configs/$COMMON

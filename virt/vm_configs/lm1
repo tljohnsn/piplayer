@@ -1,0 +1,12 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="2"
+RAM="512"
+INTERFACES=( 199 25 141 )
+FILESIZE="8"
+SYSTYPE="loadbalancer"
+COMMON="$OSTYPE$VERSION"
+EXTRAKEYS="1-lmprod"
+HOSTNAMEOVERRIDE="lm1.userworld.com"
+. /virt/vm_configs/$COMMON

@@ -1,0 +1,4 @@
+#!/bin/bash
+OSVARIANT="rhel6"
+KSFILE="c6kvm.test.ks"
+LOCATION="http://uwks/centos/6/os/x86_64/"

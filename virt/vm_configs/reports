@@ -1,0 +1,12 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="2"
+RAM="4096"
+INTERFACES=( 131 )
+FILESIZE="15"
+SYSTYPE="reports"
+COMMON="$OSTYPE$VERSION"
+#EXTRAKEYS="1-rep"
+HOSTNAMEOVERRIDE="reports.local.useractive.com"
+. /virt/vm_configs/$COMMON

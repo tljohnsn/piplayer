@@ -1,0 +1,10 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="1"
+RAM="1024"
+INTERFACES=( 199 141 )
+FILESIZE="8"
+SYSTYPE="zoku-app"
+COMMON="$OSTYPE$VERSION"
+. /virt/vm_configs/$COMMON

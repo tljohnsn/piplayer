@@ -1,0 +1,13 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="2"
+RAM="2048"
+INTERFACES=( 141 25 69 )
+FILESIZE="6"
+SYSTYPE="fs6"
+COMMON="$OSTYPE$VERSION"
+DISKS=( "path=/virt/images/$HOSTNAME.img,device=disk,bus=virtio,format=raw,size=$FILESIZE" "path=/virt/images/${HOSTNAME}-data.img,device=disk,bus=virtio,size=1" )
+#EXTRAKEYS=""
+#HOSTNAMEOVERRIDE="faucet2.useractive.com"
+. /virt/vm_configs/$COMMON

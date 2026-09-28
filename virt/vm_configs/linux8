@@ -1,0 +1,8 @@
+#!/bin/bash
+OSVARIANT="rhel6"
+KSFILE="c8kvm.test.ks"
+KSFILE="r8kvm.test.ks"
+#LOCATION="http://uwks/centos/6/os/x86_64/"
+#LOCATION="http://mirror.team-cymru.org/CentOS/8/BaseOS/x86_64/os/"
+LOCATION="http://10.0.141.13/centos/8/BaseOS/x86_64/os/"
+LOCATION="http://10.0.141.13/rocky/8/BaseOS/x86_64/os/"

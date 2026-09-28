@@ -1,0 +1,12 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="6"
+RAM="16384"
+INTERFACES=( 199 131 )
+FILESIZE="10"
+SYSTYPE="studentweb6"
+COMMON="$OSTYPE$VERSION"
+EXTRAKEYS="1-tepid"
+HOSTNAMEOVERRIDE="tepid0.local.useractive.com"
+. /virt/vm_configs/$COMMON

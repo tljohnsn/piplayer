@@ -1,0 +1,13 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="2"
+RAM="2048"
+INTERFACES=( 199 141 69 )
+FILESIZE="10"
+SYSTYPE="sink"
+COMMON="$OSTYPE$VERSION"
+EXTRAKEYS="1-sql1"
+HOSTNAMEOVERRIDE="sql1.userworld.com"
+DISKS=( "path=/virt/images/$HOSTNAME.img,device=disk,bus=virtio,format=raw,size=$FILESIZE" "path=/virt/images/${HOSTNAME}-data.img,device=disk,bus=virtio,size=6" )
+. /virt/vm_configs/$COMMON

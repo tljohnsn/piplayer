@@ -1,0 +1,12 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="1"
+RAM="2048"
+INTERFACES=( 199 141 25 )
+FILESIZE="10"
+SYSTYPE="vpn"
+COMMON="$OSTYPE$VERSION"
+EXTRAKEYS="1-test"
+HOSTNAMEOVERRIDE="vpn4.userworld.com"
+. /virt/vm_configs/$COMMON

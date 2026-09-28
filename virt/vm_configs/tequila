@@ -1,0 +1,10 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="1"
+RAM="1024"
+INTERFACES=( 199 131 172 )
+FILESIZE="8"
+SYSTYPE="umlgateway6"
+COMMON="$OSTYPE$VERSION"
+. /virt/vm_configs/$COMMON

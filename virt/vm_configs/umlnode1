@@ -1,0 +1,10 @@
+#!/bin/bash
+OSTYPE="linux"
+VERSION="6"
+VCPUS="3"
+RAM="16384"
+INTERFACES=( 131 172 )
+FILESIZE="8"
+SYSTYPE="umlcomputenode6"
+COMMON="$OSTYPE$VERSION"
+. /virt/vm_configs/$COMMON
