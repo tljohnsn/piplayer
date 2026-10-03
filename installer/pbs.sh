@@ -3,7 +3,9 @@
 apt update
 apt -y install ssacli
 
-apt -y install rdnssd
+apt -y install rdnssd ndisc6
+rdisc6 ens18
+
 apt install proxmox-backup-server
 
 mkdir -p /etc/proxmox-backup/certs.bak
