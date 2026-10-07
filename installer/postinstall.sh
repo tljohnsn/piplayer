@@ -11,6 +11,10 @@ echo "HostKeyAlgorithms=+ssh-rsa
 PubkeyAcceptedAlgorithms=+ssh-rsa
 " | tee -a /etc/ssh/ssh_config
 
+if [ ! -d /root/piplayer ]; then
+    ln -s /home/pi/piplayer /root/piplayer
+fi
+
 if [ -z "`getent passwd tljohnsn`" ]; then
     useradd -m -s /bin/bash -u 1025 -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" tljohnsn
 fi
