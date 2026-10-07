@@ -46,8 +46,10 @@ sudo sed -i -e "s%# modules, e.g.%ProxyPass /rut/RPC2 scgi://127.0.0.1:5001/%" /
 cd /users/trentj
 git clone https://github.com/tljohnsn/rtorrent_orphan_cleanup.git
 install -b -o trentj -g trentj -m 600 /root/piplayer/configfiles/orphan_cleanup.json /users/trentj/rtorrent_orphan_cleanup/config.json
+chown -R trentj:trentj /users/trentj
 
 LDQ=`ip add show | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | cut -d . -f 4 | sed -e 's/\/24//g'`
+sed -i -e s%50000%80$LDQ%g .rtorrent.rc
 
 #screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0
 su -c "screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0" - trentj | tee -a /var/log/rtorrent.log &
