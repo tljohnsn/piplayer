@@ -1,13 +1,19 @@
 #!/bin/bash
-cd /home/pi
-sudo apt-get -y install screen rtorrent sox mediainfo
-cp -a /home/pi/piplayer/configfiles/rtorrent.rc /home/pi/.rtorrent.rc
 
-mkdir -p ~/rtorrent/download
-mkdir -p ~/rtorrent/.session
-mkdir -p ~/rtorrent/watch/{load,start}
-chmod 777 ~/rtorrent/.session
-chmod 755 ~/.
+if [ -z "`getent passwd trentj`" ]; then
+    useradd -m -s /bin/bash -u 9806 -d /users/trentj -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" trentj
+fi
+
+cd /users/trentj
+sudo apt-get -y install screen rtorrent sox mediainfo
+cp -a /home/pi/piplayer/configfiles/rtorrent.rc /users/trentj/.rtorrent.rc
+
+mkdir -p /users/trentj/rtorrent/download
+mkdir -p /users/trentj/rtorrent/.session
+mkdir -p /users/trentj/rtorrent/watch/{load,start}
+chmod 777 /users/trentj/rtorrent/.session
+chmod 755 /users/trentj/.
+chown -R trentj /users/trentj/rtorrent
 
 wget https://github.com/Novik/ruTorrent/archive/refs/tags/v4.3.2.tar.gz
 tar -xzf v4.3.2.tar.gz
@@ -37,8 +43,12 @@ sudo sed -i -e "s/5000/5001/" /var/www/html/rut/conf/config.php
 
 sudo sed -i -e "s%# modules, e.g.%ProxyPass /rut/RPC2 scgi://127.0.0.1:5001/%" /etc/apache2/sites-enabled/000-default.conf
 
-cd ~pi
+cd /users/trentj
 git clone https://github.com/tljohnsn/rtorrent_orphan_cleanup.git
-install -b -o pi -g pi -m 600 ~pi/piplayer/configfiles/orphan_cleanup.json ~pi/rtorrent_orphan_cleanup/config.json
+install -b -o trentj -g trentj -m 600 /root/piplayer/configfiles/orphan_cleanup.json /users/trentj/rtorrent_orphan_cleanup/config.json
 
-screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0
+LDQ=`ip add show | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | cut -d . -f 4 | sed -e 's/\/24//g'`
+
+#screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0
+su -c "screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0" - trentj | tee -a /var/log/rtorrent.log &
+

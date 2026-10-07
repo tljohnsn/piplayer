@@ -11,6 +11,10 @@ echo "HostKeyAlgorithms=+ssh-rsa
 PubkeyAcceptedAlgorithms=+ssh-rsa
 " | tee -a /etc/ssh/ssh_config
 
+if [ -z "`getent passwd tljohnsn`" ]; then
+    useradd -m -s /bin/bash -u 1025 -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" tljohnsn
+fi
+
 #apt -y install emacs-nox sudo rsyslog libnss-mdns git pv gpg curl
 #apt -y install fupdown2 rdnssd
 #git clone https://github.com/tljohnsn/piplayer.git /root/piplayer
@@ -37,7 +41,7 @@ useradd -m -s /bin/bash -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7ku
 echo "pi ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_pi-nopasswd
 chmod 440 /etc/sudoers.d/010_pi-nopasswd
 
-useradd -m -s /bin/bash -u 9806 -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" trentj
+useradd -m -s /bin/bash -u 9806 -d /users/trentj -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" trentj
 
 systemctl enable --now avahi-daemon
 systemctl disable rsync

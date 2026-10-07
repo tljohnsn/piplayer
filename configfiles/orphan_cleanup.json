@@ -5,10 +5,10 @@
   },
   "rutorrent": {
     "url": "http://localhost/rut",
-    "download_folder": "/home/pi/rtorrent/download",
+    "download_folder": "/users/trentj/rtorrent/download",
     "path_mappings": {
-      "/home/pi/rtorrent/download": [
-        "/home/pi/rtorrent/download"
+      "/users/trentj/rtorrent/download": [
+        "/users/trentj/rtorrent/download"
       ]
     }
   },
