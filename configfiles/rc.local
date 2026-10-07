@@ -53,6 +53,9 @@ nohup /home/pi/piplayer/scripts/startsound.sh >/dev/null 2>/dev/null &
 
 date | tee -a /etc/rclocal/8
 
+source /boot/tunes.txt
+sleep 6
+curl -k -6 "https://`hostname -s`.trentjohnson.net:$dns_key@dyn.dns.he.net/nic/update?hostname=`hostname -s`.trentjohnson.net"
 
 # Print the IP address
 _IP=$(hostname -I) || true
