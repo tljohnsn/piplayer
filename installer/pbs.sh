@@ -1,10 +1,10 @@
 #apt -y install emacs-nox sudo rsyslog libnss-mdns git pv gpg curl
 
 apt update
-apt -y install ssacli
-
-apt -y install rdnssd ndisc6
+apt -y install ssacli lvm2 vdo thin-provisioning-tools
+apt -y install rdnssd ndisc6 
 rdisc6 ens18
+rdisc6 eno1
 
 apt install proxmox-backup-server
 
@@ -49,3 +49,9 @@ proxmox-backup-manager verify-job create 001 --store $STORE --schedule 22:30   -
 proxmox-backup-manager remote create pbs --host pbs.trentjohnson.net --auth-id root@pam \
   --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
   --password 'aaaa'
+
+sudo systemctl edit networking.service
+[Service]
+TimeoutStartSec=10sec
+
+/etc/systemd/system/networking.service.d/override.conf
