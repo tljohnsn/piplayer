@@ -6,9 +6,10 @@ apt -y install ssacli lvm2 vdo thin-provisioning-tools
 #cat ~/uwca/wildcards.key
 #cat >/etc/proxmox-backup/proxy.key
 
-lvcreate --type thin-pool -n data -L 2T --pooldatavdo y  --discards passdown vg0
-lvextend -L 100T vg0/data
-lvcreate  -V 10t -T vg0/data -n images
+#lvcreate --type thin-pool -n data -L 2T --pooldatavdo y  --discards passdown vg0
+#lvextend -L 100T vg0/data
+lvcreate -L 80G -T vg0/data  --discards passdown
+lvcreate  -V 100G -T vg0/data -n images
 lvcreate  -V 1t -T vg0/data -n vm-downloads
 mkfs.ext4 -K -L images /dev/vg0/images
 mkfs.ext4  -L images /dev/vg0/images
@@ -25,7 +26,7 @@ mkdir -p /etc/systemd/system/networking.service.d/
 echo '[Service]
 TimeoutStartSec=10sec' >>/etc/systemd/system/networking.service.d/override.conf
 
-apt update && apt -y full-upgrade
+apt update
 apt -y install proxmox-default-kernel
 
 reboot
@@ -68,4 +69,11 @@ ifreload -a
 
 wget https://raw.githubusercontent.com/foundObjects/pve-nag-buster/master/install.sh
 sudo bash install.sh
+
+zfs create tank/zstd
+zfs set compression=zstd tank/zstd
+pvesm add zfspool tank-zstd --pool tank/zstd --content images --sparse 1
+
+zfs list -o name,used,avail,refer,compressratio
+
 
