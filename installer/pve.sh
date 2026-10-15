@@ -42,8 +42,8 @@ LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | se
 SHOST=`hostname -s`
 echo "10.0.2.$LDQ $SHOST.trentjohnson.net $SHOST" | sudo tee -a /etc/hosts
 echo "net.ipv6.conf.vmbr0.accept_ra=2" >/etc/sysctl.d/ipv6.conf
-
 apt -y install proxmox-ve open-iscsi chrony
+#
 echo "Enabled: no" | tee -a /etc/apt/sources.list.d/pve-enterprise.sources
 apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober
 
@@ -86,6 +86,10 @@ sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
 ifreload -a
 
+wipefs --all --force /dev/sda4
+/sbin/zpool create -o ashift=12 tank /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
+/sbin/zfs set compression=zstd tank
+systemctl enable zfs-import@tank.service
 
 zfs create tank/zstd
 zfs set compression=zstd tank/zstd
