@@ -33,19 +33,20 @@ mkdir -p /etc/systemd/system/networking.service.d/
 echo '[Service]
 TimeoutStartSec=10sec' >>/etc/systemd/system/networking.service.d/override.conf
 
-apt update
-apt -y install proxmox-default-kernel
-
-reboot
-
 LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
 SHOST=`hostname -s`
 echo "10.0.2.$LDQ $SHOST.trentjohnson.net $SHOST" | sudo tee -a /etc/hosts
 echo "net.ipv6.conf.vmbr0.accept_ra=2" >/etc/sysctl.d/ipv6.conf
-apt -y install proxmox-ve open-iscsi chrony
+
+apt update
+apt -y install proxmox-default-kernel
+
+reboot
+#Remove and install one command
+apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+
+
 #
 echo "Enabled: no" | tee -a /etc/apt/sources.list.d/pve-enterprise.sources
-apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober
 
 update-grub
 
@@ -85,16 +86,27 @@ iface vmbr0 inet static
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
 ifreload -a
-
-wipefs --all --force /dev/sda4
+rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
+DISK=/dev/sda3
+DISK=/dev/disk/by-id/scsi-3600508b1001c70b692b77a909402c314-part3
+DISK=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
+vgremove vg2
+pvremove /dev/sda3
+wipefs --all --force /dev/sda3
 /sbin/zpool create -o ashift=12 tank /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
 /sbin/zfs set compression=zstd tank
 systemctl enable zfs-import@tank.service
+
 
 zfs create tank/zstd
 zfs set compression=zstd tank/zstd
 pvesm add zfspool tank-zstd --pool tank/zstd --content images --sparse 1
 
-zfs list -o name,used,avail,refer,compressratio
+zfs create tank/nocompress
+zfs set compression=off tank/nocompress
+pvesm add zfspool tank-nocompress --pool tank/nocompress --content images --sparse 1
 
+zpool list; zfs list
+zfs list -o name,used,avail,refer,compressratio,origin
+zfs list -t snapshot 
 
