@@ -41,15 +41,15 @@ echo "net.ipv6.conf.vmbr0.accept_ra=2" >/etc/sysctl.d/ipv6.conf
 apt update
 apt -y install proxmox-default-kernel
 
+echo "options kvm-intel nested=Y" > /etc/modprobe.d/kvm-intel.conf
+
 reboot
 #Remove and install one command
 apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+
 
 #
 echo "Enabled: no" | tee -a /etc/apt/sources.list.d/pve-enterprise.sources
-
 update-grub
-
 
 cp /root/piplayer/configfiles/wildcards.crt /etc/pve/local/pveproxy-ssl.pem
 cp /root/wildcard.key /etc/pve/local/pveproxy-ssl.key
@@ -60,7 +60,6 @@ pvesm add lvmthin local-lvm --vgname vg0 --thinpool data --content images
 pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
-
 
 wget https://raw.githubusercontent.com/foundObjects/pve-nag-buster/master/install.sh
 sudo bash install.sh
@@ -91,20 +90,20 @@ DISK=/dev/sda3
 DISK=/dev/disk/by-id/scsi-3600508b1001c70b692b77a909402c314-part3
 DISK=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
 vgremove vg2
-pvremove /dev/sda3
-wipefs --all --force /dev/sda3
-/sbin/zpool create -o ashift=12 tank /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
+pvremove $DISK
+wipefs --all --force $DISK
+/sbin/zpool create -o ashift=12 tank $DISK
 /sbin/zfs set compression=zstd tank
 systemctl enable zfs-import@tank.service
 
 
-zfs create tank/zstd
-zfs set compression=zstd tank/zstd
-pvesm add zfspool tank-zstd --pool tank/zstd --content images --sparse 1
+zfs create tank/z
+zfs set compression=zstd tank/z
+pvesm add zfspool tank-z --pool tank/z --content images --sparse 1
 
-zfs create tank/nocompress
-zfs set compression=off tank/nocompress
-pvesm add zfspool tank-nocompress --pool tank/nocompress --content images --sparse 1
+zfs create tank/nc
+zfs set compression=off tank/nc
+pvesm add zfspool tank-nc --pool tank/nc --content images --sparse 1
 
 zpool list; zfs list
 zfs list -o name,used,avail,refer,compressratio,origin
