@@ -86,6 +86,7 @@ sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
 ifreload -a
 rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
+DISK=/dev/nvme0n1p4
 DISK=/dev/sda3
 DISK=/dev/disk/by-id/scsi-3600508b1001c70b692b77a909402c314-part3
 DISK=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
