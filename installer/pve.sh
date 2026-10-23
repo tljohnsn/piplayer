@@ -1,7 +1,8 @@
 #!/bin/bash
 # /root/piplayer/installer/pve.sh
 #apt -y install emacs-nox sudo rsyslog libnss-mdns git pv gpg curl
-
+if [ `uname -r | grep pve |wc -l` -lt 1 ]; then
+   
 apt update
 apt -y install ssacli lvm2 vdo thin-provisioning-tools
 
@@ -10,10 +11,10 @@ apt -y install ssacli lvm2 vdo thin-provisioning-tools
 
 #lvcreate --type thin-pool -n data -L 2T --pooldatavdo y  --discards passdown vg0
 #lvextend -L 100T vg0/data
-DATA=80G
-IMAGES=100G
 DATA=5M
 IMAGES=100M
+DATA=80G
+IMAGES=100G
 umount /images
 lvremove -y vg0/images
 lvcreate -L $DATA -T vg0/data  --discards passdown
@@ -44,6 +45,9 @@ apt -y install proxmox-default-kernel
 echo "options kvm-intel nested=Y" > /etc/modprobe.d/kvm-intel.conf
 
 reboot
+fi
+if [ `uname -r | grep pve |wc -l` -gt 0 ]; then
+  
 #Remove and install one command
 apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+
 
@@ -85,6 +89,10 @@ iface vmbr0 inet static
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
 ifreload -a
+
+fi
+exit
+
 rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
 DISK=/dev/nvme0n1p4
 DISK=/dev/sda3
