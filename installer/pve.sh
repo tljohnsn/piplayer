@@ -85,6 +85,16 @@ iface vmbr0 inet static
 	bridge-fd 0
 	bridge-vlan-aware yes
 	bridge-vids 2-4094
+
+auto vmbr1
+iface vmbr1 inet6 auto
+iface vmbr1 inet static
+      address 10.0.69.$LDQ/24
+      bridge-ports thunderbolt0 thunderbolt1
+      bridge-stp on
+      bridge-fd 2
+      bridge-vlan-aware yes
+      bridge-vids 2-4094
 " | sudo tee -a /etc/network/interfaces
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
@@ -94,11 +104,12 @@ fi
 exit
 
 rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
-DISK=/dev/nvme0n1p4
 DISK=/dev/sda3
 DISK=/dev/disk/by-id/scsi-3600508b1001c70b692b77a909402c314-part3
 DISK=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
+DISK=/dev/nvme0n1p4
 vgremove vg2
+vgremove pve5-vg
 pvremove $DISK
 wipefs --all --force $DISK
 /sbin/zpool create -o ashift=12 tank $DISK
