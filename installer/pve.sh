@@ -128,6 +128,40 @@ zfs create tank/nc
 zfs set compression=off tank/nc
 pvesm add zfspool tank-nc --pool tank/nc --content images --sparse 1
 
+zfs create tank/tm
+zfs set compression=off tank/tm
+chown pi:pi /tank/tm
+chmod 777 /tank/tm
+
+apt -y install samba
+sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
+echo '
+[public]
+   path = /tank/tm
+   public = yes
+   only guest = yes
+   writable = yes
+   printable = no
+   #veto files = /._*/.DS_Store/.sync/
+   #delete veto files = yes
+   vfs objects = catia fruit streams_xattr
+   fruit:time machine = yes
+   fruit:time machine max size = 1000G
+' | sudo tee -a /etc/samba/smb.conf
+sudo systemctl enable smbd
+sudo systemctl restart smbd
+
+VMID=421
+VMIDS=(118 423 441 451 461 471)
+VMIDS=(100 103 )
+for VMID in "${VMIDS[@]}"; do
+    ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
+    qmrestore $ARCHIVE $VMID --storage tank-z
+done
+
+qmrestore pve2:backup/vm/411/2026-10-24T02:42:54Z $VMID --storage tank-z
+
+
 zpool list; zfs list
 zfs list -o name,used,avail,refer,compressratio,origin
 zfs list -t snapshot 
