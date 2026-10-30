@@ -2,7 +2,7 @@
 # /root/piplayer/installer/pve.sh
 #apt -y install emacs-nox sudo rsyslog libnss-mdns git pv gpg curl
 if [ `uname -r | grep pve |wc -l` -lt 1 ]; then
-   
+ln -s /root/piplayer/virt /virt
 apt update
 apt -y install ssacli lvm2 vdo thin-provisioning-tools
 
@@ -44,6 +44,10 @@ apt -y install proxmox-default-kernel
 
 echo "options kvm-intel nested=Y" > /etc/modprobe.d/kvm-intel.conf
 echo "nohup /root/piplayer/scripts/thunderbolt.sh >/dev/null 2>/dev/null &" | tee -a /etc/rc.local
+
+echo
+echo "Rebooting run /root/piplayer/installer/pve.sh again after rebooting"
+echo sudo /root/piplayer/installer/pve.sh
 reboot
 fi
 if [ `uname -r | grep pve |wc -l` -gt 0 ]; then
@@ -64,7 +68,7 @@ sudo bash install.sh
 
 LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
 SHOST=`hostname -s`
-NETDEV=`ip -o a | grep -v lo | cut -d " " -f 2`
+NETDEV=`ip -o a | grep -v lo |grep -v thunderbolt | cut -d " " -f 2`
 
 cp /etc/network/interfaces /root
 sed -i -e "s/inet dhcp/inet manual/g" -e "s/inet6 auto/inet6 manual/g" /etc/network/interfaces
@@ -92,6 +96,22 @@ iface vmbr1 inet static
 " | sudo tee -a /etc/network/interfaces
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
+if [ "$NETDEV" == "enp86s0xxxx" ]; then
+    echo "
+auto enp87s0
+iface enp87s0 inet manual
+auto vmbr1001
+iface vmbr1001 inet6 auto
+iface vmbr1001 inet dhcp
+	bridge-ports enp87s0
+	bridge-stp off
+	bridge-fd 0
+	bridge-vlan-aware no
+" | sudo tee -a /etc/network/interfaces
+fi
+pvesh create /nodes/<hostname>/network --iface vmbr1001 --type bridge --bridge_ports enp87s0
+
+
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
 pvesm add lvmthin local-lvm --vgname vg0 --thinpool data --content images
 pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
@@ -100,7 +120,9 @@ pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username 
 pvesm add pbs pve2 --server pve2.trentjohnson.net --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
+echo
 echo "reconnect after ifreload...."
+echo
 ifreload -a
 
 fi
@@ -152,12 +174,16 @@ sudo systemctl enable smbd
 sudo systemctl restart smbd
 
 VMID=421
-VMIDS=(118 423 441 451 461 471)
-VMIDS=(100 103 )
+VMIDS=(100)
+VMIDS=(103 118 421 423 441 451 461 471)
 for VMID in "${VMIDS[@]}"; do
     ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
     qmrestore $ARCHIVE $VMID --storage tank-z
 done
+
+VMID=617
+ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
+qmrestore $ARCHIVE $VMID --storage tank-nc
 
 qmrestore pve2:backup/vm/411/2026-10-24T02:42:54Z $VMID --storage tank-z
 
