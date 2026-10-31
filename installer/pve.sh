@@ -96,7 +96,7 @@ iface vmbr1 inet static
 " | sudo tee -a /etc/network/interfaces.tlj
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
-pvesh create /nodes/$SHOST/network --iface vmbr1 --type bridge --bridge_ports thunderbolt0 --autostart
+pvesh create /nodes/$SHOST/network --iface vmbr1 --type bridge --bridge_ports thunderbolt0 --address 10.0.69.$LDQ --netmask 255.255.255.0 --autostart
 sed -i -e "s/stp off/stp on/" -e "s/fd 0/fd 2/" /etc/network/interfaces.new
 
 if [ "$NETDEV" == "enp86s0" ]; then
