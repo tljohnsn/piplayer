@@ -96,20 +96,11 @@ iface vmbr1 inet static
 " | sudo tee -a /etc/network/interfaces
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
-if [ "$NETDEV" == "enp86s0xxxx" ]; then
-    echo "
-auto enp87s0
-iface enp87s0 inet manual
-auto vmbr1001
-iface vmbr1001 inet6 auto
-iface vmbr1001 inet dhcp
-	bridge-ports enp87s0
-	bridge-stp off
-	bridge-fd 0
-	bridge-vlan-aware no
-" | sudo tee -a /etc/network/interfaces
+if [ "$NETDEV" == "enp86s0" ]; then
+    pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0
 fi
-pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0
+#pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0
+
 
 
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
