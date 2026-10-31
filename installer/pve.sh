@@ -93,14 +93,25 @@ iface vmbr1 inet static
       bridge-fd 2
       bridge-vlan-aware yes
       bridge-vids 2-4094
-" | sudo tee -a /etc/network/interfaces
+" | sudo tee -a /etc/network/interfaces.tlj
 sed -i -e s/eno1/$NETDEV/g /etc/network/interfaces
 
-if [ "$NETDEV" == "enp86s0" ]; then
-    pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0
-fi
-#pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0
+pvesh create /nodes/$SHOST/network --iface vmbr1 --type bridge --bridge_ports thunderbolt0 --autostart
+sed -i -e "s/stp off/stp on/" -e "s/fd 0/fd 2/" /etc/network/interfaces.new
 
+if [ "$NETDEV" == "enp86s0" ]; then
+    pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0 --autostart
+fi
+
+pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0 --bridge_vlan_awar --autostart
+e
+sed -i -e "s/inet dhcp/inet manual/g" -e "s/inet6 auto/inet6 manual/g" /etc/network/interfaces.new
+
+sed -i -e "s/ports thunderbolt0/ports thunderbolt0 thunderbolt1/" /etc/network/interfaces.new
+
+echo "iface vmbr1001 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
+echo "iface vmbr1 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
+echo "iface vmbr0 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
 
 
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
