@@ -103,7 +103,7 @@ if [ "$NETDEV" == "enp86s0" ]; then
     pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0 --autostart
 fi
 
-pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0 --bridge_vlan_aware --address 10.0.2.$LDQ/24 --gateway 10.0.2.1  --autostart
+pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0 --bridge_vlan_aware --address 10.0.2.$LDQ --netmask 255.255.255.0 --gateway 10.0.2.1  --autostart
 
 sed -i -e "s/inet dhcp/inet manual/g" -e "s/inet6 auto/inet6 manual/g" /etc/network/interfaces.new
 
