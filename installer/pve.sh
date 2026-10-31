@@ -103,8 +103,8 @@ if [ "$NETDEV" == "enp86s0" ]; then
     pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0 --autostart
 fi
 
-pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0 --bridge_vlan_awar --autostart
-e
+pvesh create /nodes/$SHOST/network --iface vmbr0 --type bridge --bridge_ports enp86s0 --bridge_vlan_aware --address 10.0.2.$LDQ/24 --gateway 10.0.2.1  --autostart
+
 sed -i -e "s/inet dhcp/inet manual/g" -e "s/inet6 auto/inet6 manual/g" /etc/network/interfaces.new
 
 sed -i -e "s/ports thunderbolt0/ports thunderbolt0 thunderbolt1/" /etc/network/interfaces.new
@@ -112,7 +112,7 @@ sed -i -e "s/ports thunderbolt0/ports thunderbolt0 thunderbolt1/" /etc/network/i
 echo "iface vmbr1001 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
 echo "iface vmbr1 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
 echo "iface vmbr0 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
-
+cp -a /etc/network/interfaces.new /etc/network/interfaces
 
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
 pvesm add lvmthin local-lvm --vgname vg0 --thinpool data --content images
