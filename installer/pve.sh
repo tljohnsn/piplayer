@@ -109,7 +109,7 @@ iface vmbr1001 inet dhcp
 	bridge-vlan-aware no
 " | sudo tee -a /etc/network/interfaces
 fi
-pvesh create /nodes/<hostname>/network --iface vmbr1001 --type bridge --bridge_ports enp87s0
+pvesh create /nodes/$SHOST/network --iface vmbr1001 --type bridge --bridge_ports enp87s0
 
 
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
