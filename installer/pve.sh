@@ -53,7 +53,7 @@ fi
 if [ `uname -r | grep pve |wc -l` -gt 0 ]; then
   
 #Remove and install one command
-apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+
+apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+ samba+
 
 #
 echo "Enabled: no" | tee -a /etc/apt/sources.list.d/pve-enterprise.sources
@@ -65,6 +65,24 @@ systemctl restart pveproxy
 
 wget https://raw.githubusercontent.com/foundObjects/pve-nag-buster/master/install.sh
 sudo bash install.sh
+
+sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
+echo '
+[public]
+   path = /tank/tm
+   public = yes
+   only guest = yes
+   writable = yes
+   printable = no
+   #veto files = /._*/.DS_Store/.sync/
+   #delete veto files = yes
+   vfs objects = catia fruit streams_xattr
+   fruit:time machine = yes
+   fruit:time machine max size = 1000G
+' | sudo tee -a /etc/samba/smb.conf
+sudo systemctl enable smbd
+sudo systemctl restart smbd
+
 
 LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
 SHOST=`hostname -s`
@@ -156,24 +174,6 @@ zfs create tank/tm
 zfs set compression=off tank/tm
 chown pi:pi /tank/tm
 chmod 777 /tank/tm
-
-apt -y install samba
-sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
-echo '
-[public]
-   path = /tank/tm
-   public = yes
-   only guest = yes
-   writable = yes
-   printable = no
-   #veto files = /._*/.DS_Store/.sync/
-   #delete veto files = yes
-   vfs objects = catia fruit streams_xattr
-   fruit:time machine = yes
-   fruit:time machine max size = 1000G
-' | sudo tee -a /etc/samba/smb.conf
-sudo systemctl enable smbd
-sudo systemctl restart smbd
 
 VMID=421
 VMIDS=(100)
