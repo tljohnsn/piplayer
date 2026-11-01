@@ -52,8 +52,10 @@ systemctl disable rsync
 
 #Disable privacy
 echo "net.ipv6.conf.all.use_tempaddr = 0
-net.ipv6.conf.default.use_tempaddr = 0" >>/etc/sysctl.d/99-disable-ipv6-privacy.conf
-#sed -i -e "s/inet6 auto/inet6 eui64/" /etc/network/interfaces
+net.ipv6.conf.default.use_tempaddr = 0
+net.ipv6.conf.default.addr_gen_mode = 0
+" >>/etc/sysctl.d/99-disable-ipv6-privacy.conf
+#nmcli con modify "Connection name" ipv6.addr-gen-mode eui64
 sed -i -e "s/#IPv6PrivacyExtensions/IPv6PrivacyExtensions/" /etc/systemd/networkd.conf
 #Only this one actually works in trixie
 sed -i -e "s/#slaac hwaddr/slaac hwaddr/" /etc/dhcpcd.conf
