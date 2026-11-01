@@ -54,6 +54,11 @@ systemctl disable rsync
 echo "net.ipv6.conf.all.use_tempaddr = 0
 net.ipv6.conf.default.use_tempaddr = 0" >>/etc/sysctl.d/99-disable-ipv6-privacy.conf
 #sed -i -e "s/inet6 auto/inet6 eui64/" /etc/network/interfaces
+sed -i -e "s/#IPv6PrivacyExtensions/IPv6PrivacyExtensions/" /etc/systemd/networkd.conf
+#Only this one actually works in trixie
+sed -i -e "s/#slaac hwaddr/slaac hwaddr/" /etc/dhcpcd.conf
+sed -i -e "s/slaac private/#slaac private/" /etc/dhcpcd.conf
+
 
 #Install repos
 sudo wget https://enterprise.proxmox.com/debian/proxmox-release-trixie.gpg \
