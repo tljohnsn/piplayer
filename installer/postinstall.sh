@@ -53,6 +53,7 @@ systemctl disable rsync
 #Disable privacy
 echo "net.ipv6.conf.all.use_tempaddr = 0
 net.ipv6.conf.default.use_tempaddr = 0" >>/etc/sysctl.d/99-disable-ipv6-privacy.conf
+#sed -i -e "s/inet6 auto/inet6 eui64/" /etc/network/interfaces
 
 #Install repos
 sudo wget https://enterprise.proxmox.com/debian/proxmox-release-trixie.gpg \
