@@ -50,6 +50,10 @@ useradd -m -s /bin/bash -u 9806 -d /users/trentj -p "\$6\$GFR2qgCW2m7uyFm6\$HK3L
 systemctl enable --now avahi-daemon
 systemctl disable rsync
 
+#Disable privacy
+echo "net.ipv6.conf.all.use_tempaddr = 0
+net.ipv6.conf.default.use_tempaddr = 0" >>/etc/sysctl.d/99-disable-ipv6-privacy.conf
+
 #Install repos
 sudo wget https://enterprise.proxmox.com/debian/proxmox-release-trixie.gpg \
      -O /etc/apt/trusted.gpg.d/proxmox-release-trixie.gpg
