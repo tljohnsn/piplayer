@@ -144,6 +144,7 @@ vgremove vg2 || true
 vgremove pve5-vg || true
 pvremove $DISK
 wipefs --all --force $DISK
+blkdiscard $DISK
 /sbin/zpool create -o ashift=12 tank $DISK
 /sbin/zfs set compression=zstd tank
 systemctl enable zfs-import@tank.service
