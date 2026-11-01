@@ -132,29 +132,16 @@ echo "iface vmbr1 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
 echo "iface vmbr0 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
 cp -a /etc/network/interfaces.new /etc/network/interfaces
 
-pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
-pvesm add lvmthin local-lvm --vgname vg0 --thinpool data --content images
-pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
-      --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
-      --password
-pvesm add pbs pve2 --server pve2.trentjohnson.net --datastore aspace --username root@pam \
-      --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
-      --password
-echo
-echo "reconnect after ifreload...."
-echo
-ifreload -a
-
-fi
-exit
-
-rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
-DISK=/dev/sda3
 DISK=/dev/disk/by-id/scsi-3600508b1001c70b692b77a909402c314-part3
 DISK=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
-DISK=/dev/nvme0n1p4
-vgremove vg2
-vgremove pve5-vg
+DISK=/dev/sda3
+if [ -b "/dev/nvme0n1p4" ]; then
+    DISK=/dev/nvme0n1p4
+fi
+echo Disk is $DISK
+
+vgremove vg2 || true
+vgremove pve5-vg || true
 pvremove $DISK
 wipefs --all --force $DISK
 /sbin/zpool create -o ashift=12 tank $DISK
@@ -174,6 +161,24 @@ zfs create tank/tm
 zfs set compression=off tank/tm
 chown pi:pi /tank/tm
 chmod 777 /tank/tm
+
+pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
+pvesm add lvmthin local-lvm --vgname vg0 --thinpool data --content images
+pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
+      --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
+      --password
+pvesm add pbs pve2 --server pve2.trentjohnson.net --datastore aspace --username root@pam \
+      --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
+      --password
+echo
+echo "reconnect after ifreload...."
+echo
+ifreload -a
+
+fi
+exit
+
+rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
 
 VMID=421
 VMIDS=(100)
