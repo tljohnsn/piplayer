@@ -177,7 +177,7 @@ chmod 777 /tank/tm
 
 VMID=421
 VMIDS=(100)
-VMIDS=(103 118 421 423 441 451 461 471)
+VMIDS=(100 103 118 401 405 411 421 423 431 441 451 461 471)
 for VMID in "${VMIDS[@]}"; do
     ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
     qmrestore $ARCHIVE $VMID --storage tank-z
