@@ -183,7 +183,7 @@ rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /imag
 
 VMID=421
 VMIDS=(100)
-VMIDS=(100 103 118 401 405 411 421 423 431 441 451 461 471)
+VMIDS=(100 103 118 401 405 411 421 423 431 441 451 461 471 473)
 for VMID in "${VMIDS[@]}"; do
     ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
     qmrestore $ARCHIVE $VMID --storage tank-z
@@ -192,9 +192,6 @@ done
 VMID=617
 ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
 qmrestore $ARCHIVE $VMID --storage tank-nc
-
-qmrestore pve2:backup/vm/411/2026-10-24T02:42:54Z $VMID --storage tank-z
-
 
 zpool list; zfs list
 zfs list -o name,used,avail,refer,compressratio,origin
