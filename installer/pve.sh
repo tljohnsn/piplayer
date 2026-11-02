@@ -48,7 +48,10 @@ echo "nohup /root/piplayer/scripts/thunderbolt.sh >/dev/null 2>/dev/null &" | te
 echo
 echo "Rebooting run /root/piplayer/installer/pve.sh again after rebooting"
 echo sudo /root/piplayer/installer/pve.sh
-reboot
+
+sudo kexec -l /boot/vmlinuz-$(uname -r) --initrd=/boot/initrd.img-$(uname -r) --append="$(cat /proc/cmdline)"
+sudo systemctl kexec
+
 fi
 if [ `uname -r | grep pve |wc -l` -gt 0 ]; then
   
