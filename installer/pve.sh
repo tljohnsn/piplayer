@@ -171,14 +171,14 @@ pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username 
 pvesm add pbs pve2 --server pve2.trentjohnson.net --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
-echo "search trentjohnson.net
-nameserver 10.0.2.1
-nameserver 2606:4700:4700::1111" | sudo tee  /etc/resolv.conf
-
 echo
 echo "reconnect after ifreload...."
 echo
 ifreload -a
+
+echo "search trentjohnson.net
+nameserver 10.0.2.1
+nameserver 2606:4700:4700::1111" | sudo tee  /etc/resolv.conf
 
 fi
 exit
@@ -186,7 +186,7 @@ pvesm remove tank-z
 pvesm remove tank-nc
 pvesm remove pve1
 pvesm remove pve2
-
+pvesm remove local-lvm
 
 rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
 
