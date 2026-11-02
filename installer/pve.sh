@@ -9,21 +9,21 @@ apt -y install ssacli lvm2 vdo thin-provisioning-tools
 #cat ~/uwca/wildcards.key
 #cat >/etc/proxmox-backup/proxy.key
 
-#lvcreate --type thin-pool -n data -L 2T --pooldatavdo y  --discards passdown vg0
-#lvextend -L 100T vg0/data
+#lvcreate --type thin-pool -n data -L 2T --pooldatavdo y  --discards passdown pve
+#lvextend -L 100T pve/data
 DATA=5M
 IMAGES=100M
 DATA=80G
 IMAGES=100G
 umount /images
-lvremove -y vg0/images
-lvcreate -L $DATA -T vg0/data  --discards passdown
-lvcreate  -V $IMAGES -T vg0/data -n images
-#lvcreate  -V 1t -T vg0/data -n vm-downloads
-mkfs.ext4 -K -L images /dev/vg0/images
+lvremove -y pve/images
+lvcreate -L $DATA -T pve/data  --discards passdown
+lvcreate  -V $IMAGES -T pve/data -n images
+#lvcreate  -V 1t -T pve/data -n vm-downloads
+mkfs.ext4 -K -L images /dev/pve/images
 mkdir -p /images
 
-echo "/dev/vg0/images /images ext4 defaults,nofail,_netdev 1 2" >> /etc/fstab
+echo "/dev/pve/images /images ext4 defaults,nofail,_netdev 1 2" >> /etc/fstab
 mount -a
 
 cp /root/piplayer/configfiles/pve-install-repo.sources /etc/apt/sources.list.d
@@ -164,13 +164,17 @@ chown pi:pi /tank/tm
 chmod 777 /tank/tm
 
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
-pvesm add lvmthin local-lvm --vgname vg0 --thinpool data --content images
+pvesm add lvmthin local-lvm --vgname pve --thinpool data --content images
 pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
 pvesm add pbs pve2 --server pve2.trentjohnson.net --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
+echo "search trentjohnson.net
+nameserver 10.0.2.1
+nameserver 2606:4700:4700::1111" | sudo tee  /etc/resolv.conf
+
 echo
 echo "reconnect after ifreload...."
 echo
@@ -178,6 +182,11 @@ ifreload -a
 
 fi
 exit
+pvesm remove tank-z
+pvesm remove tank-nc
+pvesm remove pve1
+pvesm remove pve2
+
 
 rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
 
@@ -189,7 +198,10 @@ for VMID in "${VMIDS[@]}"; do
     qmrestore $ARCHIVE $VMID --storage tank-z
 done
 
-VMID=617
+#Trixie vm
+VMID=517
+#Bookworm vm
+VMID=626
 ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
 qmrestore $ARCHIVE $VMID --storage tank-nc
 
