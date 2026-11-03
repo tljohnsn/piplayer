@@ -4,7 +4,7 @@
 if [ `uname -r | grep pve |wc -l` -lt 1 ]; then
 ln -s /root/piplayer/virt /virt
 apt update
-apt -y install ssacli lvm2 vdo thin-provisioning-tools
+apt -y install ssacli lvm2 vdo thin-provisioning-tools mdadm
 
 #cat ~/uwca/wildcards.key
 #cat >/etc/proxmox-backup/proxy.key
