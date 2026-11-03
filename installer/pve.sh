@@ -49,8 +49,10 @@ echo
 echo "Rebooting run /root/piplayer/installer/pve.sh again after rebooting"
 echo sudo /root/piplayer/installer/pve.sh
 
-sudo kexec -l /boot/vmlinuz-$(uname -r) --initrd=/boot/initrd.img-$(uname -r) --append="$(cat /proc/cmdline)"
-sudo systemctl kexec
+#sudo kexec -l /boot/vmlinuz-$(uname -r) --initrd=/boot/initrd.img-$(uname -r) --append="$(cat /proc/cmdline)"
+#sudo systemctl kexec
+#sudo efibootmgr -n 0001
+reboot
 
 fi
 if [ `uname -r | grep pve |wc -l` -gt 0 ]; then
