@@ -214,3 +214,4 @@ zpool list; zfs list
 zfs list -o name,used,avail,refer,compressratio,volsize,origin
 zfs list -t snapshot 
 
+
