@@ -211,6 +211,6 @@ ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
 qmrestore $ARCHIVE $VMID --storage tank-nc
 
 zpool list; zfs list
-zfs list -o name,used,avail,refer,compressratio,origin
+zfs list -o name,used,avail,refer,compressratio,volsize,origin
 zfs list -t snapshot 
 
