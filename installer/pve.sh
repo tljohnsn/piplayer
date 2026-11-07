@@ -58,7 +58,7 @@ fi
 if [ `uname -r | grep pve |wc -l` -gt 0 ]; then
   
 #Remove and install one command
-apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+ samba+
+apt -y remove linux-image-amd64 'linux-image-6.12*' os-prober proxmox-ve+ open-iscsi+ chrony+ samba+ polkitd+ power-profiles-daemon+ lm-sensors+
 
 #
 echo "Enabled: no" | tee -a /etc/apt/sources.list.d/pve-enterprise.sources
@@ -219,3 +219,4 @@ zfs list -o name,used,avail,refer,compressratio,volsize,origin
 zfs list -t snapshot 
 
 
+powerprofilesctl set power-saver
