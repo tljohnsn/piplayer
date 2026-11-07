@@ -138,6 +138,11 @@ echo "iface vmbr0 inet6 auto" | sudo tee -a /etc/network/interfaces.d/v6.conf
 cp -a /etc/network/interfaces.new /etc/network/interfaces
 
 rm -f /etc/apt/sources.list.d/pve-no-subscription.list
+mkdir -p /usr/local/etc
+cp /root/piplayer/configfiles/zabbix_agentd.conf /usr/local/etc
+echo "/usr/local/sbin/zabbix_agentd &" | tee -a /etc/rc.local
+echo "zabbix:*:403:403:zabbix:/usr/share/zabbix:/bin/false" | tee -a /etc/passwd
+echo "zabbix:*:403:" | tee -a /etc/group
 
 DISK=/dev/disk/by-id/scsi-3600508b1001c70b692b77a909402c314-part3
 DISK=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0-part3
