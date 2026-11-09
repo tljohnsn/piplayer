@@ -51,6 +51,8 @@ chown -R trentj:trentj /users/trentj
 LDQ=`ip add show | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | cut -d . -f 4 | sed -e 's/\/24//g'`
 sed -i -e s%50000%80$LDQ%g .rtorrent.rc
 
+sudo systemctl restart apache2
+
 #screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0
 su -c "screen -d -m -S rtorrent /usr/bin/rtorrent -b 0.0.0.0" - trentj | tee -a /var/log/rtorrent.log &
 
