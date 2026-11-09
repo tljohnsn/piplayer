@@ -25,6 +25,7 @@ fi
 cat /root/piplayer/configfiles/bashrc.txt >>~root/.bashrc
 cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
 cat /root/piplayer/configfiles/bashrc.txt >>/home/tljohnsn/.bashrc
+cp /root/piplayer/scripts/nsupdate.sh /usr/local/sbin
 
 #setup keys
 mkdir -p /home/tljohnsn/.ssh /etc/skel/.ssh
