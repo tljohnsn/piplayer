@@ -100,6 +100,8 @@ echo "source /boot/tunes.txt" >>/etc/rc.local
 echo "sleep 6" >>/etc/rc.local
 echo 'curl -k -6 "https://`hostname -s`.trentjohnson.net:$dns_key@dyn.dns.he.net/nic/update?hostname=`hostname -s`.trentjohnson.net"' >>/etc/rc.local
 
+echo 'nohup /usr/local/sbin/nsupdate.sh </dev/null >/dev/null 2>/dev/null &' >>/etc/rc.local
+
 chmod 755 /etc/rc.local
 
 echo "" | tee /etc/motd
