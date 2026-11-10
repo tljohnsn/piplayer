@@ -175,6 +175,10 @@ zfs set compression=off tank/tm
 chown pi:pi /tank/tm
 chmod 777 /tank/tm
 
+zfs create tank/ncq
+zfs set compression=off tank/ncq
+pvesm add dir tank-ncq --path /tank/ncq --content images --is_mountpoint 1
+
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
 pvesm add lvmthin local-lvm --vgname pve --thinpool data --content images
 pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
@@ -221,6 +225,7 @@ ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
 qmrestore $ARCHIVE $VMID --storage tank-nc
 
 zpool list; zfs list
+zpool list -o name,size,alloc,free,bcloneused,bclonesaved,bcloneratio
 zfs list -o name,used,avail,refer,compressratio,volsize,origin
 zfs list -t snapshot 
 
