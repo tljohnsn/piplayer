@@ -52,6 +52,7 @@ echo sudo /root/piplayer/installer/pve.sh
 #sudo kexec -l /boot/vmlinuz-$(uname -r) --initrd=/boot/initrd.img-$(uname -r) --append="$(cat /proc/cmdline)"
 #sudo systemctl kexec
 #sudo efibootmgr -n 0001
+#systemctl reboot --firmware-setup
 reboot
 
 fi
