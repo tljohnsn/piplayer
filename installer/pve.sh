@@ -71,6 +71,8 @@ systemctl restart pveproxy
 
 wget https://raw.githubusercontent.com/foundObjects/pve-nag-buster/master/install.sh
 sudo bash install.sh
+sudo sed -i.bak 's/timeout: 7200/timeout: 604800/g' /usr/share/javascript/pve-manager/PVEUtility.js
+
 
 sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
 echo '
