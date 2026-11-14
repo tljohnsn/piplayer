@@ -1,4 +1,3 @@
-tljohnsn@faucet5:~$ cat /usr/local/sbin/nsupdate.sh
 #!/bin/bash
 
 until ping -c 1 -W 1 "dyn.dns.he.net" > /dev/null 2>&1; do
