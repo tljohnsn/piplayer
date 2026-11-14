@@ -197,6 +197,8 @@ echo "reconnect after ifreload...."
 echo
 ifreload -a
 
+killall dhcpd
+
 echo "search trentjohnson.net
 nameserver 10.0.2.1
 nameserver 2606:4700:4700::1111" | sudo tee  /etc/resolv.conf
