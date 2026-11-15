@@ -116,7 +116,7 @@ d-i mirror/http/proxy string
 #d-i passwd/root-password password r00tme
 #d-i passwd/root-password-again password r00tme
 # or encrypted using a hash
-d-i passwd/root-password-crypted password $y$j9T$9yeg44RMatX329ZOIKIx41$CV9rqX75yh5.N1oRm7EWIHtz58vzuvp6coS8u.R1uX2
+d-i passwd/root-password-crypted password $6$0kFbUey9pkXiqUY6$y9SMsRv2IxhSW6ehnTqD034CGb7ZULNQBVCqC.NnWEJpqHG/h2yVl0rCsF.Q68C8BnK9Gh0VOB4jz37h28WiZ1
 
 # To create a normal user account.
 d-i passwd/user-fullname string pi
@@ -125,7 +125,7 @@ d-i passwd/username string pi
 #d-i passwd/user-password password insecure
 #d-i passwd/user-password-again password insecure
 # or encrypted using a hash
-d-i passwd/user-password-crypted password $y$j9T$9yeg44RMatX329ZOIKIx41$CV9rqX75yh5.N1oRm7EWIHtz58vzuvp6coS8u.R1uX2
+d-i passwd/user-password-crypted password $6$RyJwtYrr7881yuBl$/ta9iG2A4zSEjHUAsnpqzu690tNnRQ2tJip.WrmKTz8ap5VrgER4oiyJBn2/aiiJ2ZtoRhqZ8TeGrzXn54AtU.
 # Create the first user with the specified UID instead of the default.
 #d-i passwd/user-uid string 1010
 
@@ -304,6 +304,7 @@ d-i partman/confirm_nooverwrite boolean true
 # Values shown below are the normal defaults.
 #d-i apt-setup/services-select multiselect security, updates
 #d-i apt-setup/security_host string security.debian.org
+d-i apt-setup/services-select multiselect
 
 # Additional repositories, local[0-9] available
 #d-i apt-setup/local0/repository string \

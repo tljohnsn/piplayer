@@ -85,3 +85,4 @@ libreadline-dev
 socat
 libnss-mdns
 avahi-utils
+zstd

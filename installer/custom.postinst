@@ -67,7 +67,36 @@ tar -xzf myfiles.tar.gz
 mkdir -p /etc/ssh
 tar -xvf hostkeys.tgz -C /etc/ssh
 
-cat ~/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
+if [ ! -d /root/piplayer ]; then
+    ln -s /home/pi/piplayer /root/piplayer
+fi
+
+if [ -z "`getent passwd tljohnsn`" ]; then
+    useradd -m -s /bin/bash -u 1025 -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" tljohnsn
+fi
+
+cat /root/piplayer/configfiles/bashrc.txt >>~root/.bashrc
+cat /root/piplayer/configfiles/bashrc.txt >>/etc/skel/.bashrc
+cat /root/piplayer/configfiles/bashrc.txt >>/home/tljohnsn/.bashrc
+cp /root/piplayer/scripts/nsupdate.sh /usr/local/sbin
+
+mkdir -p /home/tljohnsn/.ssh /etc/skel/.ssh
+sshkey0=`grep ^sshkey0 /root/piplayer/pi.sh | cut -c 9-`
+echo "ssh-rsa $sshkey0 newlaptopkey" >>~tljohnsn/.ssh/authorized_keys
+echo "ssh-rsa $sshkey0 newlaptopkey" >>~root/.ssh/authorized_keys
+echo "ssh-rsa $sshkey0 newlaptopkey" >>/etc/skel/.ssh/authorized_keys
+
+cat /home/pi/piplayer/configfiles/bashrc.txt >>~pi/.bashrc
+
+chown tljohnsn:tljohnsn ~tljohnsn/.ssh/authorized_keys /home/tljohnsn/.ssh
+chown root:root ~root/.ssh/authorized_keys
+
+chmod 600  ~tljohnsn/.ssh/authorized_keys ~root/.ssh/authorized_keys /etc/skel/.
+ssh/authorized_keys
+
+echo "tljohnsn ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/010_tljohnsn-nopasswd
+chmod 440 /etc/sudoers.d/010_tljohnsn-nopasswd
+useradd -m -s /bin/bash -u 9806 -d /users/trentj -p "\$6\$GFR2qgCW2m7uyFm6\$HK3LUvwlpN8iVae31zHPcPs6qO7kuVIcupz1VWGCd3s1hhVMlifml.1EJoxWpC6p3WaiBgTIjy1DBcnP.Kxqz0" trentj
 
 #authorized
 mkdir -p ~pi/.ssh
@@ -102,7 +131,7 @@ echo "HostKeyAlgorithms=+ssh-rsa" | tee -a /etc/ssh/sshd_config
 
 echo "" | tee /etc/motd
 
-touch /2026-04-20-17-31
+touch /2026-11-15-06-59
 
 #Don't clear screen
 mkdir -p /etc/systemd/system/getty@tty1.service.d
@@ -112,6 +141,16 @@ echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 
 sed -i -e 's/^GRUB_CMDLINE_LINUX_DEFAULT.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet consoleblank=0 nomodeset"/' /etc/default/grub
+
+wget http://ac.trentjohnson.net/tunes.deb -O /boot/tunes.txt
+wget http://ac.trentjohnson.net/wildcard.deb -O /root/wildcard.key
+
+echo '#!/bin/bash' >/etc/rc.local
+
+echo 'nohup /usr/local/sbin/nsupdate.sh </dev/null >/dev/null 2>/dev/null &' >>/etc/rc.local
+
+chmod 755 /etc/rc.local
+
 
 ######### Post-Post cleanup ####################################################
 rm -rf /tmp/extras
