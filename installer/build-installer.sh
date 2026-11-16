@@ -17,8 +17,10 @@ proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso
 			       --on-first-boot piplayer/installer/firstboot.sh
 dd if=proxmox-ve_9.1-1-auto-from-iso.iso of=/dev/sda bs=4M status=progress
 pvecm expected 1
-pvecm delnode pve2
-rm -rf /etc/pve/nodes/pve2
+mkdir /root/nodes
+cp -a /etc/pve/nodes/* /root/nodes
+rm -rf /etc/pve/nodes/pve1
+pvecm delnode pve1
 journalctl -u proxmox-first-boot-multi-user.service
 https://forum.proxmox.com/threads/how-to-enable-a-be202ngw-device.163798/
 

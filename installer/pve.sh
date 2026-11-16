@@ -73,10 +73,13 @@ wget https://raw.githubusercontent.com/foundObjects/pve-nag-buster/master/instal
 sudo bash install.sh
 sudo sed -i.bak 's/timeout: 7200/timeout: 604800/g' /usr/share/javascript/pve-manager/PVEUtility.js
 
+LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
+SHOST=`hostname -s`
+NETDEV=`ip -o a | grep -v lo |grep -v thunderbolt | cut -d " " -f 2`
 
 sudo sed -i -e "s/\[global\]/\[global\]\nguest account = pi/" /etc/samba/smb.conf
 echo '
-[public]
+[$SHOST]
    path = /tank/tm
    public = yes
    only guest = yes
@@ -90,11 +93,6 @@ echo '
 ' | sudo tee -a /etc/samba/smb.conf
 sudo systemctl enable smbd
 sudo systemctl restart smbd
-
-
-LDQ=`/sbin/ip addr show | awk '/10.0.2/ {print $2}' | sed -e 's/10.0.2.//g' | sed -e 's/\/24//g'`
-SHOST=`hostname -s`
-NETDEV=`ip -o a | grep -v lo |grep -v thunderbolt | cut -d " " -f 2`
 
 cp /etc/network/interfaces /root
 sed -i -e "s/inet dhcp/inet manual/g" -e "s/inet6 auto/inet6 manual/g" /etc/network/interfaces
@@ -143,6 +141,12 @@ cp -a /etc/network/interfaces.new /etc/network/interfaces
 rm -f /etc/apt/sources.list.d/pve-no-subscription.list
 mkdir -p /usr/local/etc
 cp /root/piplayer/configfiles/zabbix_agentd.conf /usr/local/etc
+
+echo "net.ipv6.conf.all.accept_ra_defrtr = 0
+net.ipv6.conf.vmbr0.accept_ra_defrtr = 1
+net.ipv6.conf.vmbr1.accept_ra_defrtr = 0
+net.ipv6.conf.vmbr1001.accept_ra_defrtr = 0" >/etc/sysctl.d/02-6routes.conf
+
 echo "/usr/local/sbin/zabbix_agentd &" | tee -a /etc/rc.local
 echo "zabbix:*:403:403:zabbix:/usr/share/zabbix:/bin/false" | tee -a /etc/passwd
 echo "zabbix:*:403:" | tee -a /etc/group
@@ -184,38 +188,42 @@ pvesm add dir tank-ncq --path /tank/ncq --content images --is_mountpoint 1
 
 pvesm add dir images --path /images --content images,iso,backup --is_mountpoint 1
 pvesm add lvmthin local-lvm --vgname pve --thinpool data --content images
-pvesm add pbs pve1 --server pve1.trentjohnson.net --datastore aspace --username root@pam \
+pvesm add pbs pve1 --server 10.0.69.201 --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
-pvesm add pbs pve2 --server pve2.trentjohnson.net --datastore aspace --username root@pam \
+pvesm add pbs pve2 --server 10.0.69.202 --datastore aspace --username root@pam \
       --fingerprint cd:88:3f:3d:78:3a:8d:5b:d0:28:a9:c2:e0:9f:d1:1f:49:b7:26:b9:a8:36:d4:93:4c:0c:5e:ac:78:4f:ac:10 \
       --password
-killall dhcpd
+killall dhcpcd
 
 echo
 echo "reconnect after ifreload...."
 echo
 ifreload -a
 
-killall dhcpd
+killall dhcpcd
 
 echo "search trentjohnson.net
 nameserver 10.0.2.1
 nameserver 2606:4700:4700::1111" | sudo tee  /etc/resolv.conf
 
+powerprofilesctl set power-saver
+
 fi
 exit
 pvesm remove tank-z
 pvesm remove tank-nc
+pvesm remove tank-ncq
 pvesm remove pve1
 pvesm remove pve2
 pvesm remove local-lvm
 
 rsync -avP tljohnsn@pve2.local:/images/template/iso/virtio-win-0.1.149.iso /images/template/iso/
+rsync -avP tljohnsn@10.0.69.202:/images/template/iso/. /images/template/iso/
 
 VMID=421
 VMIDS=(100)
-VMIDS=(100 103 118 401 405 411 421 423 431 441 451 461 471 473)
+VMIDS=(100 106 118 119 401 405 411 421 431 441 451 461 463 465 467 471 473 486 492)
 VMIDS=(107 402 404 412 420 430 440 452 460 470 472)
 for VMID in "${VMIDS[@]}"; do
     ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
@@ -235,4 +243,3 @@ zfs list -o name,used,avail,refer,compressratio,volsize,origin
 zfs list -t snapshot 
 
 
-powerprofilesctl set power-saver
