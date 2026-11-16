@@ -9,7 +9,9 @@ ln -s ~/piplayer/installer/custom.postinst .
 cd ..
 sed -i -e s/ftp.de.debian.org/ftp.us.debian.org/ custom.conf
 tar -pczf extras.tar.gz extras/
-build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed --no-do-mirror --dvd --logfile ./out.log
+sudo emacs /usr/lib/python3/dist-packages/simple_cdd/tools/mirror_download.py
+build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed  --dvd --logfile ./out.log
+#--no-do-mirror
 
 proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso --answer-file piplayer/installer/answer.toml \
 			       --on-first-boot piplayer/installer/firstboot.sh
