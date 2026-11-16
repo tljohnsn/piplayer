@@ -1,8 +1,8 @@
 ## this file lists packages that will be automatically installed with this profile
 
 #
-libgnutls30
-libgnutls-openssl27
+#libgnutls30
+#libgnutls-openssl27
 tasksel
 tasksel-data
 
@@ -54,7 +54,7 @@ expect
 gridsite-clients
 alsa-tools
 sqlite3
-ntp
+#ntp
 rsyslog
 
 netfilter-persistent
