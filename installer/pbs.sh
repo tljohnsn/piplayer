@@ -7,6 +7,7 @@ rdisc6 ens18
 rdisc6 eno1
 
 apt install proxmox-backup-server
+echo "Enabled: no">>/etc/apt/sources.list.d/pbs-enterprise.sources
 
 mkdir -p /etc/proxmox-backup/certs.bak
 cp /etc/proxmox-backup/proxy.pem /etc/proxmox-backup/certs.bak
@@ -43,7 +44,8 @@ echo "" | tee /etc/motd
 
 STORE=96space
 STORE=aspace
-proxmox-backup-manager datastore create $STORE /safemount/aspace --prune-schedule 22:00   --gc-schedule 22:15 --keep-last 14 --keep-monthly 36
+proxmox-backup-manager datastore create $STORE /safemount/aspace --prune-schedule 22:00   --gc-schedule 22:15 --keep-last 14 --keep-monthly 36 \
+		       --reuse-datastore
 proxmox-backup-manager verify-job create 001 --store $STORE --schedule 22:30   --read-threads 3 --verify-threads 12
 
 proxmox-backup-manager remote create pbs --host pbs.trentjohnson.net --auth-id root@pam \
