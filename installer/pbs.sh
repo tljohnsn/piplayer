@@ -57,3 +57,18 @@ sudo systemctl edit networking.service
 TimeoutStartSec=10sec
 
 /etc/systemd/system/networking.service.d/override.conf
+
+echo '
+# Set Read-Ahead for the RAID array
+SUBSYSTEM=="block", KERNEL=="md*", ATTR{bdi/read_ahead_kb}="4096"
+
+# Set Stripe Cache Size for md127
+SUBSYSTEM=="block", KERNEL=="md0", ATTR{md/stripe_cache_size}="4096"
+
+# Set Read-Ahead for the physical member SSDs
+SUBSYSTEM=="block", KERNEL=="sd[b-e]", ATTR{bdi/read_ahead_kb}="2048"
+' >/etc/udev/rules.d/99-mdadm-performance.rules
+
+echo "options mpt3sas max_queue_depth=128" | sudo tee /etc/modprobe.d/mpt3sas.conf
+
+sudo tune2fs -E stride=128,stripe_width=384 /dev/md0
