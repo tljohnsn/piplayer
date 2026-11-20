@@ -223,7 +223,7 @@ rsync -avP tljohnsn@10.0.69.202:/images/template/iso/. /images/template/iso/
 
 VMID=421
 VMIDS=(100)
-VMIDS=(100 106 118 119 401 405 411 421 431 441 451 461 463 465 467 471 473 486 492)
+VMIDS=(100 106 118 119 203 401 405 411 421 431 441 451 461 463 465 467 471 473 486 492)
 VMIDS=(107 402 404 412 420 430 440 452 460 470 472)
 for VMID in "${VMIDS[@]}"; do
     ARCHIVE=`pvesm list pve2 --vmid $VMID | tail -n 1 | cut -d " " -f 1`
