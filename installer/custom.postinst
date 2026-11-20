@@ -140,7 +140,9 @@ echo "TTYVTDisallocate=no" | tee -a /etc/systemd/system/getty@tty1.service.d/noc
 echo ExecStart= | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 echo ExecStart=-/sbin/agetty --noclear %I $TERM | tee -a /etc/systemd/system/getty@tty1.service.d/noclear.conf
 
-sed -i -e 's/^GRUB_CMDLINE_LINUX_DEFAULT.*/GRUB_CMDLINE_LINUX_DEFAULT="consoleblank=0 video=640x480@60"/' /etc/default/grub
+sed -i -e 's/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="consoleblank=0 nomodeset"/' /etc/default/grub
+echo "GRUB_GFXPAYLOAD_LINUX=text" | sudo tee -a /etc/default/grub
+echo "GRUB_TERMINAL=console" | sudo tee -a      /etc/default/grub
 
 update-grub
 
