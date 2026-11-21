@@ -13,7 +13,7 @@ export ARCHES=amd64
 export ARCH=amd64
 export DISABLE_UEFI_32=1
 #
-tar -xczf extras.tar.gz extras/
+tar -czf extras.tar.gz extras/
 sudo emacs /usr/lib/python3/dist-packages/simple_cdd/tools/mirror_download.py
 build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed  --dvd --logfile ./out.log
 #--no-do-mirror
