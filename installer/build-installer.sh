@@ -14,9 +14,18 @@ export ARCH=amd64
 export DISABLE_UEFI_32=1
 #
 tar -czf extras.tar.gz extras/
+
+#If Invalid checksum, relace fail with log.warning()
+rm /usr/lib/python3/dist-packages/simple_cdd/__pycache__/utils.cpython-311.pyc
 sudo emacs /usr/lib/python3/dist-packages/simple_cdd/tools/mirror_download.py
+
+#It i386 downloads fail
+sudo emacs /usr/lib/python3/dist-packages/simple_cdd/utils.py
+
 build-simple-cdd --conf custom.conf --auto-profiles custom --locale en_US --keyboard us --force-root --force-preseed  --dvd --logfile ./out.log
 #--no-do-mirror
+
+scp /home/tljohnsn/unattended-debian-installer/images/debian-12-i386-DVD-1.iso root@pve2.local:/images/template/iso/debian-12-i386-2026-11-21.iso
 
 proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso --answer-file piplayer/installer/answer.toml \
 			       --on-first-boot piplayer/installer/firstboot.sh
