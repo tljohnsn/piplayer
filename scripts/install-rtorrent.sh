@@ -49,7 +49,8 @@ install -b -o trentj -g trentj -m 600 /root/piplayer/configfiles/orphan_cleanup.
 chown -R trentj:trentj /users/trentj
 
 LDQ=`ip add show | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | cut -d . -f 4 | sed -e 's/\/24//g'`
-sed -i -e s%50000%80$LDQ%g .rtorrent.rc
+printf -v padded "%03d" "$LDQ"
+sed -i -e s%50000%8$padded%g .rtorrent.rc
 
 sudo systemctl restart apache2
 
