@@ -8,7 +8,7 @@ if [ -z "$dst" ]; then
     dst="pi@tunes.local:/home/ftp/local"
 fi
 if [ -z "$rsync" ]; then
-rsync='rsync -aP --info=progress2 --exclude=.sync --exclude=.DS_Store --exclude=._* --delete'
+rsync='rsync -ahP --info=progress2 --exclude=.sync --exclude=.DS_Store --exclude=._* --delete'
 fi
 #echo $rsync
 
