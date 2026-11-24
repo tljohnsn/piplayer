@@ -55,6 +55,13 @@ echo "  Do the folders look like 'Artist - Album'?"
 echo "  Are the tracks named like '01 Track Name.mp3'?"
 echo "  Do all the tracks have cover art?"
 echo
+read -r -n 1 -p "Press Enter to send files from mp3zlaptop to tunes..."
+mv ~/mp3zrenamed/* /Users/Music/mp3zlaptop/.
+~/piplayer/tagger/syncssh.sh
+~/piplayer/tagger/mbpsync.sh
+gfind  ~/mp3zstaging -type f -print0 |xargs -0 rm -f
+gfind  ~/mp3zstaging -mindepth 1 -type d -print0  |xargs -0 rmdir
+echo
 echo "If everything looks good, drag the folders from mp3zrenamed into mp3zlaptop"
 echo 
 echo "now run this command to send files from mp3zlaptop to tunes:"
