@@ -9,13 +9,14 @@ exit
 
 apt -y install qbittorrent-nox cifs-utils
 
-echo "//10.0.2.151/Movies /safemount/shows cifs credentials=/etc/smbcredentials,uid=9806,gid=9806,iocharset=utf8,_netdev,nofail 3 3" \
+echo "//10.0.2.151/Movies /safemount/shows cifs credentials=/etc/smbcredentials,uid=9806,gid=9806,iocharset=utf8,_netdev,nofail,x-systemd.automount,x-systemd.idle-timeout=60 3 3" \
     | sudo tee -a /etc/fstab
 echo "username=tljohnsn
 password=" | sudo tee /etc/smbcredentials
 chmod 600 /etc/smbcredentials
 mkdir -p /safemount/shows
 systemctl daemon-reload
+sudo systemctl restart remote-fs.target
 mount -a
 systemctl status safemount-shows.mount
 
